@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title></title>
+<title>添加文章</title>
 <link rel="stylesheet" href="../js-css/edit.css">
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 
@@ -34,9 +34,7 @@
 		<textarea id="inputContent" rows="53" cols="53" name="content"></textarea>
 	</form>
 	<script type="text/javascript">
-		CKEDITOR.replace('content', {
-			height : 577
-		});
+		CKEDITOR.replace('content');
 	</script>
 
 	<%-- 	<script>

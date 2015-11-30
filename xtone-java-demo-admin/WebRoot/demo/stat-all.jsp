@@ -1,3 +1,4 @@
+<%@page import="java.util.function.Function"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -29,7 +30,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>Login</title>
+<title>所有文章</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -84,6 +85,7 @@
 	  if (request.getParameter("submit") != null
 						&& request.getParameter("submit").equals("1")) {
 	%> --%>
+	<input type="button" style="width: 150px;height: 30px" value="新增文章" onclick="window.location.href='edit-add.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
@@ -122,6 +124,8 @@
 										catalogStr="资料";
 									}else if("forum".equals(catalog)){
 										catalogStr="论坛";
+									}else{
+										catalogStr=catalog;
 									}
 									SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd");
 									String addTime=sf.format(new Date(rs.getLong("addTime"))) ;
@@ -138,7 +142,6 @@
 				<td><%=rs.getString("lastname")%></td>
 				<td><%=lastModifyTime%></td> 
 				<td>
-				<a href="edit-add.jsp?">添加</a>&emsp;
 				<a href="edit-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
 				<a href="preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
 				<a href="show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
