@@ -11,7 +11,21 @@
 <title>添加文章</title>
 <link rel="stylesheet" href="../js-css/edit.css">
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script language="JavaScript">
+   function add(){
+      document.form1.method="post";	  
+      document.form1.action="add.jsp";
+      document.form1.submit();
+      return true;
+}
+   function cancel(){
+      document.form1.method="post";
+      document.form1.action="stat-all.jsp";
+      document.form1.submit();
+      return true;
+}
 
+</script>
 </head>
 <body>
 
@@ -22,13 +36,14 @@
 					type="text" name="title">
 			</div>
 			<select name="catalog" id="catalog" onchange="check(this)"
-				style="width: 10%; height: 30px">
+				style="width: 8%; height: 30px">
 				<option value="news">新闻</option>
 				<option value="material">资料</option>
 				<option value="forum">论坛</option>
-			</select> <input class="font_16 " style="width: 10%; height: 30px"
-				type="submit" value="确&nbsp;认&nbsp;添&nbsp;加">
-
+			</select> <input class="font_16 " style="width: 4%; height: 30px"
+				type="submit" value="确认添加" onclick="add()">
+			<input class="font_16 " style="width: 4%; height: 30px"
+				type="submit" value="取消编辑" onclick="cancel()">
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"></textarea>

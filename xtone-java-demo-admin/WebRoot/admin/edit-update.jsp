@@ -48,11 +48,7 @@
 				String title = rs.getString("title");
 				String content = rs.getString("content");
 	%>
-	<script>
-		var province = <%=rs.getString("catalog")%>
-		$("#catalog").val(province);
-// 		$("#catalog option[value='" + province + "']").attr("selected", true);
-	</script>
+	
 	<form class="form-date" id="form1" name="form1" method="post">
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
@@ -65,14 +61,19 @@
 				<option value="forum">论坛</option>
 			</select> 
 			<input class="font_16 " style="width: 4%; height: 30px"
-				type="submit" value="保&nbsp;存&nbsp;更&nbsp;新" onclick="update()">
+				type="submit" value="保存更新" onclick="update()">
 			<input class="font_16 " style="width: 4%; height: 30px"
-				type="submit" value="取&nbsp;消&nbsp;编&nbsp;辑" onclick="cancel()">
+				type="submit" value="取消编辑" onclick="cancel()">
 			<input type="hidden" name="id" value="<%=id%>">
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"><%=content%></textarea>
 	</form>
+	<script>
+		var province = "<%=rs.getString("catalog")%>";
+		$("#catalog").val(province);
+// 		$("#catalog option[value='" + province + "']").attr("selected", true);
+	</script>
 	<script type="text/javascript">
 		CKEDITOR.replace('content',{height:600});
 		
