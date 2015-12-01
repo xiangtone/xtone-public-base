@@ -6,7 +6,7 @@ public class HexChange {
 
   // it must no repeat !
   private final static Logger LOG = Logger.getLogger(HexChange.class);
-  public static String STRING_MAP = "23456789ABCDEFGHIJKLMNPQRSTUVWXYZ";
+  public static String STRING_MAP = "23456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
   
   private static int HEX_LENGTH = STRING_MAP.length();
   private static char[] CHAR_MAPS = new char[STRING_MAP.length()];
