@@ -60,9 +60,9 @@
 				<option value="material">资料</option>
 				<option value="forum">论坛</option>
 			</select> 
-			<input class="font_16 " style="width: 4%; height: 30px"
+			<input class="font_16 " style="width: 5%; height: 30px"
 				type="submit" value="保存更新" onclick="update()">
-			<input class="font_16 " style="width: 4%; height: 30px"
+			<input class="font_16 " style="width: 5%; height: 30px"
 				type="submit" value="取消编辑" onclick="cancel()">
 			<input type="hidden" name="id" value="<%=id%>">
 		</div>

@@ -29,7 +29,7 @@
 </head>
 <body>
 
-	<form class="form-date" method="post" action="add.jsp">
+	<form class="form-date"  id="form1" name="form1" method="post">
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
@@ -40,9 +40,10 @@
 				<option value="news">新闻</option>
 				<option value="material">资料</option>
 				<option value="forum">论坛</option>
-			</select> <input class="font_16 " style="width: 4%; height: 30px"
+			</select> 
+			<input class="font_16 " style="width: 5%; height: 30px"
 				type="submit" value="确认添加" onclick="add()">
-			<input class="font_16 " style="width: 4%; height: 30px"
+			<input class="font_16 " style="width: 5%; height: 30px"
 				type="submit" value="取消编辑" onclick="cancel()">
 		</div>
 
