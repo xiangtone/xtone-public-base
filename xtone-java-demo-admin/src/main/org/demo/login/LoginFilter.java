@@ -43,7 +43,8 @@ public class LoginFilter implements Filter {
     if (!bExcept){
       HttpSession session = ((HttpServletRequest) request).getSession();
       if (!(session!=null&&session.getAttribute("user")!=null)){
-        session.setAttribute("lastFileName", fileName);
+//        session.setAttribute("lastFileName", fileName);
+    	session.setAttribute("lastFileName", "stat-all.jsp");//固定跳转到列表页
         HttpServletResponse resp = (HttpServletResponse) response;
         resp.sendRedirect("login.jsp");
         return ;

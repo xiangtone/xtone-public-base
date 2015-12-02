@@ -75,7 +75,9 @@
 // 		$("#catalog option[value='" + province + "']").attr("selected", true);
 	</script>
 	<script type="text/javascript">
-		CKEDITOR.replace('content',{height:600});
+	CKEDITOR.replace('content',{
+        customConfig : '../ckeditor/my_config.js'
+    });
 		
 	</script>
 	<%

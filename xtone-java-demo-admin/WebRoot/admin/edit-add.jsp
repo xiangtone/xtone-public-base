@@ -12,26 +12,32 @@
 <link rel="stylesheet" href="../js-css/edit.css">
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 <script language="JavaScript">
-   function add(){
-      document.form1.method="post";	  
-      document.form1.action="add.jsp";
-      document.form1.submit();
-      return true;
-}
-   function cancel(){
-      document.form1.method="post";
-      document.form1.action="stat-all.jsp";
-      document.form1.submit();
-      return true;
-}
-
+	function add() {
+		document.form1.method = "post";
+		document.form1.action = "add.jsp";
+		var title = document.getElementById("inputTitle");
+		var text = document.getElementById("inputContent");
+		if (text.value == "" || title.value == null) {
+			alert("标题或内容为空！");
+			return false;
+		} else {
+			document.form1.submit();
+			return true;
+		}
+	}
+	function cancel() {
+		document.form1.method = "post";
+		document.form1.action = "stat-all.jsp";
+		document.form1.submit();
+		return true;
+	}
 </script>
 </head>
 <body>
 
-	<form class="form-date"  id="form1" name="form1" method="post">
+	<form class="form-date" id="form1" name="form1" method="post">
 		<div class="note_title clear_float">
-			<div class="col_li col_left" style="width: 79%">
+			<div class="col_li col_left" style="width: 80%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
 					type="text" name="title">
 			</div>
@@ -40,17 +46,18 @@
 				<option value="news">新闻</option>
 				<option value="material">资料</option>
 				<option value="forum">论坛</option>
-			</select> 
-			<input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="确认添加" onclick="add()">
-			<input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="取消编辑" onclick="cancel()">
+			</select> <input class="font_16 " style="width: 5%; height: 30px"
+				type="submit" value="确认添加" onclick="add()"> <input
+				class="font_16 " style="width: 5%; height: 30px" type="button"
+				value="取消编辑" onclick="cancel()">
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"></textarea>
 	</form>
 	<script type="text/javascript">
-		CKEDITOR.replace('content',{height:600});
+		CKEDITOR.replace('content', {
+			customConfig : '../ckeditor/my_config.js'
+		});
 	</script>
 
 	<%-- 	<script>
