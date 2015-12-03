@@ -62,8 +62,7 @@
 </head>
 
 <body>
-	<%-- <%@ include file="menu.jsp"%> --%>
-	<%-- <div class="container">
+	<%--<div class="con tainer">
 
 		<form class="form-signin" role="form">
 			from:<input size="10" name="dateFrom" type="text"
@@ -82,10 +81,10 @@
 		</form>
 
 	</div> --%>
-	<%-- <%
-	  if (request.getParameter("submit") != null
-						&& request.getParameter("submit").equals("1")) {
-	%> --%>
+	<%
+// 	  if (request.getParameter("submit") != null
+// 						&& request.getParameter("submit").equals("1")) {
+	%>
 	<input type="button" style="width: 150px;height: 30px" value="新增文章" onclick="window.location.href='edit-add.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
@@ -170,9 +169,9 @@
 			$('#table_id').DataTable();
 		});
 	</script>
-	<<%-- %
-	  }
-	%> --%>
+	<%
+// 	  }
+	%>
 
 	<!-- /container -->
 

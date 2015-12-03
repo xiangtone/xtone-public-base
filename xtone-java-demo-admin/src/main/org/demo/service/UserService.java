@@ -153,7 +153,7 @@ public class UserService {
   
   
 
-  public long checkLoginUser(String pwd, User user) {
+  public long checkLoginUser(User user) {
     long result = 0;
     PreparedStatement ps = null;
     Connection con = null;
@@ -163,7 +163,7 @@ public class UserService {
       ps = con.prepareStatement("select id from tbl_base_users where username=? and pwd=md5(?)");
       int m = 1;
       ps.setString(m++, user.getUserName());
-      ps.setString(m++, pwd);
+      ps.setString(m++, user.getPassword());
       rs = ps.executeQuery();
       if (rs.next()) {
         result = rs.getLong("id");
