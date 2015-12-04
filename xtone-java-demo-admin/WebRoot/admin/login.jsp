@@ -88,6 +88,13 @@
 
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js-css/ie10-viewport-bug-workaround.js"></script>
-	
+	<script type="text/javascript">
+
+		//防止被嵌套
+		if (self.location != top.location) {
+			top.location.href = self.location;
+		}
+	</script>
+
 </body>
 </html>

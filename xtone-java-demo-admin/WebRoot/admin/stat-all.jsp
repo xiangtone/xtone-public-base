@@ -1,4 +1,4 @@
-<%@page import="org.demo.info.Content"%>
+﻿<%@page import="org.demo.info.Content"%>
 <%@page import="java.util.function.Function"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -85,7 +85,7 @@
 // 	  if (request.getParameter("submit") != null
 // 						&& request.getParameter("submit").equals("1")) {
 	%>
-	<input type="button" style="width: 150px;height: 30px" value="新增文章" onclick="window.location.href='edit-add.jsp'" >
+	<input type="button" style="width: 150px;height: 30px;margin-top: 10px;margin-bottom: 10px;margin-left:10px" value="新增文章" onclick="window.location.href='edit-add.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
