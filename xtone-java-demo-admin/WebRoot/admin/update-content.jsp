@@ -15,17 +15,20 @@
 <script src="../js-css/jquery-2.1.3.min.js"></script>
 <script language="JavaScript">
    function update(){
-      document.form1.method="post";	  
-      document.form1.action="update.jsp";
-      document.form1.submit();
-      return true;
-}
-   function cancel(){
-      document.form1.method="post";
-      document.form1.action="stat-all.jsp";
-      document.form1.submit();
-      return true;
-}
+		var oEditor = CKEDITOR.instances.inputContent;
+		if (document.getElementById("inputTitle").value.trim() == "") {
+			alert("标题为空！");
+			return false;
+		}
+		if (oEditor.getData()== "") {
+			alert("内容为空！");
+			return false;
+		}
+		 
+	}
+	String.prototype.trim = function(){ 
+		return this.replace(/(^\s*)|(\s*$)/g, ""); 
+	};
 
 </script>
 </head>
@@ -49,7 +52,7 @@
 				String content = rs.getString("content");
 	%>
 	
-	<form class="form-date" id="form1" name="form1" method="post">
+	<form class="form-date" id="form1" name="form1" onsubmit="return update();" method="post" action="commit-update-content.jsp">
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
@@ -61,9 +64,9 @@
 				<option value="forum">论坛</option>
 			</select> 
 			<input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="保存更新" onclick="update()">
+				type="submit" value="保存更新">
 			<input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="取消编辑" onclick="cancel()">
+				type="button" value="取消编辑" onclick="window.location.href='stat-all.jsp'">
 			<input type="hidden" name="id" value="<%=id%>">
 		</div>
 
@@ -72,7 +75,6 @@
 	<script>
 		var province = "<%=rs.getString("catalog")%>";
 		$("#catalog").val(province);
-// 		$("#catalog option[value='" + province + "']").attr("selected", true);
 	</script>
 	<script type="text/javascript">
 	CKEDITOR.replace('content',{

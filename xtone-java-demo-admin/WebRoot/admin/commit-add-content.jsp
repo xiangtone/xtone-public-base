@@ -12,7 +12,7 @@
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
 	User user=(User)session.getAttribute("user");
-	
+
 	String title = new String(request.getParameter("title").trim());
 	String content = new String(request.getParameter("content").trim());
 	String catalog = new String(request.getParameter("catalog").trim());

@@ -46,6 +46,7 @@
 
 		UserService userService = new UserService();
 		long userId = userService.checkLoginUser(user);
+		user.setId(userId);
 		if (userId > 0) {
 			BaseRsp baseRsp = new BaseRsp();
 			baseRsp.setStatus("success");
@@ -57,7 +58,6 @@
 					&& session.getAttribute("lastFileName").toString().length() > 0) {
 				response.sendRedirect(session.getAttribute("lastFileName").toString());
 				session.removeAttribute("lastFileName");
-				response.sendRedirect("login.jsp");
 			} else {
 				out.print(rsp);
 			}

@@ -11,31 +11,26 @@
 <title>添加文章</title>
 <link rel="stylesheet" href="../js-css/edit.css">
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
-<script language="JavaScript">
-	function add() {
-		document.form1.method = "post";
-		document.form1.action = "add.jsp";
-		var title = document.getElementById("inputTitle");
-		var text = document.getElementById("inputContent");
-		if (text.value == "" || title.value == null) {
-			alert("标题或内容为空！");
-			return false;
-		} else {
-			document.form1.submit();
-			return true;
-		}
-	}
-	function cancel() {
-		document.form1.method = "post";
-		document.form1.action = "stat-all.jsp";
-		document.form1.submit();
-		return true;
-	}
-</script>
 </head>
 <body>
-
-	<form class="form-date" id="form1" name="form1" method="post">
+<script language="JavaScript">
+	function add(){
+		var oEditor = CKEDITOR.instances.inputContent;
+		if (document.getElementById("inputTitle").value.trim() == "") {
+			alert("标题为空！");
+			return false;
+		}
+		if (oEditor.getData()== "") {
+			alert("内容为空！");
+			return false;
+		}
+		 
+	}
+	String.prototype.trim = function(){ 
+		return this.replace(/(^\s*)|(\s*$)/g, ""); 
+	}; 
+</script>
+	<form class="form-date" id="form1" name="form1" onsubmit="return add();" method="post" action="commit-add-content.jsp">
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 80%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
@@ -46,10 +41,10 @@
 				<option value="news">新闻</option>
 				<option value="material">资料</option>
 				<option value="forum">论坛</option>
-			</select> <input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="确认添加" onclick="add()"> <input
-				class="font_16 " style="width: 5%; height: 30px" type="button"
-				value="取消编辑" onclick="cancel()">
+			</select> <input style="width: 5%; height: 30px"
+				type="submit" value="确认添加"> <input
+				style="width: 5%; height: 30px" type="button"
+				value="取消编辑" onclick="window.location.href='stat-all.jsp'">
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"></textarea>
@@ -60,15 +55,5 @@
 		});
 	</script>
 
-	<%-- 	<script>
-		window.onload = function(){
-	    var obj = document.getElementById('saveUpdate');
-	    var title = document.getElementById("inputTitle");
-	    var content = document.getElementById("inputContent");
-	    obj.onclick=function(){  
-	        window.location.href="updateEdit.jsp?id=<%=id%>&title=title&content=content";            
-	     }
-	 }
-</script> --%>
 </body>
 </html>

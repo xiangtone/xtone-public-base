@@ -45,11 +45,11 @@
 						location.href='console.jsp';
 						
 					} else {
-						alert('邮箱或密码错误!');
+						alert('邮箱或密码错误!'+msg.data);
 					}
 				},
 				error : function () {
-					alert('邮箱或密码错误!');
+					alert('登录失败!');
 
 				}
 			});
@@ -90,10 +90,6 @@
 	<script src="../js-css/ie10-viewport-bug-workaround.js"></script>
 	<script type="text/javascript">
 
-		//防止被嵌套
-		if (self.location != top.location) {
-			top.location.href = self.location;
-		}
 	</script>
 
 </body>
