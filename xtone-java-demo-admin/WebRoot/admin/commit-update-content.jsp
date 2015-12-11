@@ -45,7 +45,7 @@
 		out.print("<script>alert('" + str + "');location.href='stat-all.jsp';</script>");
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		str = "添加失败!";
+		str = "更新失败!";
 		out.print("<script>alert('" + str + "');location.href='stat-all.jsp';</script>");
 		e.printStackTrace();
 	} finally {

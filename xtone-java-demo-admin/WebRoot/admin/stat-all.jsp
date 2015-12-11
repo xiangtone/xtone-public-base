@@ -1,4 +1,4 @@
-<%@page import="org.demo.info.Content"%>
+﻿<%@page import="org.demo.info.Content"%>
 <%@page import="java.util.function.Function"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -62,8 +62,7 @@
 </head>
 
 <body>
-	<%-- <%@ include file="menu.jsp"%> --%>
-	<%-- <div class="container">
+	<%--<div class="con tainer">
 
 		<form class="form-signin" role="form">
 			from:<input size="10" name="dateFrom" type="text"
@@ -82,11 +81,12 @@
 		</form>
 
 	</div> --%>
-	<%-- <%
-	  if (request.getParameter("submit") != null
-						&& request.getParameter("submit").equals("1")) {
-	%> --%>
-	<input type="button" style="width: 150px;height: 30px" value="新增文章" onclick="window.location.href='edit-add.jsp'" >
+	<%
+// 	  if (request.getParameter("submit") != null
+// 						&& request.getParameter("submit").equals("1")) {
+	%>
+	<jsp:include page="menu.jsp"/>	
+	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增文章" onclick="window.location.href='add-content.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
@@ -143,9 +143,9 @@
 				<td><%=rs.getString("lastname")%></td>
 				<td><%=lastModifyTime%></td> 
 				<td>
-				<a href="edit-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
-				<a href="preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
-				<a href="show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
+				<a href="update-content.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
+				<a href="preview-content.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
+				<a href="show-hidden-content.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
 			</tr>
 			<%
 			  }
@@ -170,9 +170,9 @@
 			$('#table_id').DataTable();
 		});
 	</script>
-	<<%-- %
-	  }
-	%> --%>
+	<%
+// 	  }
+	%>
 
 	<!-- /container -->
 
