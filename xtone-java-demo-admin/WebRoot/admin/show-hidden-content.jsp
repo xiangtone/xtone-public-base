@@ -1,7 +1,5 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@page import="org.demo.service.UserService"%>
-<%@page import="org.demo.info.User"%>
 <%@page import="org.common.util.ConnectionService"%>
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>

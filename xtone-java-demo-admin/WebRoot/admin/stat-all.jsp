@@ -1,5 +1,4 @@
-﻿<%@page import="org.demo.info.Content"%>
-<%@page import="java.util.function.Function"%>
+﻿<%@page import="java.util.function.Function"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,7 +9,7 @@
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="org.common.util.ConnectionService"%>
-<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%> 
 <%
   TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 			Calendar calendar = Calendar.getInstance();
