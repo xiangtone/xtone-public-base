@@ -4,6 +4,8 @@
 # date:Nov 19 2015
 
 # DEFINE
+export JAVA_HOME=/usr/local/jdk1.7.0_71
+
 # tomcat path
 TomcatPath=/opt/apache-tomcat-8.0.15
 # define monitor URL
