@@ -1,0 +1,76 @@
+ ---------------------------------------------------------------------------
+|注意：搭建全新数据库的时候建议启用每表独立空间，否则xtrabackup只能全库备份	|
+|		必须启用二进制日志，并为不同的服务器设置不同的server-id		          		|
+|		master:														                                  		|
+|			[mysqld]												                                  		|
+|				log-bin=/data/log/bin-log.index							                      	|
+|				server-id=2												                                	|
+|				innodb_file_per_table = 1					                           				|	
+|																		                                      	|
+|		slave:													                                  			|
+|			[mysqld]										                                  				|
+|				log-bin=/data/log/bin-log.index			                      					|
+|				server-id=3											                                 		|
+|				innodb_file_per_table = 1							                          		|
+ ---------------------------------------------------------------------------
+ 
+需要用到的软件有：
+	mysql
+	xtrabackup
+		依赖：
+			perl-DBD-MySQL
+			libev
+	
+主要操作流程为：
+	1、备份master主服务器的数据库（由于不能停止数据库，只能使用xtrabackup进行热备）；
+	2、搭建slave从服务器并将master备份数据恢复到从服务器上；
+	3、在主服务器上新建一个同步用的用户
+	4、在从服务器上配置和启用同步功能即可
+	
+步骤：
+	一、备份master主服务器的数据库（全库备份），使用xtrabackup：
+			innobackupex --defaults-file=my.cnf位置 --host=MYSQL地址 --user=用户名  --password=密码 --port=端口 备份路径
+				eg:innobackupex --defaults-file=/etc/my.cnf --user=root --password=123456 --prot=3306 /data/sql_bak/chenDF/
+				
+		完成命令后要使用命令使事务同步：
+			innobackupex --apply-log 备份路径
+				eg：innobackupex --apply-log /data/sql_bak/chenDF/2015-12-15_09-45-25/
+			
+					本机可忽略--host，在备份后默认会在备份路径下生成一个以时间命名的目录。
+					
+		压缩打包：
+			tar -czf bak.tar.gz /data/sql_bak/chenDF/2015-12-15_09-45-25/
+			
+	二、在slave上安装数据库，(以下操作过程勿启动数据库)删除slave数据目录下的数据文件，并将备份文件拷贝到slave上并解压复制所有文件到数据目录下：
+			tar -zxf bak.tar.gz
+			cd 2015-12-15_09-45-25/
+			cp -rf * /data/server/mysql/data/
+			
+		尝试下是否可以启动数据库；
+		
+	三、在主服务器上新建一个同步用的用户：
+			mysql>GRANT REPLICATION SLAVE ON *.* to 'SYNCUSER'@'%' identified by 'SYNCUSERPASSWORD';
+		
+	四、在从服务器上配置和启用同步功能：
+			查看文件xtrabackup_binlog_info中记录的二进制日志中Position信息：
+			
+				[root@iZ234ckyxnzZ 2015-12-15_09-45-25]# cat xtrabackup_binlog_info 
+				iZ234ckyxnzZ-bin.000004	15454841
+				
+			在mysql交互界面中设置master信息：
+				change master to master_host='MASTER_IP',master_user='SYNCUSER',master_password='SYNCUSERPASSWORD',master_log_file='BINLOGFILE',master_log_pos=POSITION;
+					eg: 
+						mysql>change master to master_host='192.168.145.222',master_user='sync',master_password='123456',master_log_file='iZ234ckyxnzZ-bin.000004',master_log_pos=15454841;
+						
+			启动从服务器复制功能:
+				Mysql>start slave; 
+				
+			检查从服务器复制功能状态：
+				mysql> show slave status\G
+				
+			确保
+				Slave_IO_Running: Yes
+				Slave_SQL_Running: Yes
+			状态都为YES
+		
+		PS：注意端口的设置
