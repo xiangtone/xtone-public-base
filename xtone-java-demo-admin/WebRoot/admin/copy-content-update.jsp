@@ -52,7 +52,7 @@
 				String content = rs.getString("content");
 	%>
 	
-	<form class="form-date" id="form1" name="form1" onsubmit="return update();" method="post" action="commit-update-content.jsp">
+	<form class="form-date" id="form1" name="form1" onsubmit="return update();" method="post" action="content-update-commit.jsp">
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"

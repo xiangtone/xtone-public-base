@@ -1,5 +1,5 @@
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page import="org.demo.info.News"%>
+<%@page import="org.demo.info.Content"%>
 <%@page import="org.common.util.ConnectionService"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
@@ -12,7 +12,7 @@
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
-	News news = new News();
+	Content content = new Content();
 	try {
 		con = ConnectionService.getInstance().getConnectionForLocal();
 		String sql = "SELECT `title`,`content`,`lastModifyTime` FROM `tbl_cms_contents` WHERE id=?";
@@ -21,9 +21,9 @@
 		rs = ps.executeQuery();
 		if (rs.next()) {
 
-			news.setTitle(rs.getString("title"));
-			news.setContent(rs.getString("content"));
-			news.setLastModifyTime(rs.getLong("lastModifyTime"));
+			content.setTitle(rs.getString("title"));
+			content.setContent(rs.getString("content"));
+			content.setLastModifyTime(rs.getLong("lastModifyTime"));
 		}
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -881,15 +881,15 @@ body {
 				</div>
 				<div id="NIE-art">
 					<!-- <h1 class="artTitle">神魔战歌攻略： 如何完美通关英灵试炼40层</h1> -->
-					<h1 class="artTitle"><%=news.getTitle()%></h1>
+					<h1 class="artTitle"><%=content.getTitle()%></h1>
 					<!-- <span class="artDate">2015-11-13</span> -->
 					<%
 						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-						String timeStr = sdf.format(news.getLastModifyTime());
+						String timeStr = sdf.format(content.getLastModifyTime());
 					%>
 					<span class="artDate"><%=timeStr%></span>
 					<div class="artText">
-						<%=news.getContent()%>
+						<%=content.getContent()%>
 					</div>
 				</div>
 				<!-- 分享 start -->

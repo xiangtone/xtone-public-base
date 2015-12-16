@@ -45,7 +45,7 @@
 						location.href='console.jsp';
 						
 					} else {
-						alert('邮箱或密码错误!'+msg.data);
+						alert('邮箱或密码错误!');
 					}
 				},
 				error : function () {

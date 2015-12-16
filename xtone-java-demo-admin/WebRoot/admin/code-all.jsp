@@ -69,7 +69,7 @@
 				<td><%=rs.getInt("id")%></td>
 				<td><%=rs.getString("content")%></td>
 				<td>
-				<a href="update-code.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
+				<a href="code-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
 			</tr>
 			<%
 			  }

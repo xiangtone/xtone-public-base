@@ -2,10 +2,9 @@ package org.demo.json;
 
 import org.demo.info.User;
 
-public class BaseRsp {
+public class LoginRsp {
 	private String status;
-	private User data;
-	
+	private User data;	
 	public User getData() {
 		return data;
 	}

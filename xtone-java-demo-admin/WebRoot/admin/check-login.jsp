@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@page import="org.demo.service.UserService"%>
-<%@page import="org.demo.json.BaseRsp"%>
+<%@page import="org.demo.json.LoginRsp"%>
 <%@page import="org.demo.info.User"%>
 <%@page import="com.google.gson.LongSerializationPolicy"%>
 <%@page import="com.google.gson.GsonBuilder"%>
@@ -48,10 +48,10 @@
 		long userId = userService.checkLoginUser(user);
 		user.setId(userId);
 		if (userId > 0) {
-			BaseRsp baseRsp = new BaseRsp();
-			baseRsp.setStatus("success");
-			baseRsp.setData(user);
-			String rsp = gson.toJson(baseRsp);
+			LoginRsp loginRsp = new LoginRsp();
+			loginRsp.setData(user);
+			loginRsp.setStatus("success");			
+			String rsp = gson.toJson(loginRsp);
 
 			session.setAttribute("user", user);
 			if (session.getAttribute("lastFileName") != null
@@ -63,10 +63,11 @@
 			}
 		} else {			
 			String msg = "check user failure!";
-			out.print("{\"status\":\"error\",\"msg\":\"" + msg + "\"}");
+			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		}
 
 	} catch (Exception e) {
-		out.print("{\"status\":\"error\",\"msg\":\"" + e.getMessage() + "\"}");
+		String msg = "check user failure!";
+		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 	}
 %>

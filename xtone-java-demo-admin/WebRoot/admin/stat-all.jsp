@@ -85,7 +85,7 @@
 // 						&& request.getParameter("submit").equals("1")) {
 	%>
 	<jsp:include page="menu.jsp"/>	
-	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增文章" onclick="window.location.href='add-content.jsp'" >
+	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增文章" onclick="window.location.href='content-add.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
@@ -142,9 +142,9 @@
 				<td><%=rs.getString("lastname")%></td>
 				<td><%=lastModifyTime%></td> 
 				<td>
-				<a href="update-content.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
-				<a href="preview-content.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
-				<a href="show-hidden-content.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
+				<a href="content-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
+				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
+				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
 			</tr>
 			<%
 			  }
