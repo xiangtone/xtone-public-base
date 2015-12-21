@@ -14,21 +14,48 @@
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 <script src="../js-css/jquery-2.1.3.min.js"></script>
 <script language="JavaScript">
-   function update(){
+   function updateAjax() {
 		var oEditor = CKEDITOR.instances.inputContent;
-		if (document.getElementById("inputTitle").value.trim() == "") {
-			alert("标题为空！");
-			return false;
-		}
-		if (oEditor.getData()== "") {
-			alert("内容为空！");
-			return false;
-		}
-		 
+// 		if (document.getElementById("inputTitle").value.trim() == "") {
+// 			alert("标题为空！");
+// 			return false;
+// 		}
+// 		if (oEditor.getData() == "") {
+// 			alert("内容为空！");
+// 			return false;
+// 		}
+
+		var oriData = {
+			id : $("#id").val(),
+			catalog : $("#catalog").val(),
+			title : $("#inputTitle").val(),
+			content : oEditor.getData()
+		};
+		
+		$.ajax({
+			type : "post",
+			url : "content-update-commit.jsp",
+			async : false,
+			data : encodeURI("info="+escape(JSON.stringify(oriData))),
+			dataType : "json",
+			success : function(msg) {
+
+				if (msg.status == "success") {
+					
+					alert('修改文章成功!');
+					location.href = 'stat-all.jsp';
+					
+				} else {
+					alert('修改文章失败!');
+				}
+			},
+			error : function(msg) {
+				alert('修改文章失败!');
+
+			}
+		});
+
 	}
-	String.prototype.trim = function(){ 
-		return this.replace(/(^\s*)|(\s*$)/g, ""); 
-	};
 
 </script>
 </head>
@@ -52,7 +79,7 @@
 				String content = rs.getString("content");
 	%>
 	
-	<form class="form-date" id="form1" name="form1" onsubmit="return update();" method="post" action="commit-update-content.jsp">
+<!-- 	<form class="form-date" id="form1" name="form1"> -->
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
@@ -64,14 +91,14 @@
 				<option value="forum">论坛</option>
 			</select> 
 			<input class="font_16 " style="width: 5%; height: 30px"
-				type="submit" value="保存更新">
+				type="button" value="保存更新" onclick="updateAjax()">
 			<input class="font_16 " style="width: 5%; height: 30px"
 				type="button" value="取消编辑" onclick="window.location.href='stat-all.jsp'">
-			<input type="hidden" name="id" value="<%=id%>">
+			<input type="hidden" name="id" id="id" value="<%=id%>">
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"><%=content%></textarea>
-	</form>
+<!-- 	</form> -->
 	<script>
 		var province = "<%=rs.getString("catalog")%>";
 		$("#catalog").val(province);

@@ -38,7 +38,6 @@
 	href="http://cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8"
 	src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
-
 </head>
 
 <body>
@@ -63,13 +62,14 @@
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {
+									long id=rs.getLong("id");
 									
 			%>
 			<tr>
-				<td><%=rs.getInt("id")%></td>
+				<td><%=id%></td>
 				<td><%=rs.getString("content")%></td>
-				<td>
-				<a href="update-code.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
+				<td> 
+				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp;
 			</tr>
 			<%
 			  }
