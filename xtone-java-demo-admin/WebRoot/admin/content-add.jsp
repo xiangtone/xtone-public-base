@@ -15,25 +15,25 @@
 <script type="text/javascript">
 	function addAjax() {
 		var oEditor = CKEDITOR.instances.inputContent;
-		if (document.getElementById("inputTitle").value.trim() == "") {
-			alert("标题为空！");
-			return false;
-		}
-		if (oEditor.getData() == "") {
-			alert("内容为空！");
-			return false;
-		}
+// 		if (document.getElementById("inputTitle").value.trim() == "") {
+// 			alert("标题为空！");
+// 			return false;
+// 		}
+// 		if (oEditor.getData() == "") {
+// 			alert("内容为空！");
+// 			return false;
+// 		}
 		var oriData = {
 			catalog : $("#catalog").val(),
 			title : $("#inputTitle").val(),
 			content : oEditor.getData()
 		};
-
+		
 		$.ajax({
 			type : "post",
 			url : "content-add-commit.jsp",
 			async : false,
-			data : "info=" + JSON.stringify(oriData),
+			data : encodeURI("info="+escape(JSON.stringify(oriData))),
 			dataType : "json",
 			success : function(msg) {
 
@@ -43,11 +43,11 @@
 					location.href = 'stat-all.jsp';
 					
 				} else {
-					alert('添加文章失败!' + msg.data);
+					alert('添加文章失败!内容暂不支持首位空格。。。');
 				}
 			},
 			error : function() {
-				alert('添加文章失败!');
+				alert('添加文章失败!内容暂不支持首位空格。。。');
 
 			}
 		});

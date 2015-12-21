@@ -11,16 +11,17 @@
 <%@page import="com.google.gson.LongSerializationPolicy"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
+<%@page import="org.demo.util.EscapeUnescape"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
-	User user=(User)session.getAttribute("user");	
-	String info = new String(request.getParameter("info"));
+	User user=(User)session.getAttribute("user");
+	String info= new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
 	Connection con = null;
 	int updates = 0;
-	String msg = "更新失败!";
+
 	try {		
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
@@ -50,12 +51,12 @@
 			String rsp = gson.toJson(contentRsp);
 			out.print(rsp);
 		} else {			
-			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
+			out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
 		}
 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
+		out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
 		e.printStackTrace();
 	} finally {
 		if (con != null) {

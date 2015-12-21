@@ -16,26 +16,27 @@
 <script language="JavaScript">
    function updateAjax() {
 		var oEditor = CKEDITOR.instances.inputContent;
-		if (document.getElementById("inputTitle").value.trim() == "") {
-			alert("标题为空！");
-			return false;
-		}
-		if (oEditor.getData() == "") {
-			alert("内容为空！");
-			return false;
-		}
+// 		if (document.getElementById("inputTitle").value.trim() == "") {
+// 			alert("标题为空！");
+// 			return false;
+// 		}
+// 		if (oEditor.getData() == "") {
+// 			alert("内容为空！");
+// 			return false;
+// 		}
+
 		var oriData = {
 			id : $("#id").val(),
 			catalog : $("#catalog").val(),
 			title : $("#inputTitle").val(),
 			content : oEditor.getData()
 		};
-
+		
 		$.ajax({
 			type : "post",
 			url : "content-update-commit.jsp",
 			async : false,
-			data : "info=" + JSON.stringify(oriData),
+			data : encodeURI("info="+escape(JSON.stringify(oriData))),
 			dataType : "json",
 			success : function(msg) {
 
@@ -48,7 +49,7 @@
 					alert('修改文章失败!');
 				}
 			},
-			error : function() {
+			error : function(msg) {
 				alert('修改文章失败!');
 
 			}
@@ -78,7 +79,7 @@
 				String content = rs.getString("content");
 	%>
 	
-	<form class="form-date" id="form1" name="form1">
+<!-- 	<form class="form-date" id="form1" name="form1"> -->
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 79%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
@@ -97,7 +98,7 @@
 		</div>
 
 		<textarea id="inputContent" rows="53" cols="53" name="content"><%=content%></textarea>
-	</form>
+<!-- 	</form> -->
 	<script>
 		var province = "<%=rs.getString("catalog")%>";
 		$("#catalog").val(province);

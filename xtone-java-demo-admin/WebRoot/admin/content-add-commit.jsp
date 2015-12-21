@@ -11,15 +11,17 @@
 <%@page import="com.google.gson.LongSerializationPolicy"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
+<%@page import="org.demo.util.EscapeUnescape"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
 	User user = (User) session.getAttribute("user");
-	String info = new String(request.getParameter("info"));
+	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
 	Connection con = null;
 	int adds = 0;
+	String msg = "添加失败!";
 	try {
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -31,7 +33,7 @@
 		content.setAddTime(time);
 		content.setLastModifyId(user.getId());
 		content.setLastModifyTime(time);
-
+	
 		con = ConnectionService.getInstance().getConnectionForLocal();
 		String sql = "insert into tbl_cms_contents (title,catalog,content,authorId,addTime,lastModifyId,lastModifyTime) values (?,?,?,?,?,?,?)";
 		ps = con.prepareStatement(sql);	
@@ -51,14 +53,13 @@
 			contentRsp.setData(content);
 			String rsp = gson.toJson(contentRsp);
 			out.print(rsp);
-		} else {
-			String msg = "添加失败!";
+		} else {	
 			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		}
 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		String msg = "添加失败!";
+		
 		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		e.printStackTrace();
 	} finally {

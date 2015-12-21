@@ -58,6 +58,7 @@
 					&& session.getAttribute("lastFileName").toString().length() > 0) {
 				response.sendRedirect(session.getAttribute("lastFileName").toString());
 				session.removeAttribute("lastFileName");
+				out.print(rsp);
 			} else {
 				out.print(rsp);
 			}
@@ -69,5 +70,6 @@
 	} catch (Exception e) {
 		String msg = "check user failure!";
 		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
+		e.printStackTrace();
 	}
 %>

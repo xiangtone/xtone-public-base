@@ -5,6 +5,11 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="org.demo.json.CodeRsp"%>
+<%@page import="org.demo.info.Code"%>
+<%@page import="com.google.gson.LongSerializationPolicy"%>
+<%@page import="com.google.gson.GsonBuilder"%>
+<%@page import="com.google.gson.Gson"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -13,20 +18,20 @@
 <script src="../js-css/jquery-2.1.3.min.js"></script>
 <script language="JavaScript">
 	function updateAjax() {
-		if (document.getElementById("content").value.trim() == "") {
-			alert("兑换码为空！");
-			return false;
-		}
+		// 		if (document.getElementById("content").value.trim() == "") {
+		// 			alert("兑换码为空！");
+		// 			return false;
+		// 		}
 		var oriData = {
 			id : $("#id").val(),
 			content : $("#content").val()
 		};
-
+		
 		$.ajax({
 			type : "post",
 			url : "code-update-commit.jsp",
 			async : false,
-			data : "info=" + JSON.stringify(oriData),
+			data : encodeURI("info="+escape(JSON.stringify(oriData))),
 			dataType : "json",
 			success : function(msg) {
 
@@ -50,7 +55,9 @@
 <body>
 	<%
 		String StrId = new String(request.getParameter("id").trim());
-		int id = Integer.parseInt(StrId);
+		long id = Long.parseLong(StrId);
+		Code code = new Code();
+		code.setId(id);
 		PreparedStatement ps = null;
 		Connection con = null;
 		ResultSet rs = null;
@@ -59,17 +66,18 @@
 			String sql = "SELECT content FROM tbl_exchange_codes WHERE id=?";
 			ps = con.prepareStatement(sql);
 			int m = 1;
-			ps.setInt(m++, id);
+			ps.setLong(m++, code.getId());
 			rs = ps.executeQuery();
 			while (rs.next()) {
-				String content = rs.getString("content");
+				code.setContent(rs.getString("content"));
 	%>
 	<div style="text-align: center; margin-top: 200px">
 		<form id="form1" name="form1">
 
-			<input id="content" placeholder="在此编辑兑换码" value="<%=content%>"
-				name="title" type="text" style="width: 300px; height: 25px">
-			<input type="hidden" name="id" id="id" value="<%=id%>"> <input
+			<input id="content" placeholder="在此编辑兑换码"
+				value="<%=code.getContent()%>" name="title" type="text"
+				style="width: 300px; height: 25px"> <input type="hidden"
+				name="id" id="id" value="<%=code.getId()%>"> <input
 				style="font-size: 15px; width: 100px; height: 30px" type="button"
 				value="确认修改" onclick="updateAjax()"> <input
 				style="font-size: 15px; width: 100px; height: 30px" type="button"
@@ -81,6 +89,7 @@
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				out.print("{\"status\":\"error\",\"data\":\"无法编辑\"}");
 			} finally {
 				if (con != null) {
 					try {
@@ -93,7 +102,6 @@
 			}
 		%>
 	</div>
-
 
 </body>
 </html>
