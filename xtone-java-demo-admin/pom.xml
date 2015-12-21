@@ -73,7 +73,7 @@
 					<webResources>
 						<resource>
 							<directory>${runtime.env}</directory>
-							<targetPath>WEB-INF</targetPath>
+							<targetPath>WEB-INF/classes</targetPath>
 						</resource>
 					</webResources>
 				</configuration>
