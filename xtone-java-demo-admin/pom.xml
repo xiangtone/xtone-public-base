@@ -10,7 +10,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -73,7 +72,7 @@
 					<webResources>
 						<resource>
 							<directory>${runtime.env}</directory>
-							<targetPath>WEB-INF</targetPath>
+							<targetPath>WEB-INF/classes</targetPath>
 						</resource>
 					</webResources>
 				</configuration>
@@ -96,6 +95,27 @@
 			<properties>
 				<runtime.env>packageConfig\test</runtime.env>
 				<final.name>smzg-admin.xtonegame.com-test</final.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>vanggame</id>
+			<properties>
+				<runtime.env>packageConfig\vanggame</runtime.env>
+				<final.name>vanggame-admin.xtonegame.com</final.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>vanggame-test</id>
+			<properties>
+				<runtime.env>packageConfig\vanggame-test</runtime.env>
+				<final.name>vanggame-admin.xtonegame.com-test</final.name>
+			</properties>
+		</profile>
+		<profile>
+			<id>smzg</id>
+			<properties>
+				<runtime.env>packageConfig\smzg</runtime.env>
+				<final.name>smzg-admin.xtonegame.com</final.name>
 			</properties>
 		</profile>
 	</profiles>

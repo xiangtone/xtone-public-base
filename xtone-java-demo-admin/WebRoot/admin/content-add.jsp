@@ -79,7 +79,7 @@
 	</form>
 	<script type="text/javascript">
 		CKEDITOR.replace('content', {
-			customConfig : '../ckeditor/my_config.js'
+			customConfig : '../ckeditor/config.js'
 		});
 	</script>
 
