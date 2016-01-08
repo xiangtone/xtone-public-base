@@ -12,7 +12,8 @@ public class Content {
 	private Long lastModifyId;
 	private String lastModifyName;
 	private Long lastModifyTime;
-	
+	private String subTitle;
+	private int priority;
 	public Content() {
 		super();
 	}
@@ -117,6 +118,22 @@ public class Content {
 
 	public void setLastModifyName(String lastModifyName) {
 		this.lastModifyName = lastModifyName;
+	}
+
+	public String getSubTitle() {
+		return subTitle;
+	}
+
+	public void setSubTitle(String subTitle) {
+		this.subTitle = subTitle;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
 	}
 	
 	

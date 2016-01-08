@@ -12,11 +12,12 @@
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.demo.util.EscapeUnescape"%>
+<%@ include file="inc-receive-body.jsp"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
 	User user = (User) session.getAttribute("user");
-	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
+// 	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
 	Connection con = null;
@@ -35,7 +36,7 @@
 		content.setLastModifyTime(time);
 	
 		con = ConnectionService.getInstance().getConnectionForLocal();
-		String sql = "insert into tbl_cms_contents (title,catalog,content,authorId,addTime,lastModifyId,lastModifyTime) values (?,?,?,?,?,?,?)";
+		String sql = "insert into tbl_cms_contents (title,catalog,content,authorId,addTime,lastModifyId,lastModifyTime,subTitle) values (?,?,?,?,?,?,?,?)";
 		ps = con.prepareStatement(sql);	
 
 		int m = 1;
@@ -46,6 +47,7 @@
 		ps.setLong(m++, content.getAddTime());
 		ps.setLong(m++, content.getLastModifyId());
 		ps.setLong(m++, content.getLastModifyTime());
+		ps.setString(m++, content.getSubTitle());
 		adds = ps.executeUpdate();
 		if (adds != 0) {
 			ContentRsp contentRsp = new ContentRsp();

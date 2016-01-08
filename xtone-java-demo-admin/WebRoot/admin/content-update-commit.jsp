@@ -12,11 +12,12 @@
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.demo.util.EscapeUnescape"%>
+<%@ include file="inc-receive-body.jsp"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
 	User user=(User)session.getAttribute("user");
-	String info= new String(EscapeUnescape.unescape(request.getParameter("info")));
+// 	String info= new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
 	Connection con = null;
@@ -32,7 +33,7 @@
 		content.setLastModifyTime(time);
 
 		con = ConnectionService.getInstance().getConnectionForLocal();
-		String sql = "UPDATE tbl_cms_contents SET title=?,catalog=?,content=?,lastModifyId=?,lastModifyTime=? WHERE id=?";
+		String sql = "UPDATE tbl_cms_contents SET title=?,catalog=?,content=?,lastModifyId=?,lastModifyTime=?,subTitle=? WHERE id=?";
 		ps = con.prepareStatement(sql);	
 
 		int m = 1;	
@@ -41,6 +42,7 @@
 		ps.setString(m++, content.getContent());
 		ps.setLong(m++, content.getLastModifyId());
 		ps.setLong(m++, content.getLastModifyTime());
+		ps.setString(m++, content.getSubTitle());
 		ps.setInt(m++, content.getId());
 		updates = ps.executeUpdate();
 		

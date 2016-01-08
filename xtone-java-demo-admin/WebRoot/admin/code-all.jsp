@@ -76,6 +76,7 @@
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
+								out.print("没有兑换码！");
 							} finally {
 								if (con != null) {
 									try {
