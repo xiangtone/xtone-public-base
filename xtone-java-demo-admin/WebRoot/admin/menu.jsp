@@ -9,10 +9,17 @@
 	float: left;
 	font-size: 20px;
 }
+
+.menus{
+	font-size: 20px; 
+	margin-left: 20px;
+}
+
 </style>
 <div style="margin-top: 5px; margin-left: 10px; margin-bottom: 10px">
-	<a href="stat-all.jsp" style="font-size: 20px">文章列表</a><a
-		href="code-all.jsp" style="font-size: 20px; margin-left: 20px">兑换码列表</a>
+	<a href="stat-all.jsp" class="menus" style="margin-left: 0px;">文章列表</a>
+<!-- 	<a href="catalog-all.jsp" class="menus">文章类型列表</a> -->
+	<a href="code-all.jsp" class="menus">兑换码列表</a>
 </div>
 <!-- <div id="navigation"> -->
 <!-- 		<ul> -->

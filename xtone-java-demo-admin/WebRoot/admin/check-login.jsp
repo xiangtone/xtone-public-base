@@ -35,10 +35,10 @@
 	//     return;
 	//   }
 %>
+<%@ include file="inc-receive-body.jsp"%>
 <%
 	
 	try {
-		String info = new String(request.getParameter("info").trim());
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
 		Gson gson = gsonBuilder.create();

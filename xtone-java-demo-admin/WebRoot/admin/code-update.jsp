@@ -31,7 +31,7 @@
 			type : "post",
 			url : "code-update-commit.jsp",
 			async : false,
-			data : encodeURI("info="+escape(JSON.stringify(oriData))),
+			data : JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
 

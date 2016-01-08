@@ -5,6 +5,7 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
+<%@page import="java.util.ArrayList"%>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -26,6 +27,7 @@
 		var oriData = {
 			catalog : $("#catalog").val(),
 			title : $("#inputTitle").val(),
+			subTitle : $("#inputSubTitle").val(),
 			content : oEditor.getData()
 		};
 		
@@ -33,7 +35,7 @@
 			type : "post",
 			url : "content-add-commit.jsp",
 			async : false,
-			data : encodeURI("info="+escape(JSON.stringify(oriData))),
+			data : JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
 
@@ -57,31 +59,62 @@
 </script>
 </head>
 <body>
+<%
+		PreparedStatement ps = null;
+		Connection con = null;
+		ResultSet rs = null;
+		try {
+			con = ConnectionService.getInstance().getConnectionForLocal();
+			String sql = "SELECT content FROM tbl_cms_catalogs";
+			ps = con.prepareStatement(sql);
+			rs = ps.executeQuery();	
+			ArrayList<String> listCatalog = new ArrayList<String>();
+			while (rs.next()) {
+				listCatalog.add(rs.getString("content"));
+			}
 
-	<form class="form-date" id="form1" name="form1">
+	%>
+
 		<div class="note_title clear_float">
 			<div class="col_li col_left" style="width: 80%">
 				<input class="input_text" id="inputTitle" placeholder="在此编辑标题"
 					type="text" name="title">
 			</div>
-			<select name="catalog" id="catalog" onchange="check(this)"
-				style="width: 8%; height: 30px">
-				<option value="news">新闻</option>
-				<option value="material">资料</option>
-				<option value="forum">论坛</option>
+			<select name="catalog" id="catalog" onchange="check(this)" style="width: 8%; height: 30px">
+				<%for(int i=0;i<listCatalog.size();i++){%>
+					<option value="<%=listCatalog.get(i) %>"><%=listCatalog.get(i) %></option>
+				<%}%>
 			</select> 
 			<input style="width: 5%; height: 30px" type="button" value="确认添加" onclick="addAjax()">
 			<input style="width: 5%; height: 30px" type="button" value="取消编辑"
 				onclick="window.location.href='stat-all.jsp'">
 		</div>
 
+		<br><font class="ztgs">请在这里编辑副标题（请根据需求选填）:</font><br>
+		<textarea id="inputSubTitle" rows="4" cols="250" name="subTitle" class="input-subtitle"></textarea>
+		<br><br><font class="ztgs">请在这里编辑内容:</font>
 		<textarea id="inputContent" rows="53" cols="53" name="content"></textarea>
-	</form>
+
 	<script type="text/javascript">
 		CKEDITOR.replace('content', {
-			customConfig : '../ckeditor/config.js'
+			customConfig : '../ckeditor/config-content.js'
 		});
 	</script>
+<%
 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	%>
 </body>
 </html>

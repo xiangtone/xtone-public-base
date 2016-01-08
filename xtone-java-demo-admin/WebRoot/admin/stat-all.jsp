@@ -117,16 +117,16 @@
 									int statusInt=rs.getInt("status");
 									String statusStr=statusInt== 1?"发布":"隐藏";
 									String catalog=rs.getString("catalog");
-									String catalogStr="null";
-									if("news".equals(catalog)){
-										catalogStr="新闻";
-									}else if("material".equals(catalog)){
-										catalogStr="资料";
-									}else if("forum".equals(catalog)){
-										catalogStr="论坛";
-									}else{
-										catalogStr=catalog;
-									}
+// 									String catalogStr="null";
+// 									if("news".equals(catalog)){
+// 										catalogStr="新闻";
+// 									}else if("material".equals(catalog)){
+// 										catalogStr="资料";
+// 									}else if("forum".equals(catalog)){
+// 										catalogStr="论坛";
+// 									}else{
+// 										catalogStr=catalog;
+// 									}
 									SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd");
 									String addTime=sf.format(new Date(rs.getLong("addTime"))) ;
 									String lastModifyTime=sf.format(new Date(rs.getLong("lastModifyTime")));
@@ -134,7 +134,7 @@
 			<tr>
 				<td><%=rs.getInt("id")%></td>
 				<td><%=rs.getString("title")%></td>
-				<td><%=catalogStr%></td>
+				<td><%=catalog%></td>
 				<%--<td><%=rs.getString("content")%></td>--%>
 				<td><%=statusStr%></td>
 				<td><%=rs.getString("addname")%></td>
