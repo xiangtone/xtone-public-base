@@ -584,3 +584,7 @@ footer{
 .input-subtitle{
 	margin-left: 65px;
 }
+
+.btn-content{
+width: 5%; height: 30px;
+}
