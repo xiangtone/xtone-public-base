@@ -36,13 +36,14 @@
 		content.setLastModifyTime(time);
 	
 		con = ConnectionService.getInstance().getConnectionForLocal();
-		String sql = "insert into tbl_cms_contents (title,catalog,content,authorId,addTime,lastModifyId,lastModifyTime,subTitle) values (?,?,?,?,?,?,?,?)";
+		String sql = "insert into tbl_cms_contents (title,catalog,content,status,authorId,addTime,lastModifyId,lastModifyTime,subTitle) values (?,?,?,?,?,?,?,?,?)";
 		ps = con.prepareStatement(sql);	
 
 		int m = 1;
 		ps.setString(m++, content.getTitle());
 		ps.setString(m++, content.getCatalog());
 		ps.setString(m++, content.getContent());
+		ps.setInt(m++, 0);
 		ps.setLong(m++, content.getAuthorId());
 		ps.setLong(m++, content.getAddTime());
 		ps.setLong(m++, content.getLastModifyId());

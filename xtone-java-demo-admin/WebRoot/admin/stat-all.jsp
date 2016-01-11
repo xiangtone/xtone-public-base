@@ -1,5 +1,4 @@
-﻿<%@page import="java.util.function.Function"%>
-<%@page import="java.util.Date"%>
+﻿<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -143,7 +142,7 @@
 				<td><%=lastModifyTime%></td> 
 				<td>
 				<a href="content-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
-				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
+<%-- 				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			 --%>
 				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
 			</tr>
 			<%
