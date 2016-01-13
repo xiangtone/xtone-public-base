@@ -584,3 +584,8 @@ footer{
 .input-subtitle{
 	margin-left: 65px;
 }
+
+.btn-content-commit{
+	width: 5%;
+	height: 30px;
+}

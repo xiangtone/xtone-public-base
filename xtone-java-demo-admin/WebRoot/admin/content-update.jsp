@@ -106,9 +106,9 @@
 					<option value="<%=listCatalog.get(i) %>"><%=listCatalog.get(i)%></option>
 				<%}%>
 			</select> 
-			<input class="font_16 " style="width: 5%; height: 30px"
+			<input class="btn-content-commit" 
 				type="button" value="保存更新" onclick="updateAjax()">
-			<input class="font_16 " style="width: 5%; height: 30px"
+			<input class="btn-content-commit"
 				type="button" value="取消编辑" onclick="window.location.href='stat-all.jsp'">
 			<input type="hidden" name="id" id="id" value="<%=content.getId()%>">
 		</div>

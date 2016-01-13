@@ -1,17 +1,23 @@
 package org.demo.info;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Content {
 	private int id;
 	private String catalog;
 	private String title;
 	private String content;
 	private int status;
+	private String statusStr;
 	private Long authorId;
 	private String authorName;
 	private Long addTime;
+	private String addTimeStr;
 	private Long lastModifyId;
 	private String lastModifyName;
 	private Long lastModifyTime;
+	private String lastModifyTimeStr;
 	private String subTitle;
 	private int priority;
 	public Content() {
@@ -70,6 +76,7 @@ public class Content {
 
 	public void setStatus(int status) {
 		this.status = status;
+		setStatusStr(status == 1?"发布":"隐藏"); 
 	}
 
 	public Long getAuthorId() {
@@ -86,6 +93,8 @@ public class Content {
 
 	public void setAddTime(Long addTime) {
 		this.addTime = addTime;
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd");
+		setAddTimeStr( sf.format(new Date(addTime)) );
 	}
 
 	public Long getLastModifyId() {
@@ -102,6 +111,8 @@ public class Content {
 
 	public void setLastModifyTime(Long lastModifyTime) {
 		this.lastModifyTime = lastModifyTime;
+		SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd");
+		setLastModifyTimeStr( sf.format(new Date(lastModifyTime)) );		
 	}
 
 	public String getAuthorName() {
@@ -135,6 +146,29 @@ public class Content {
 	public void setPriority(int priority) {
 		this.priority = priority;
 	}
-	
+
+	public String getAddTimeStr() {
+		return addTimeStr;
+	}
+
+	public void setAddTimeStr(String addTimeStr) {
+		this.addTimeStr = addTimeStr;
+	}
+
+	public String getLastModifyTimeStr() {
+		return lastModifyTimeStr;
+	}
+
+	public void setLastModifyTimeStr(String lastModifyTimeStr) {
+		this.lastModifyTimeStr = lastModifyTimeStr;
+	}
+
+	public String getStatusStr() {
+		return statusStr;
+	}
+
+	public void setStatusStr(String statusStr) {
+		this.statusStr = statusStr;
+	}
 	
 }
