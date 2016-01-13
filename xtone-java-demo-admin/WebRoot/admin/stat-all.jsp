@@ -159,7 +159,7 @@
 				<td>
 				<a href="content-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
 <%-- 				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;--%>
-				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=content.getStatus()%>"><%=content.getStatusStr()%></a></td>
+				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=content.getStatus()%>"><%=(content.getStatus()== 1?"隐藏":"发布")%></a></td>
 			</tr>
 			<%
 			  }

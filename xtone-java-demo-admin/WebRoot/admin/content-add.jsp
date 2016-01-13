@@ -85,8 +85,8 @@
 					<option value="<%=listCatalog.get(i) %>"><%=listCatalog.get(i) %></option>
 				<%}%>
 			</select> 
-			<input class="btn-content" type="button" value="确认添加" onclick="addAjax()">
-			<input class="btn-content" type="button" value="取消编辑"
+			<input class="btn-content-commit" type="button" value="确认添加" onclick="addAjax()">
+			<input class="btn-content-commit" type="button" value="取消编辑"
 				onclick="window.location.href='stat-all.jsp'">
 		</div>
 
