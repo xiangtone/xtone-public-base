@@ -20,6 +20,7 @@
 	<a href="stat-all.jsp" class="menus" style="margin-left: 0px;">文章列表</a>
 <!-- 	<a href="catalog-all.jsp" class="menus">文章类型列表</a> -->
 	<a href="code-all.jsp" class="menus">兑换码列表</a>
+	<a href="password-update.jsp" class="menus">更换密码</a>
 </div>
 <!-- <div id="navigation"> -->
 <!-- 		<ul> -->

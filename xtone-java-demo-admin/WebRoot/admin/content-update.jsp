@@ -27,7 +27,7 @@
 // 			alert("内容为空！");
 // 			return false;
 // 		}
-
+		var action="修改文章";
 		var oriData = {
 			id : $("#id").val(),
 			catalog : $("#catalog").val(),
@@ -47,15 +47,16 @@
 
 				if (msg.status == "success") {
 					
-					alert('修改文章成功!');
-					location.href = 'stat-all.jsp';
+					alert(action+'成功!');
+					history.go(-1);
+// 					location.href = 'stat-all.jsp';
 					
 				} else {
-					alert('修改文章失败!');
+					alert(action+'失败!');
 				}
 			},
 			error : function(msg) {
-				alert('修改文章失败!');
+				alert(action+'失败!');
 
 			}
 		});
