@@ -5,6 +5,7 @@ public class User {
 	private long id;
 	private String userName;
 	private String password;
+	private String newPassword;
 	private String email;
 	private int status = 1;
 
@@ -48,4 +49,12 @@ public class User {
 		this.email = email;
 	}
 
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	
 }

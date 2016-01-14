@@ -24,6 +24,7 @@
 // 			alert("内容为空！");
 // 			return false;
 // 		}
+		var action="添加文章";
 		var oriData = {
 			catalog : $("#catalog").val(),
 			title : $("#inputTitle").val(),
@@ -41,15 +42,15 @@
 
 				if (msg.status == "success") {
 					
-					alert('添加文章成功!');
+					alert(action+'成功!');
 					location.href = 'stat-all.jsp';
 					
 				} else {
-					alert('添加文章失败!内容暂不支持首位空格。。。');
+					alert(action+'失败!');
 				}
 			},
 			error : function() {
-				alert('添加文章失败!内容暂不支持首位空格。。。');
+				alert(action+'失败!');
 
 			}
 		});
