@@ -45,7 +45,7 @@ CREATE TABLE `log_async_generals` (
   `para20` text,
   PRIMARY KEY (`id`),
   KEY `idx_logId` (`logId`)
-) ENGINE=MRG_MyISAM DEFAULT CHARSET=latin1 INSERT_METHOD=LAST UNION=(`z160120a`,`z160121a`);
+) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8 INSERT_METHOD=LAST UNION=(`z160120a`,`z160121a`);
 
 /*Table structure for table `log_sync_generals` */
 
@@ -76,7 +76,7 @@ CREATE TABLE `log_sync_generals` (
   `para20` text,
   PRIMARY KEY (`id`),
   KEY `idx_logId` (`logId`)
-) ENGINE=MRG_MyISAM DEFAULT CHARSET=latin1 INSERT_METHOD=LAST UNION=(`z160120b`,`z160121b`);
+) ENGINE=MRG_MyISAM DEFAULT CHARSET=utf8 INSERT_METHOD=LAST UNION=(`z160120b`,`z160121b`);
 
 /*Table structure for table `z160114a` */
 
