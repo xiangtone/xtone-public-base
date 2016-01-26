@@ -46,6 +46,9 @@
 			cd 2015-12-15_09-45-25/
 			cp -rf * /data/server/mysql/data/
 			
+		或者使用命令innobackupex --copy-back --defaults-file=/etc/my.cnf 2015-12-15_09-45-25/拷贝也可以；
+		拷贝完数据后记得修改文件的所属组和所属者；
+			
 		尝试下是否可以启动数据库；
 		
 	三、在主服务器上新建一个同步用的用户：

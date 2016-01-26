@@ -576,3 +576,22 @@ footer{
 	/*height:550px;*/
 }
 
+.ztgs{
+	font-size: 16px;
+	font-family: '微软雅黑';
+}
+
+.input-subtitle{
+	margin-left: 65px;
+}
+
+.btn-content-commit{
+	width: 5%;
+	height: 30px;
+}
+.input1{
+	width: 300px; height: 30px
+}
+.btn1{
+	font-size: 15px; width: 100px; height: 30px
+}

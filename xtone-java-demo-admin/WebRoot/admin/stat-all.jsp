@@ -1,5 +1,4 @@
-﻿
-<%@page import="java.util.Date"%>
+﻿<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,6 +9,8 @@
 <%@page import="java.sql.ResultSet"%>
 <%@page import="org.common.util.ConnectionService"%>
 <%@page import="java.text.SimpleDateFormat"%> 
+<%@page import="org.common.util.ConnectionService"%>
+<%@page import="org.demo.info.Content"%>
 <%
   TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
 			Calendar calendar = Calendar.getInstance();
@@ -98,53 +99,67 @@
 				<th>创建时间</th>
 				<th>最后修改人</th>
 				<th>最后修改时间</th> 
+				<th>优先级</th> 
 				<td></td>
 			</tr>
 		</thead>
 		<tbody>
 			<%
-			  PreparedStatement ps = null;
+				Content content;
+			  	PreparedStatement ps = null;
 							Connection con = null;
 							ResultSet rs = null;
 							try {
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
 								//String sql = "SELECT FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d') AS dt,service_id,msg,msg_type,status_report,send_status,COUNT(DISTINCT link_id) AS ct FROM receives WHERE id>=UNIX_TIMESTAMP('"+dateFrom+" 0:0:0')*1000*100000 AND id<=UNIX_TIMESTAMP('"+dateTo+" 23:59:59')*1000*100000  GROUP BY FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d'),     service_id,msg,msg_type,status_report,send_status ORDER BY dt DESC";
-								String sql = "SELECT c.id,c.title,c.catalog,c.`status`,u1.`username` AS addname,c.`addTime`,u2.`username` AS lastname,c.lastModifyTime FROM `tbl_cms_contents` c LEFT JOIN `tbl_base_users` u1 ON c.`authorId`=u1.`id` LEFT JOIN `tbl_base_users` u2 ON c.`lastModifyId`= u2.`id`;";
+								String sql = "SELECT c.id,c.title,c.catalog,c.`status`,u1.`username` AS addname,c.`addTime`,u2.`username` AS lastname,c.lastModifyTime,priority FROM `tbl_cms_contents` c LEFT JOIN `tbl_base_users` u1 ON c.`authorId`=u1.`id` LEFT JOIN `tbl_base_users` u2 ON c.`lastModifyId`= u2.`id`;";
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {
-									int statusInt=rs.getInt("status");
-									String statusStr=statusInt== 1?"发布":"隐藏";
-									String catalog=rs.getString("catalog");
-									String catalogStr="null";
-									if("news".equals(catalog)){
-										catalogStr="新闻";
-									}else if("material".equals(catalog)){
-										catalogStr="资料";
-									}else if("forum".equals(catalog)){
-										catalogStr="论坛";
-									}else{
-										catalogStr=catalog;
-									}
-									SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd");
-									String addTime=sf.format(new Date(rs.getLong("addTime"))) ;
-									String lastModifyTime=sf.format(new Date(rs.getLong("lastModifyTime")));
+									content=new Content();
+									content.setId(rs.getInt("id"));
+									content.setTitle(rs.getString("title"));
+									content.setCatalog(rs.getString("catalog"));					
+									content.setStatus(rs.getInt("status"));
+									content.setAuthorName(rs.getString("addname"));
+									content.setLastModifyName(rs.getString("lastname"));
+									content.setAddTime(rs.getLong("addTime"));
+									content.setLastModifyTime(rs.getLong("lastModifyTime"));
+									content.setPriority(rs.getInt("priority"));
+									
+// 									String catalogStr="null";
+// 									if("news".equals(catalog)){
+// 										catalogStr="新闻";
+// 									}else if("material".equals(catalog)){
+// 										catalogStr="资料";
+// 									}else if("forum".equals(catalog)){
+// 										catalogStr="论坛";
+// 									}else{
+// 										catalogStr=catalog;
+// 									}									
 			%>
 			<tr>
-				<td><%=rs.getInt("id")%></td>
-				<td><%=rs.getString("title")%></td>
-				<td><%=catalogStr%></td>
+				<td><%=content.getId()%></td>
+				<td><%=content.getTitle()%></td>
+				<td><%=content.getCatalog()%></td>
 				<%--<td><%=rs.getString("content")%></td>--%>
-				<td><%=statusStr%></td>
-				<td><%=rs.getString("addname")%></td>
-				<td><%=addTime%></td> 
-				<td><%=rs.getString("lastname")%></td>
-				<td><%=lastModifyTime%></td> 
+				<td><%=content.getStatusStr()%></td>
+				<td><%=content.getAuthorName()%></td>
+				<td><%=content.getAddTimeStr()%></td> 
+				<td><%=content.getLastModifyName()%></td>
+				<td><%=content.getLastModifyTimeStr()%></td> 
+				<td>
+					<input id="priority<%=content.getId()%>" placeholder="优先级"
+					value="<%=content.getPriority()%>" name="title" type="text"
+					style="width: 80px; height: 25px">&nbsp;<input
+					style="font-size: 15px; width: 70px; height: 28px" type="button"
+					value="确认" onclick="updatePriority(<%=content.getId()%>)">
+				</td>
 				<td>
 				<a href="content-update.jsp?id=<%=rs.getInt("id")%>">编辑</a>&emsp;
-				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;			
-				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=statusInt%>"><%=statusInt== 1?"隐藏":"发布" %></a></td>
+<%-- 				<a href="content-preview.jsp?id=<%=rs.getInt("id")%>" target="_blank">预览</a>&emsp;--%>
+				<a href="content-show-hidden.jsp?id=<%=rs.getInt("id")%>&status=<%=content.getStatus()%>"><%=(content.getStatus()== 1?"隐藏":"发布")%></a></td>
 			</tr>
 			<%
 			  }
@@ -168,6 +183,41 @@
 		$(document).ready(function() {
 			$('#table_id').DataTable();
 		});
+
+
+		function updatePriority(id) {
+			// 		if (document.getElementById("content").value.trim() == "") {
+			// 			alert("兑换码为空！");
+			// 			return false;
+			// 		}
+			var oriData = {
+				id : id,
+				priority : $("#priority"+id).val(),
+			};
+			
+			$.ajax({
+				type : "post",
+				url : "priority-update-commit.jsp?",
+				async : false,
+				data : JSON.stringify(oriData),
+				dataType : "json",
+				success : function(msg) {
+
+					if (msg.status == "success") {
+
+						alert('修改优先级成功!');
+
+					} else {
+						alert('修改优先级失败!');
+					}
+				},
+				error : function() {
+					alert('修改优先级失败!');
+
+				}
+			});
+		}
+	
 	</script>
 	<%
 // 	  }

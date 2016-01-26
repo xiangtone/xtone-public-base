@@ -16,12 +16,14 @@
 <title>修改兑换码</title>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 <script src="../js-css/jquery-2.1.3.min.js"></script>
+<link href="../js-css/edit.css" rel="stylesheet">
 <script language="JavaScript">
 	function updateAjax() {
 		// 		if (document.getElementById("content").value.trim() == "") {
 		// 			alert("兑换码为空！");
 		// 			return false;
 		// 		}
+		var action="修改兑换码";
 		var oriData = {
 			id : $("#id").val(),
 			content : $("#content").val()
@@ -31,21 +33,21 @@
 			type : "post",
 			url : "code-update-commit.jsp",
 			async : false,
-			data : encodeURI("info="+escape(JSON.stringify(oriData))),
+			data : JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
 
 				if (msg.status == "success") {
 
-					alert('修改兑换码成功!');
+					alert(action+'成功!');
 					location.href = 'code-all.jsp';
 
 				} else {
-					alert('修改兑换码失败!');
+					alert(action+'失败!');
 				}
 			},
 			error : function() {
-				alert('修改兑换码失败!');
+				alert(action+'失败!');
 
 			}
 		});
@@ -76,11 +78,11 @@
 
 			<input id="content" placeholder="在此编辑兑换码"
 				value="<%=code.getContent()%>" name="title" type="text"
-				style="width: 300px; height: 25px"> <input type="hidden"
+				class="input1"> <input type="hidden"
 				name="id" id="id" value="<%=code.getId()%>"> <input
-				style="font-size: 15px; width: 100px; height: 30px" type="button"
+				class="btn1" type="button"
 				value="确认修改" onclick="updateAjax()"> <input
-				style="font-size: 15px; width: 100px; height: 30px" type="button"
+				class="btn1" type="button"
 				value="取消修改" onclick="window.location.href='code-all.jsp'">
 
 		</form>

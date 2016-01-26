@@ -13,11 +13,12 @@
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
 <%@page import="org.demo.util.EscapeUnescape"%>
+<%@ include file="inc-receive-body.jsp"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	request.getSession(true);
 	User user = (User) session.getAttribute("user");
-	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
+// 	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
 	Connection con = null;

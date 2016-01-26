@@ -36,7 +36,7 @@
 				type : "post",
 				url : "check-login.jsp",
 				async : false,
-				data : "info="+JSON.stringify(oriData),
+				data : JSON.stringify(oriData),
 				dataType : "json",
 				success : function(msg) {
 										
