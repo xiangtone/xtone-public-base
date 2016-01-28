@@ -29,14 +29,13 @@ public class ConfigManager {
 		InputStream in = null;
 		ClassLoader loader = ConfigManager.class.getClassLoader();
 		try {
-			System.out.println(resource);
 			if (loader != null){
 				in = loader.getResourceAsStream(resource);
-				System.out.println("1 "+resource);
+				LOG.debug("load config from loader.getResourceAsStream:"+resource);
 			}
 			if (in == null){
 				in = ClassLoader.getSystemResourceAsStream(resource);
-				System.out.println("2 "+resource);
+				LOG.debug("load config from ClassLoader.getSystemResourceAsStream:"+resource);
 			}
 			if (in == null) {
 				File file = new File(System.getProperty("user.dir") + "/"
@@ -45,7 +44,7 @@ public class ConfigManager {
 					in = new FileInputStream(System.getProperty("user.dir")
 							+ "/" + resource);
 				}
-				System.out.println("2 "+System.getProperty("user.dir")
+				LOG.debug("load config from System.getProperty(\"user.dir\"):"+System.getProperty("user.dir")
 						+ "/" + resource);
 				// ClassLoader.getSystemResourceAsStream(System.getProperty("user.dir")+"/"+resource);
 			}
@@ -60,7 +59,7 @@ public class ConfigManager {
 				if (file.exists()) {
 					in = new FileInputStream(filePath);
 				}
-				System.out.println("4 "+filePath);
+				LOG.debug("load config from filePath:"+filePath);
 				// ClassLoader.getSystemResourceAsStream(System.getProperty("user.dir")+"/"+resource);
 			}
 		} catch (Exception e) {
