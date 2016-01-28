@@ -1,3 +1,7 @@
+<%@page import="org.common.util.ConnectionService"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.PreparedStatement"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@page import="org.demo.service.UserService"%>
 <%@page import="org.demo.json.LoginRsp"%>
@@ -37,13 +41,12 @@
 %>
 <%@ include file="inc-receive-body.jsp"%>
 <%
-	
 	try {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
 		Gson gson = gsonBuilder.create();
 		User user = gson.fromJson(info, User.class);
-
+		
 		UserService userService = new UserService();
 		long userId = userService.checkLoginUser(user);
 		user.setId(userId);
@@ -52,7 +55,7 @@
 			loginRsp.setData(user);
 			loginRsp.setStatus("success");			
 			String rsp = gson.toJson(loginRsp);
-
+			session.setAttribute("userid",userId );
 			session.setAttribute("user", user);
 			if (session.getAttribute("lastFileName") != null
 					&& session.getAttribute("lastFileName").toString().length() > 0) {
