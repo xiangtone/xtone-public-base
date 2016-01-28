@@ -43,7 +43,7 @@
 				if (msg.status == "success") {
 
 					alert(action+'成功!');
-					location.href = 'stat-all.jsp';
+					window.history.back();
 
 				} else {
 					alert(action+'失败!');

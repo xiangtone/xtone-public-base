@@ -37,7 +37,6 @@
 				if (msg.status == "success") {
 
 					alert('添加文章类型成功!');
-					location.href = 'catalog-all.jsp';
 
 				} else {
 					alert('添加文章类型失败!');
