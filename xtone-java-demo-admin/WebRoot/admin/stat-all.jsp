@@ -25,34 +25,7 @@
 			String dateTo = request.getParameter("dateTo") == null
 					? today
 					: request.getParameter("dateTo");
-  long userid =  Long.valueOf(String.valueOf(session.getAttribute("userid"))).longValue();
-  	PreparedStatement ps = null;
-	Connection con = null;
-	ResultSet rs = null;
-	List<Long> list = new ArrayList<Long>();
-	String sql = "";
-	Date date = new Date();
-	try{
-		con = ConnectionService.getInstance().getConnectionForLocal();
-		sql = "UPDATE `tbl_base_users` SET lastLogin=? WHERE id=?";
-		ps = con.prepareStatement(sql);
-		ps.setLong(1, date.getTime());
-		ps.setLong(2,userid );
-		ps.executeUpdate();
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		out.print("{\"status\":\"error\",\"data\":\"\"}");
-		e.printStackTrace();
-	} finally {
-		if (con != null) {
-			try {
-				con.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	}
+
 %>
 <html lang="en">
 <head>
@@ -136,11 +109,14 @@
 		<tbody>
 			<%
 				Content content;
+				PreparedStatement ps = null;
+				Connection con = null;
+				ResultSet rs = null;
 							try {
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
 								//String sql = "SELECT FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d') AS dt,service_id,msg,msg_type,status_report,send_status,COUNT(DISTINCT link_id) AS ct FROM receives WHERE id>=UNIX_TIMESTAMP('"+dateFrom+" 0:0:0')*1000*100000 AND id<=UNIX_TIMESTAMP('"+dateTo+" 23:59:59')*1000*100000  GROUP BY FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d'),     service_id,msg,msg_type,status_report,send_status ORDER BY dt DESC";
-								sql = "SELECT c.id,c.title,c.catalog,c.`status`,u1.`username` AS addname,c.`addTime`,u2.`username` AS lastname,c.lastModifyTime,priority FROM `tbl_cms_contents` c LEFT JOIN `tbl_base_users` u1 ON c.`authorId`=u1.`id` LEFT JOIN `tbl_base_users` u2 ON c.`lastModifyId`= u2.`id`;";
+								String sql = "SELECT c.id,c.title,c.catalog,c.`status`,u1.`username` AS addname,c.`addTime`,u2.`username` AS lastname,c.lastModifyTime,priority FROM `tbl_cms_contents` c LEFT JOIN `tbl_base_users` u1 ON c.`authorId`=u1.`id` LEFT JOIN `tbl_base_users` u2 ON c.`lastModifyId`= u2.`id`;";
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {

@@ -50,8 +50,7 @@ finally
 }
 
 info = result.toString().trim();
-System.out.println("####notice:\n" + info);
-System.out.println("####end:");
 Logger LOG = Logger.getLogger(this.getClass());
+LOG.info(info);
 
 %>

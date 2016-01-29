@@ -41,30 +41,36 @@
 %>
 <%@ include file="inc-receive-body.jsp"%>
 <%
+	User user = null;
+	PreparedStatement ps = null;
+	Connection con = null;
+	ResultSet rs = null;
+
+	Date date = new Date();
 	try {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
 		Gson gson = gsonBuilder.create();
-		User user = gson.fromJson(info, User.class);
-		
+		user = gson.fromJson(info, User.class);
 		UserService userService = new UserService();
 		long userId = userService.checkLoginUser(user);
 		user.setId(userId);
+
 		if (userId > 0) {
 			LoginRsp loginRsp = new LoginRsp();
 			loginRsp.setData(user);
-			loginRsp.setStatus("success");			
+			loginRsp.setStatus("success");
 			String rsp = gson.toJson(loginRsp);
+			request.getSession(true);
 			session.setAttribute("user", user);
-			if (session.getAttribute("lastFileName") != null
-					&& session.getAttribute("lastFileName").toString().length() > 0) {
-				response.sendRedirect(session.getAttribute("lastFileName").toString());
-				session.removeAttribute("lastFileName");
-				out.print(rsp);
-			} else {
-				out.print(rsp);
-			}
-		} else {			
+			out.print(rsp);
+			con = ConnectionService.getInstance().getConnectionForLocal();	
+			String sql = "UPDATE `tbl_base_users` SET lastLogin=? WHERE id=?";
+			ps = con.prepareStatement(sql);
+			ps.setLong(1, date.getTime());
+			ps.setLong(2, user.getId());
+			ps.executeUpdate();
+		} else {
 			String msg = "check user failure!";
 			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		}
@@ -73,5 +79,14 @@
 		String msg = "check user failure!";
 		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		e.printStackTrace();
+	} finally {
+		if (con != null) {
+			try {
+				con.close();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 %>

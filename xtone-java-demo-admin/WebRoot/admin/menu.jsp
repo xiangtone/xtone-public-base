@@ -64,10 +64,3 @@
 	%>
 	<a href="password-update.jsp" class="menus">更换密码</a>
 </div>
-<!-- <div id="navigation"> -->
-<!-- 		<ul> -->
-<!-- 		<li>文章列表&nbsp;|&nbsp;</li> -->
-<!-- 		<li>兑换码列表</li> -->
-<!-- 		</ul> -->
-<!-- 		</div> -->
-
