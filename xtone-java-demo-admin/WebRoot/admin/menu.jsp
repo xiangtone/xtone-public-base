@@ -1,3 +1,4 @@
+<%@page import="org.demo.info.User"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
@@ -7,19 +8,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	long userid =  Long.valueOf(String.valueOf(session.getAttribute("userid"))).longValue();
+	request.getSession(true);
+	User user = (User) session.getAttribute("user");
 	PreparedStatement ps = null;
 	Connection con = null;
 	ResultSet rs = null;
-	List<Long> list = new ArrayList<Long>();
 	String sql = "";
 	try{
 		con = ConnectionService.getInstance().getConnectionForLocal();
-		sql = "SELECT id FROM `tbl_base_users` WHERE isAdmin=1";
+		sql = "SELECT isAdmin FROM `tbl_base_users` WHERE id="+user.getId();
 		ps = con.prepareStatement(sql);
 		rs = ps.executeQuery();
-		while(rs.next()){
-			list.add(rs.getLong("id"));
+		if(rs.next()){
+			user.setAdmin(rs.getInt("isAdmin"));
 		}
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
@@ -54,15 +55,12 @@
 </style>
 <div style="margin-top: 5px; margin-left: 10px; margin-bottom: 10px">
 	<a href="stat-all.jsp" class="menus" style="margin-left: 0px;">文章列表</a>
-<!-- 	<a href="catalog-all.jsp" class="menus">文章类型列表</a> -->
 	<a href="code-all.jsp" class="menus">兑换码列表</a>
 	<%
-		
-		for(long id : list){
-			if(id == userid){
+			if(user.getAdmin() == 1){
 				out.write("<a href='user-all.jsp' class='menus'>用户管理</a>");
+				out.write("<a href='catalog-all.jsp' class='menus'>文章类型</a>");
 			}
-		}
 	%>
 	<a href="password-update.jsp" class="menus">更换密码</a>
 </div>

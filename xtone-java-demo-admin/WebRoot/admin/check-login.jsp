@@ -55,7 +55,6 @@
 			loginRsp.setData(user);
 			loginRsp.setStatus("success");			
 			String rsp = gson.toJson(loginRsp);
-			session.setAttribute("userid",userId );
 			session.setAttribute("user", user);
 			if (session.getAttribute("lastFileName") != null
 					&& session.getAttribute("lastFileName").toString().length() > 0) {

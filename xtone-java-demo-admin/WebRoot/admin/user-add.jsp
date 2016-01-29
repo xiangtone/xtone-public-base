@@ -66,7 +66,6 @@
 			},
 			error : function(msg) {
 				alert(action+'失败!');
-				console.log("in error!");
 			}
 		});
 	}

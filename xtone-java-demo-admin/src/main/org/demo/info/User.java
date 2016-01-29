@@ -7,6 +7,7 @@ public class User {
 	private String password;
 	private String newPassword;
 	private String email;
+	private int admin;
 	private int status = 1;
 
 	public int getStatus() {
@@ -55,6 +56,14 @@ public class User {
 
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
+	}
+
+	public int getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(int admin) {
+		this.admin = admin;
 	}
 	
 }
