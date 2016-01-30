@@ -160,7 +160,7 @@ public class UserService {
     ResultSet rs = null;
     try {
       con = ConnectionService.getInstance().getConnectionForLocal();
-      ps = con.prepareStatement("select id from tbl_base_users where username=? and pwd=md5(?)");
+      ps = con.prepareStatement("select id from tbl_base_users where username=? and pwd=md5(?) and isAvail=1");
       int m = 1;
       ps.setString(m++, user.getUserName());
       ps.setString(m++, user.getPassword());
