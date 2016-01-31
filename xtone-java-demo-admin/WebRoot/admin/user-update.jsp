@@ -18,15 +18,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>修改兑换码</title>
+<title>修改用户</title>
 <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
 <script type="text/javascript" src="../js-css/base.js"></script>
-<script src="../js-css/jquery-2.1.3.min.js"></script>
+<script src="../js-css/jquery-1.7.js"></script>
 <link href="../js-css/edit.css" rel="stylesheet">
 <script language="JavaScript">
 	function commin(){
-		var user = $("#user").val().trim();
-		var pwd = $("#pwd").val().trim();
+		var user = Trim($("#user").val());
+		var pwd =  Trim($("#pwd").val());
 		if(isNullOrEmpty(user)){
 			alert("用户名不能为空");
 			return;
@@ -37,28 +37,22 @@
 		}
 		updateAjax();
 	}
+	/*****去除前后空格*******/
+	 function Trim(str){ 
+         return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	 }
+	 /*****去除前后空格*******/
 	function updateAjax() {
-		// 		if (document.getElementById("content").value.trim() == "") {
-		// 			alert("兑换码为空！");
-		// 			return false;
-		// 		}
 		var action="修改用户信息";
-		var oriData = {
-			id : $("#id").val(),
-			type : $("#type").val(),
-			user : $("#user").val(),
-			pwd : $("#pwd").val().trim(),
-			email : $("#email").val()=="null"?"" : $("#email").val(),
-			admin : $("input[name='admin']:checked").val(),
-			status : $("input[name='status']:checked").val()
-		};
+		var email = $("#email").val()=="null"?"" : $("#email").val();
+		var date = '{"id":'+$("#id").val()+',"type":'+$("#type").val()+',"user":"'+Trim($("#user").val())+'","pwd":"'+Trim($("#pwd").val())+'","email":"'+email+'","admin":'+$("input[name='admin']:checked").val()+',"status":'+$("input[name='status']:checked").val()+'}';
 		
 		$.ajax({
 			type : "post",
 			contentType: "application/json; charset=utf-8", 
 			url : "user-update-commit.jsp",
 			async : true,
-			data : JSON.stringify(oriData),
+			data : date,
 			dataType : "json",
 			success : function(msg) {
 				alert(action+'成功!');

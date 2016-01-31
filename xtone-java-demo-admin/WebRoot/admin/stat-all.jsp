@@ -40,7 +40,8 @@
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <!-- code.jquery.com -->
-<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<!-- <script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script> -->
+<script src="../js-css/jquery-1.7.js"></script>
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->

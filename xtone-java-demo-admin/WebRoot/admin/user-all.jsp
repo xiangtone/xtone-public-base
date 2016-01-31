@@ -24,8 +24,7 @@
 <link rel="stylesheet"
 	href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css">
 <!-- code.jquery.com -->
-<script src="http://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
-
+<script src="../js-css/jquery-1.7.js"></script>
 <script src="../js-css/ie-emulation-modes-warning.js"></script>
 
 <link href="../js-css/bootstrap-datetimepicker.min.css" rel="stylesheet"
