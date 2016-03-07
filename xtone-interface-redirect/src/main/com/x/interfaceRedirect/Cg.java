@@ -62,9 +62,9 @@ public class Cg extends HttpServlet {
     if (request.getHeader("user-agent") != null
         && (request.getHeader("user-agent").matches("(.*)iPhone(.*)") || request.getHeader("user-agent").matches(
             "(.*)iPod(.*)"))) {
-      targetUrl = CacheConfig.getInstance().getNameLoadingCache("apple");
+      targetUrl = CacheConfig.getInstance().getNameLoadingCache("apple").getTargetUrl();
     }else{
-      targetUrl = CacheConfig.getInstance().getNameLoadingCache("android");
+      targetUrl = CacheConfig.getInstance().getNameLoadingCache("android").getTargetUrl();
     }
     ThreadPool.mThreadPool.execute(new LogInsert(request.getParameter("f"), request.getHeader("user-agent"), targetUrl, request.getHeader("X-Real-IP")!=null?request.getHeader("X-Real-IP"):request.getRemoteAddr()));
     response.sendRedirect(targetUrl);

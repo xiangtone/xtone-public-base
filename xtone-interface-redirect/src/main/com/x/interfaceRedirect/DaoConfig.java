@@ -10,8 +10,8 @@ public class DaoConfig {
   
   private final static Logger LOG = Logger.getLogger(DaoConfig.class);
 
-  public String getTargetUrlByTitle(String title) {
-    String result = "";
+  public TargetInfo getTargetUrlByTitle(String title) {
+    TargetInfo result = null;
     PreparedStatement ps = null;
     Connection con = null;
     ResultSet rs = null;
@@ -23,7 +23,8 @@ public class DaoConfig {
       ps.setString(m++, title);
       rs = ps.executeQuery();
       while (rs.next()) {
-        result = rs.getString("targetUrl");
+        result = new TargetInfo();
+        result.setTargetUrl(rs.getString("targetUrl"));
       }
     } catch (Exception e) {
       // TODO Auto-generated catch block

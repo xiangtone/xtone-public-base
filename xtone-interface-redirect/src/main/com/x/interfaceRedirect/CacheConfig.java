@@ -15,19 +15,19 @@ public class CacheConfig {
   private final static Logger LOG = Logger.getLogger(CacheConfig.class);
   
   private static CacheConfig instance = new CacheConfig();
-  private static LoadingCache<String, String> cache ;
+  private static LoadingCache<String, TargetInfo> cache ;
   private CacheConfig(){
   }
   static{
     cache = CacheBuilder.newBuilder().maximumSize(20)// 设置大小，条目数
         .expireAfterWrite(10, TimeUnit.SECONDS)// 设置失效时间，创建时间
         .expireAfterAccess(20, TimeUnit.HOURS) // 设置时效时间，最后一次被访问
-        .removalListener(new RemovalListener<String, String>() { // 移除缓存的监听器
-              public void onRemoval(RemovalNotification<String, String> notification) {
+        .removalListener(new RemovalListener<String, TargetInfo>() { // 移除缓存的监听器
+              public void onRemoval(RemovalNotification<String, TargetInfo> notification) {
               }
-            }).build(new CacheLoader<String, String>() { // 通过回调加载缓存
+            }).build(new CacheLoader<String, TargetInfo>() { // 通过回调加载缓存
               @Override
-              public String load(String name) throws Exception {
+              public TargetInfo load(String name) throws Exception {
                 DaoConfig daoConfig = new DaoConfig();
                 return daoConfig.getTargetUrlByTitle(name);
               }
@@ -43,7 +43,7 @@ public class CacheConfig {
     cache.getNameLoadingCache("android");
   }
 
-  public String getNameLoadingCache(String name) throws Exception {
+  public TargetInfo getNameLoadingCache(String name) throws Exception {
     return cache.get(name);
     // cache.invalidateAll();
   }
