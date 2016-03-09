@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zgt.mapping.statisticsDayMapper">
+
+	<resultMap type="com.zgt.dao.bean.StatisticsDay" id="dayMap">
+		<id property="id" column="id" />
+		<result property="packageName" column="packageName" />
+		<result property="SendNotifiCountDay" column="SendNotifiCountDay" />
+		<result property="ClickDownCountDay" column="ClickDownCountDay" />
+		<result property="DownSuccessCountDay" column="DownSuccessCountDay" />
+		<result property="InstallSuccessCountDay" column="InstallSuccessCountDay" />
+		<result property="date" column="date" />
+		<result property="createDate" column="createDate" />
+	</resultMap>
+	
+	
+	<insert id="insertStatisticsDay" parameterType="com.zgt.dao.bean.StatisticsDay">
+		insert into
+		StatisticsDay
+		(packageName,SendNotifiCountDay,ClickDownCountDay,DownSuccessCountDay,InstallSuccessCountDay,date,createDate)
+		values
+		(#{packageName},#{SendNotifiCountDay},#{ClickDownCountDay},#{DownSuccessCountDay},
+		#{InstallSuccessCountDay},#{date},#{createDate});
+	</insert>
+	
+	<update id="updateStatisticsDay" parameterType="com.zgt.dao.bean.StatisticsDay">
+		update
+		StatisticsDay set packageName=#{packageName}
+		,SendNotifiCountDay=#{SendNotifiCountDay},
+		ClickDownCountDay=#{ClickDownCountDay},DownSuccessCountDay=#{DownSuccessCountDay},
+		InstallSuccessCountDay=#{InstallSuccessCountDay},date=#{date},createDate=#{createDate} where
+		packageName=#{packageName};
+	</update>
+	
+	
+	<select id="getStatisticsDayByPackageName" parameterType="String" resultMap="dayMap">
+		select
+		id,packageName,SendNotifiCountDay,ClickDownCountDay,DownSuccessCountDay,InstallSuccessCountDay,date,createDate from
+		StatisticsDay where packageName =#{packageName};
+	</select>
+	
+
+
+</mapper>

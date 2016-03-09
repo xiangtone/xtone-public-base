@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zgt.mapping.statisticsCurrentMapper">
+
+
+
+	<resultMap type="com.zgt.dao.bean.StatisticsCurrent" id="StatisticsCurrentMap">
+		<id property="id" column="id" />
+		<result property="packageName" column="packageName" />
+		<result property="SendNotifiCount" column="SendNotifiCount" />
+		<result property="ClickDownCount" column="ClickDownCount" />
+		<result property="DownSuccessCount" column="DownSuccessCount" />
+		<result property="InstallSuccessCount" column="InstallSuccessCount" />
+		<result property="date" column="date" />
+		<result property="updateDate" column="updateDate" />
+	</resultMap>
+
+
+	<insert id="insertStatisticsCurrent" parameterType="com.zgt.dao.bean.StatisticsCurrent">
+		insert into
+		statisticscurrent
+		(packageName,SendNotifiCount,ClickDownCount,DownSuccessCount,InstallSuccessCount,date,updateDate)
+		values
+		(#{packageName},#{SendNotifiCount},#{ClickDownCount},#{DownSuccessCount},
+		#{InstallSuccessCount},#{date},#{updateDate});
+	</insert>
+
+
+	<update id="updateStatisticsCurrent" parameterType="com.zgt.dao.bean.StatisticsCurrent">
+		update
+		StatisticsCurrent set packageName=#{packageName}
+		,SendNotifiCount=#{SendNotifiCount},
+		ClickDownCount=#{ClickDownCount},DownSuccessCount=#{DownSuccessCount},
+		InstallSuccessCount=#{InstallSuccessCount},date=#{date},updateDate=#{updateDate} where
+		packageName=#{packageName};
+	</update>
+	
+	
+	
+	<select id="getStatisticsCurrentByPackageName" parameterType="String" resultMap="StatisticsCurrentMap">
+		select
+		id,packageName,SendNotifiCount,ClickDownCount,DownSuccessCount,InstallSuccessCount,date,updateDate from
+		StatisticsCurrent where packageName =#{packageName};
+	</select>
+
+
+
+
+
+
+
+</mapper>
