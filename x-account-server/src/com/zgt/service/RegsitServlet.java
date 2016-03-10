@@ -34,23 +34,13 @@ public class RegsitServlet extends HttpServlet {
         String info = request.getParameter("info"); //获得信息
 		System.out.println(info);
 		
-		JSONObject jsonObject = JSON.parseObject(info); //解析info
-		
-		String name = jsonObject.getString("name"); 
-		String pwd = jsonObject.getString("pwd");
-		String email = jsonObject.getString("email");
-		String phone = jsonObject.getString("phone");
-		
-		MyUser myUser = new MyUser(); //写入myUser类
-		myUser.setEmail(email);
-		myUser.setName(name);
-		myUser.setPhone(phone);
-		myUser.setPwd(pwd);
+		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
+
 		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
         
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
-		List<MyUser> list = daoImpl.findByName(name); //查看数据是否存在
+		List<MyUser> list = daoImpl.findByName(myUser.getName()); //查看数据是否存在
 		if(list!=null&&!list.isEmpty()){
 			String msg = "用户已经存在";
     		response.getWriter().append("{\"status\":\"err\",\"data\":\"" + msg + "\"}");

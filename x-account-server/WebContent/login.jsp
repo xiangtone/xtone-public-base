@@ -4,23 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-
+<title>用户登录</title>
+<link rel="stylesheet" href="css/main.css">
 <script type="text/javascript" src="jquery-1.7.js"></script>
-
-
-<style type="text/css">
-.divCenter {
-	margin: 0px auto;
-	text-align: center
-}
-
-body {
-	margin: 0px auto;
-}
-</style>
-
-
+<script type="text/javascript" src="js/base.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -33,9 +20,22 @@ body {
 	});
 
 	function submitBtn() {
+		var name=$("#username");
+		var pwd=$("#pwd");
+		if(isNullOrEmpty(name.val())){
+			alert("用户名不能为空!");
+			name.focus();
+			return;
+		}
+		
+		if(isNullOrEmpty(pwd.val())){
+			alert("密码不能为空!");
+			pwd.focus();
+			return;
+		}
 		var oriData = {
-			userName : $("#username").val(),
-			password : $("#pwd").val()
+			userName : name.val().trim(),
+			password : pwd.val().trim()
 		};
 		$.ajax({
 			type : "post",
@@ -57,9 +57,11 @@ body {
 					
 				}
 			},
-			error : function() {
+			error : function(msg) {
 				
-				alert('登录失败!');
+				alert('登录失败!'+msg.data);
+				
+				webjs.getUid(msg.data);
 
 			}
 		});
@@ -81,15 +83,14 @@ body {
 
 </head>
 <body>
-	<div>
+	<div class="divCenter">
 
 		<form action="/adTest/LoginServlet" method="get" id="login_form">
-
-			用户名: <input type="text" name="username" id="username" /><br />
-			密码:<input type="text" name="pwd" id="pwd" /><br /> <input
-				type="button" value="登录" id="submit" onclick="submitBtn()"/> <a
-				href="regist.jsp">注册</a>
-
+			<font class="login_tip">请先登录:</font><br>
+			<input type="text" class="m_input" name="username" id="username" placeholder="请输入用户名"/><br />
+			<input type="password" class="m_input" name="pwd" id="pwd" placeholder="请输入密码"/><br />
+			<input type="button" class="login_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
+			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="#" class="foget_pwd_a text_a">忘记密码?</a>
 		</form>
 	</div>
 

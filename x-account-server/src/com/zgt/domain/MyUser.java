@@ -1,17 +1,15 @@
 package com.zgt.domain;
 
-public class MyUser {
+public class MyUser{
 	
 	//实体类的属性和表的字段名称一一对应
 	private int id;
-	
-	 private String name;
-	 private String phone;
-	 private String email;
-	 private String uid;
-	 private String pwd;
-	 
-	 
+	private String name;
+	private String pwd;	
+	private String email;
+	private String phone;
+	private String uid;
+		 
 	public int getId() {
 		return id;
 	}
@@ -48,11 +46,5 @@ public class MyUser {
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
-	
-	
-	
-	
-	
 
 }

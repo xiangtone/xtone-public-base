@@ -19,7 +19,7 @@
 
 	<insert id="insertMyUser" parameterType="com.zgt.domain.MyUser">
 		insert into my_user
-		(name,phone,email,uid,pwd) values (#{name},#{phone},#{email},#{uid},#{pwd})
+		(name,phone,email,uid,pwd) values (#{name},#{phone},#{email},#{uid},Md5(#{pwd}))
 	</insert>
 
 
@@ -30,7 +30,7 @@
 		phone = #{phone} , 
 		email = #{email} , 
 		uid = #{uid} , 
-		pwd = #{pwd}
+		pwd = Md5(#{pwd})
 		where id = #{id};
 	</update>
 
@@ -55,7 +55,7 @@
 	<select id="login" parameterType="java.util.Map"  resultType="com.zgt.domain.MyUser">
 		select
 		id,name,phone,email,uid,pwd from
-		my_user where name = #{name} and pwd = #{pwd};
+		my_user where name = #{name} and pwd = Md5(#{pwd});
 		
 	</select>
 	
