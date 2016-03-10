@@ -5,19 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户登录</title>
-<link rel="stylesheet" href="css/main.css">
-<script type="text/javascript" src="jquery-1.7.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<script type="text/javascript" src="../js/jquery-1.7.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#btn1").click(function() {
-			alert("Text: " + $("#test").text());
-		});
-		$("#btn2").click(function() {
-			alert("HTML: " + $("#test").html());
-		});
-	});
 
 	function submitBtn() {
 		var name=$("#username");
@@ -39,7 +31,7 @@
 		};
 		$.ajax({
 			type : "post",
-			url : "LoginServlet",
+			url : "../LoginServlet",
 			async : false,
 			data : "info=" + JSON.stringify(oriData), 
 			dataType : "json",
@@ -47,33 +39,27 @@
 
 				if (msg.status == "success") {
 
-					alert(msg.data);
+					alert('登录成功!');
 
-					webjs.getUid(msg.data);
-
+// 					webjs.getUid(msg.data);
+					
+					window.location.href = 'accout.jsp';
 				} else {
 					
 					alert('邮箱或密码错误!');
 					
 				}
 			},
-			error : function(msg) {
+			error : function() {
 				
-				alert('登录失败!'+msg.data);
+				alert('登录失败!请检查输入的邮箱或密码是否错误。');
 				
-				webjs.getUid(msg.data);
 
 			}
 		});
 
-		//show();
 
 	}
-
-	function show() {
-		alert("dfdsf");
-	}
-
 	function showUid() {
 		//javascript:xtongjs.getUid("oooooooooooo")
 		webjs.getUid("获取uid");

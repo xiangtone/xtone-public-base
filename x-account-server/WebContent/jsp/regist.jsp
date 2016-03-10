@@ -5,9 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户注册</title>
-<link rel="stylesheet" href="css/main.css">
-<script type="text/javascript" src="jquery-1.7.js"></script>
-<script type="text/javascript" src="js/base.js"></script>
+<link rel="stylesheet" href="../css/main.css">
+<script type="text/javascript" src="../js/jquery-1.7.js"></script>
+<script type="text/javascript" src="../js/base.js"></script>
 <script type="text/javascript">
 
 	function regist() {
@@ -50,7 +50,7 @@
 
 		$.ajax({
 			type : "post",
-			url : "RegsitServlet",
+			url : "../RegsitServlet",
 			cache : false,
 			async : false,
 			data : "info=" + JSON.stringify(oriData),
@@ -58,9 +58,6 @@
 			success : function(msg) {
 
 				if (msg.status == "success") {
-
-					//	alert(msg.data);
-
 					alert('注册成功');
 					window.history.back(-1);
 				} else {
