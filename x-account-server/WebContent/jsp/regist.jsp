@@ -61,7 +61,7 @@
 					alert('注册成功');
 					window.history.back(-1);
 				} else {
-					alert('用户名已被注册!请更改您的用户名。');
+					alert('用户名已被注册!请更换您的用户名。');
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -70,7 +70,7 @@
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="用户名已被注册!请更改您的用户名。";
+						msg="用户名不可用!请更换您的用户名。";
 				  		break;
 					default:
 						msg="网络异常，请稍后再试。";
