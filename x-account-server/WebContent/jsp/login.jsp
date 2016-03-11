@@ -45,7 +45,7 @@
 					
 					window.location.href = 'accout.jsp';
 				}else {
-					alert(msg.data);
+					alert('登录失败!请检查用户名和密码是否正确。');
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {

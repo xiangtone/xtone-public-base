@@ -57,12 +57,10 @@ public class LoginServlet extends HttpServlet {
 
 		if (myUser != null) {
 			// 登录成功
-			String msg = myUser.getUid();
-			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + msg + "\"}");
+			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
 			
 		} else {
-			String msg = "登录失败!请检查用户名和密码是否正确。";
-			response.getWriter().append("{\"status\":\"err\",\"data\":\"" + msg + "\"}");
+			response.getWriter().append("{\"status\":\"err\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,
 			response);
 		}
