@@ -1,4 +1,4 @@
-﻿package com.account.utils;
+package com.account.utils;
 
 import java.io.UnsupportedEncodingException;
 
