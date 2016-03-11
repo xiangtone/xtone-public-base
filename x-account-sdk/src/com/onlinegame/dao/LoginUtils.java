@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnKeyListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout.LayoutParams;
@@ -47,8 +48,8 @@ public class LoginUtils {
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
 		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.FILL_PARENT));
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));
 
 		RelativeLayout plaqueRelative = new RelativeLayout(context);
 
@@ -56,16 +57,16 @@ public class LoginUtils {
 		plaqueRelative.setGravity(Gravity.CENTER);
 		// 装webview的相对布局Layoutparams
 		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
-				LinearLayout.LayoutParams.FILL_PARENT));// 设置dialog宽度高度
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));// 设置dialog宽度高度
 
 		WebView webpobView = null;
 
 		// webview的Layoutparams
 		LayoutParams plaqueParams = new LayoutParams(
 				new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.FILL_PARENT,
-						LinearLayout.LayoutParams.FILL_PARENT));
+						LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.MATCH_PARENT));
 
 		webpobView = new WebView(context);
 		webpobView.setLayoutParams(plaqueParams);
@@ -85,7 +86,7 @@ public class LoginUtils {
 			}
 		});
 
-		
+		webpobView.setWebChromeClient(new WebChromeClient());//使webview能弹出alert
 
 		login_dialog = new Dialog(context,
 				android.R.style.Theme_Translucent_NoTitleBar);
