@@ -7,7 +7,7 @@ public class MyUser{
 	private String name;
 	private String pwd;	
 	private String email;
-	private String phone;
+	private int phone;
 	private String uid;
 		 
 	public int getId() {
@@ -22,10 +22,10 @@ public class MyUser{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getPhone() {
+	public int getPhone() {
 		return phone;
 	}
-	public void setPhone(String phone) {
+	public void setPhone(int phone) {
 		this.phone = phone;
 	}
 	public String getEmail() {

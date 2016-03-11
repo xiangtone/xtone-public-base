@@ -44,16 +44,28 @@
 // 					webjs.getUid(msg.data);
 					
 					window.location.href = 'accout.jsp';
-				} else {
-					
-					alert('邮箱或密码错误!');
-					
+				}else {
+					alert(msg.data);
 				}
 			},
-			error : function() {
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				alert('登录失败!请检查输入的邮箱或密码是否错误。');
-				
+				var msg="登录失败!";
+				switch (XMLHttpRequest.status)
+				{
+									 
+					case 200:
+				  		msg="登录成功!";
+				  		break;
+					case 404:
+						msg="登录失败!请检查用户名和密码是否正确。";
+				  		break;
+					default:
+						msg="网络异常，请稍后再试。";
+						break;
+				  			
+				}
+				alert(msg);
 
 			}
 		});

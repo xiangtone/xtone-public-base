@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + msg + "\"}");
 			
 		} else {
-			String msg = "登录出错";
+			String msg = "登录失败!请检查用户名和密码是否正确。";
 			response.getWriter().append("{\"status\":\"err\",\"data\":\"" + msg + "\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,
 			response);
