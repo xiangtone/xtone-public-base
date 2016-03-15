@@ -68,7 +68,7 @@
 					alert('密码修改成功!');
 					window.history.back(-1);
 				} else {
-					alert('用户名不存在!请重新登录!');
+					alert('登录异常!请重新登录!');
 					window.location.href='login.jsp';
 				}
 			},
