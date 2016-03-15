@@ -48,18 +48,13 @@ public class LoginServlet extends HttpServlet {
 		String info = request.getParameter("info");
 		System.out.println(info);
 
-		JSONObject jsonObject = JSON.parseObject(info);
-//		MyUser myUser = JSON.parseObject(info,MyUser.class);
-		String name = jsonObject.getString("userName");
-		String pwd = jsonObject.getString("password");
-		
+		MyUser myUser = JSON.parseObject(info,MyUser.class);
 		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
-
-		MyUser myUser = daoImpl.login(name, pwd);
+		
+		myUser = daoImpl.login(myUser);
 		
 		if (myUser != null) {
-			// 登录成功
 			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
 			HttpSession session=request.getSession();
 			session.setAttribute("user", myUser);

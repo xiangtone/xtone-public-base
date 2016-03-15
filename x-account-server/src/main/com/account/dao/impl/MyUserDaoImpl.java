@@ -13,11 +13,13 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	// 添加用户
 	public int add(MyUser MyUser) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
 			value=sqlSession.insert("insertMyUser", MyUser);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
@@ -26,11 +28,13 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	// 删除用户
 	public int delete(int id) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
 			value=sqlSession.delete("com.account.mapping.myUserMapper.deleteMyUser", id);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
@@ -39,11 +43,13 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	// 更新用户
 	public int update(MyUser MyUser) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
 			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", MyUser);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
@@ -76,11 +82,13 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	// 修改密码
 		public int changePwd(MyUser MyUser) {
 			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-			int value;
+			int value = 0;
 			try {
 				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", MyUser);
 				sqlSession.commit();
-			} finally {
+			} catch (Exception e) {  
+				sqlSession.rollback();  
+			}finally {
 				sqlSession.close();
 			}
 			return value;
@@ -93,25 +101,15 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	 * @param name
 	 * @return
 	 */
-	public MyUser login(String name,String pwd) {
+	public MyUser login(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		MyUser user = null;
+		MyUser myUser=null;
 		try {
-			
-			Map<String, Object> param=new HashMap<String, Object>();             
-		     param.put("name", name);             
-		     param.put("pwd", pwd);  
-		     
-		     
-//		     MyUser myUser = new MyUser();
-//		     myUser.setName(name);
-//		     myUser.setPwd(pwd);
-//			
-		     user = sqlSession.selectOne("login", param);
+		     myUser = sqlSession.selectOne("login", user);
 		} finally {
 			sqlSession.close();
 		}
-		return user;
+		return myUser;
 	}
 	
 	

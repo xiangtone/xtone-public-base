@@ -56,7 +56,7 @@
 
 	</select>
 
-	<select id="login" parameterType="java.util.Map" resultType="com.account.domain.MyUser">
+	<select id="login" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
 		id,name,phone,email,uid,pwd from
 		my_user where name = #{name} and

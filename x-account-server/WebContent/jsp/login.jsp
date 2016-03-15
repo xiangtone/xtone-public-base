@@ -26,8 +26,8 @@
 			return;
 		}
 		var oriData = {
-			userName : name.val().trim(),
-			password : pwd.val().trim()
+			name : name.val().trim(),
+			pwd : pwd.val().trim()
 		};
 		$.ajax({
 			type : "post",
