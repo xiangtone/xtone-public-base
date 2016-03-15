@@ -60,8 +60,10 @@
 				if (msg.status == "success") {
 					alert('注册成功');
 					window.history.back(-1);
-				} else {
+				} else if(msg.status == "errRepeat"){
 					alert('用户名已被注册!请更换您的用户名。');
+				} else{
+					alert('注册失败!请稍后重试。');
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
@@ -89,7 +91,7 @@
 </head>
 <body>
 
-<input type="text" class="m_input" id="name" placeholder="请输入用户名"/><br/>
+<input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
 <input type="password" class="m_input" id="pwd" placeholder="请输入密码"/><br/>
 <input type="password" class="m_input" id="re_pwd" placeholder="请再次输入密码"/><br/>
 <input type="text" class="m_input" id="email" placeholder="请输入邮箱地址，方便日后找回账号"/><br/>

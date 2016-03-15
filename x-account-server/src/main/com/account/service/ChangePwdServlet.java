@@ -16,14 +16,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * Servlet implementation class RegsitServlet
- * 用户注册
+ * Servlet implementation class ChangePwdServlet
+ * 用户修改密码
  */
-@WebServlet("/RegsitServlet")
-public class RegsitServlet extends HttpServlet {
+@WebServlet("/ChangePwdServlet")
+public class ChangePwdServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public RegsitServlet() {
+    public ChangePwdServlet() {
         super();
     }
 
@@ -35,21 +35,15 @@ public class RegsitServlet extends HttpServlet {
 		System.out.println(info);
 		
 		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
-
-		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
         
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
 		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在
 		if (user != null) {
-			response.getWriter().append("{\"status\":\"errRepeat\"}");
+			daoImpl.changePwd(myUser);
+			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
 		} else {
-			int value=daoImpl.add(myUser); // 写入数据库
-			if(value==1){
-				response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
-			}else{
-				response.getWriter().append("{\"status\":\"errInsert\"}");
-			}			
+			response.getWriter().append("{\"status\":\"err\"}");
 		}
 		
 	}

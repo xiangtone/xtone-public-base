@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
@@ -50,15 +52,17 @@ public class LoginServlet extends HttpServlet {
 		// {"userName":"name","password":"pwd"}
 		String name = jsonObject.getString("userName");
 		String pwd = jsonObject.getString("password");
-
+		
+		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
 
 		MyUser myUser = daoImpl.login(name, pwd);
-
+		
 		if (myUser != null) {
 			// 登录成功
 			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
-			
+			HttpSession session=request.getSession();
+			session.setAttribute("user", myUser);
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,

@@ -12,36 +12,42 @@ import com.account.domain.User;
 public class MyUserDaoImpl extends BasicDaoImpl {
 
 	// 添加用户
-	public void add(MyUser MyUser) {
+	public int add(MyUser MyUser) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		int value;
 		try {
-			sqlSession.insert("insertMyUser", MyUser);
+			value=sqlSession.insert("insertMyUser", MyUser);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}
+		return value;
 	}
 
 	// 删除用户
-	public void delete(int id) {
+	public int delete(int id) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		int value;
 		try {
-			sqlSession.insert("com.account.mapping.myUserMapper.deleteMyUser", id);
+			value=sqlSession.insert("com.account.mapping.myUserMapper.deleteMyUser", id);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}
+		return value;
 	}
 
 	// 更新用户
-	public void update(MyUser MyUser) {
+	public int update(MyUser MyUser) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		int value;
 		try {
-			sqlSession.insert("com.account.mapping.myUserMapper.updateMyUser", MyUser);
+			value=sqlSession.insert("com.account.mapping.myUserMapper.updateMyUser", MyUser);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
 		}
+		return value;
 	}
 
 	// 获取所有用户
@@ -57,18 +63,29 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	}
 
 	// 根据名字模糊查询
-	public List<MyUser> findByName(String name) {
+	public MyUser findByName(String name) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		List<MyUser> students = null;
+		MyUser students;
 		try {
-			students = sqlSession.selectList("com.account.mapping.myUserMapper.findByName", name);
+			students = sqlSession.selectOne("com.account.mapping.myUserMapper.findByName", name);
 		} finally {
 			sqlSession.close();
 		}
 		return students;
 	}
 
-	
+	// 修改密码
+		public int changePwd(MyUser MyUser) {
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			int value;
+			try {
+				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", MyUser);
+				sqlSession.commit();
+			} finally {
+				sqlSession.close();
+			}
+			return value;
+		}
 	
 	
 	
