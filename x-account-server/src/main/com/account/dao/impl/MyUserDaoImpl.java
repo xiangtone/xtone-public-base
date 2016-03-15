@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.account.domain.MyUser;
-import com.account.domain.User;
 
 public class MyUserDaoImpl extends BasicDaoImpl {
 
@@ -29,7 +28,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 		int value;
 		try {
-			value=sqlSession.insert("com.account.mapping.myUserMapper.deleteMyUser", id);
+			value=sqlSession.delete("com.account.mapping.myUserMapper.deleteMyUser", id);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();
@@ -42,7 +41,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 		int value;
 		try {
-			value=sqlSession.insert("com.account.mapping.myUserMapper.updateMyUser", MyUser);
+			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", MyUser);
 			sqlSession.commit();
 		} finally {
 			sqlSession.close();

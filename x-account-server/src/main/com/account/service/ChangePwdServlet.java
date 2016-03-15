@@ -1,8 +1,6 @@
 package com.account.service;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * Servlet implementation class ChangePwdServlet
@@ -40,8 +37,12 @@ public class ChangePwdServlet extends HttpServlet {
 		
 		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在
 		if (user != null) {
-			daoImpl.changePwd(myUser);
-			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+			int value=daoImpl.changePwd(myUser);
+			if(value==1){
+				response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+			}else{
+				response.getWriter().append("{\"status\":\"err\"}");
+			}
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
 		}

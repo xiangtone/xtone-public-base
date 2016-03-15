@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
 		System.out.println(info);
 
 		JSONObject jsonObject = JSON.parseObject(info);
-		// {"userName":"name","password":"pwd"}
+//		MyUser myUser = JSON.parseObject(info,MyUser.class);
 		String name = jsonObject.getString("userName");
 		String pwd = jsonObject.getString("password");
 		

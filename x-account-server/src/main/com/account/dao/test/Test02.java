@@ -2,7 +2,6 @@ package com.account.dao.test;
 
 import java.util.UUID;
 
-import com.account.dao.AdBean;
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
 import com.alibaba.fastjson.JSON;

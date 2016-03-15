@@ -8,12 +8,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.account.dao.bean.StatisticsCurrent;
-import com.account.dao.bean.StatisticsDay;
-import com.account.dao.impl.StatisticsCurrentImpl;
-import com.account.dao.impl.StatisticsDayImpl;
-import com.account.dao.impl.UserDaoImpl;
-import com.account.domain.User;
 import com.account.utils.TimeUtil;
 
 public class MyTest {
