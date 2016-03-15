@@ -39,11 +39,14 @@
 		delete from my_user where id
 		= #{id};
 	</delete>
-
-
 	
-
-
+	<!-- 对应userDao中的changePwd方法 -->
+	<update id="changePwd" parameterType="com.account.domain.MyUser">
+		update my_user set  
+		pwd = Md5(#{pwd})
+		where name = #{name};
+	</update>
+	
 	<select id="findByName" parameterType="String" resultMap="userMap">
 		select
 		id,name,phone,email,uid,pwd  from

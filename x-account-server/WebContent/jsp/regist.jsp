@@ -60,8 +60,10 @@
 				if (msg.status == "success") {
 					alert('注册成功');
 					window.history.back(-1);
-				} else {
+				} else if(msg.status == "errRepeat"){
 					alert('用户名已被注册!请更换您的用户名。');
+				} else{
+					alert('注册失败!请稍后重试。');
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {

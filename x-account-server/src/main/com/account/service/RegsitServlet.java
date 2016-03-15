@@ -40,12 +40,16 @@ public class RegsitServlet extends HttpServlet {
         
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
-		List<MyUser> list = daoImpl.findByName(myUser.getName()); //查看数据是否存在
-		if(list!=null&&!list.isEmpty()){			
-    		response.getWriter().append("{\"status\":\"err\"}");
-		}else {
-			daoImpl.add(myUser); //写入数据库
-    		response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在
+		if (user != null) {
+			response.getWriter().append("{\"status\":\"errRepeat\"}");
+		} else {
+			int value=daoImpl.add(myUser); // 写入数据库
+			if(value==1){
+				response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+			}else{
+				response.getWriter().append("{\"status\":\"errInsert\"}");
+			}			
 		}
 		
 	}

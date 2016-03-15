@@ -34,7 +34,7 @@
 </style>
 </head>
 <body class="divCenter">
-	<img alt="head" src="..img/1.png" class="circle_head"><br>
+	<img alt="head" src="../img/head1.jpeg" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
 	<a href="change-pwd.jsp">修改密码</a>
 </body>

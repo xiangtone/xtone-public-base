@@ -35,20 +35,16 @@ public class ChangePwdServlet extends HttpServlet {
 		System.out.println(info);
 		
 		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
-
-//		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
-//        
-//		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
-//		
-//		List<MyUser> list = daoImpl.findByName(myUser.getName()); //查看数据是否存在
-//		if(list!=null&&!list.isEmpty()){	
-//			
-//    		response.getWriter().append("{\"status\":\"err\"}");
-//		}else {
-//			
-//			daoImpl.add(myUser); //写入数据库
-//    		response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
-//		}
+        
+		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
+		
+		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在
+		if (user != null) {
+			daoImpl.changePwd(myUser);
+			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+		} else {
+			response.getWriter().append("{\"status\":\"err\"}");
+		}
 		
 	}
 

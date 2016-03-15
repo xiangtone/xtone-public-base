@@ -50,7 +50,7 @@
 		}
 
 		var oriData = {
-			name : name.val.trim(),
+			name : name.val().trim(),
 			pwd : old_pwd.val().trim(),
 			newPwd : new_pwd.val().trim()
 		};
@@ -68,7 +68,8 @@
 					alert('密码修改成功!');
 					window.history.back(-1);
 				} else {
-					alert('');
+					alert('用户名不存在!请重新登录!');
+					window.location.href='login.jsp';
 				}
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
