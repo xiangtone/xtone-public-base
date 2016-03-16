@@ -30,15 +30,15 @@
 			window.location.href="login.jsp";
 		}
 		
-		if(isNullOrEmpty(old_pwd.val())){
-			alert("旧密码不能为空!");
-			old_pwd.focus();
+		if(old_pwd.val().length<6||old_pwd.val().length>20){
+			alert("请输入旧的6-20位数密码!");
+			pwd.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(new_pwd.val())){
-			alert("新密码不能为空!");
-			new_pwd.focus();
+		if(new_pwd.val().length<6||new_pwd.val().length>20){
+			alert("请输入新的6-20位数密码!");
+			pwd.focus();
 			return;
 		}
 		
@@ -113,9 +113,9 @@
 </head>
 <body>
 <input type="hidden" id="name" value="<%=user.getName()%>"/>
-<input type="password" class="m_input" id="old_pwd" placeholder="请输入旧密码"/><br/>
-<input type="password" class="m_input" id="new_pwd" placeholder="请输入新密码"/><br/>
-<input type="password" class="m_input" id="re_new_pwd" placeholder="请再次输入新密码"/><br/>
+<input type="password" class="m_input" id="old_pwd" maxlength="20" placeholder="请输入旧密码"/><br/>
+<input type="password" class="m_input" id="new_pwd" maxlength="20" placeholder="请输入新密码"/><br/>
+<input type="password" class="m_input" id="re_new_pwd" maxlength="20" placeholder="请再次输入新密码"/><br/>
 <input type="button" class="ok_button" value="确&nbsp;认&nbsp;修&nbsp;改" onclick="update()"/>
 <input type="button" class="cancle_button" value="取&nbsp;消&nbsp;修&nbsp;改" onclick="javascrip:window.history.back(1);"/>
 

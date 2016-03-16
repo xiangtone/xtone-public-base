@@ -21,14 +21,14 @@
 		var num_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
 		var oriData;
 		
-		if(isNullOrEmpty(name.val())){
-			alert("用户名不能为空!");
+		if(isNullOrEmpty(name.val())||name.val().length>20){
+			alert("请输入20字以内用户名!");
 			name.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(pwd.val())){
-			alert("密码不能为空!");
+		if(pwd.val().length<6||pwd.val().length>20){
+			alert("请输入6-20位数密码!");
 			pwd.focus();
 			return;
 		}
@@ -103,8 +103,8 @@
 <body>
 
 <input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
-<input type="password" class="m_input" id="pwd" placeholder="请输入密码"/><br/>
-<input type="password" class="m_input" id="re_pwd" placeholder="请再次输入密码"/><br/>
+<input type="password" class="m_input" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
+<input type="password" class="m_input" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
 <input type="text" class="m_input" id="email" placeholder="请输入邮箱地址，方便日后找回账号"/><br/>
 <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/>
 <input type="button" class="login_button" value="注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册" onclick="regist()"/><br/>

@@ -14,14 +14,14 @@
 	function submitBtn() {
 		var name=$("#username");
 		var pwd=$("#pwd");
-		if(isNullOrEmpty(name.val())){
-			alert("用户名不能为空!");
+		if(isNullOrEmpty(name.val())||name.val().length>20){
+			alert("请输入20字以内用户名!");
 			name.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(pwd.val())){
-			alert("密码不能为空!");
+		if(pwd.val().length<6||pwd.val().length>20){
+			alert("请输入6-20位数密码!");
 			pwd.focus();
 			return;
 		}
@@ -85,8 +85,8 @@
 
 		<form action="/adTest/LoginServlet" method="get" id="login_form">
 			<font class="login_tip">请先登录:</font><br>
-			<input type="text" class="m_input" name="username" id="username" placeholder="请输入用户名"/><br />
-			<input type="password" class="m_input" name="pwd" id="pwd" placeholder="请输入密码"/><br />
+			<input type="text" class="m_input" name="username" id="username" maxlength="20" placeholder="请输入用户名"/><br />
+			<input type="password" class="m_input" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/><br />
 			<input type="button" class="login_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
 			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a>
 		</form>
