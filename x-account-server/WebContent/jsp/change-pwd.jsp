@@ -67,6 +67,9 @@
 				if (msg.status == "success") {
 					alert('密码修改成功!');
 					window.history.back(-1);
+				}else if (msg.status == "errPwd") {
+					alert('输入的旧密码不正确!');
+					old_pwd.focus();
 				} else {
 					alert('登录异常!请重新登录!');
 					window.location.href='login.jsp';
