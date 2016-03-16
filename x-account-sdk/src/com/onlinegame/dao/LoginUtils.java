@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnKeyListener;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -98,7 +99,9 @@ public class LoginUtils {
 			@Override
 			public boolean onKey(DialogInterface dialog, int keyCode,
 					KeyEvent event) {
-				dialog.cancel();
+				if(keyCode == KeyEvent.KEYCODE_BACK) {  
+					dialog.cancel();
+                }  
 				return false;
 			}
 		});
