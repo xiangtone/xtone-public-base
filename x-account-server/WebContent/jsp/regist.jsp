@@ -16,6 +16,11 @@
 		var re_pwd = $("#re_pwd");
 		var email = $("#email");
 		var phone = $("#phone");
+		
+		var mail_reg=  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var num_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
+		var oriData;
+		
 		if(isNullOrEmpty(name.val())){
 			alert("用户名不能为空!");
 			name.focus();
@@ -35,11 +40,17 @@
 			return;
 		}
 		
-		if(!isNullOrEmpty(phone.val())&&phone.val().length!=11){
-			alert("输入11位手机号码!");
-			phone.focus();
-			return;
-		}
+// 		if(!mail_reg.test(email.val())){
+// 			alert("请输入正确的邮箱!");
+// 			email.focus();
+// 			return;
+// 		}
+		
+// 		if(!num_reg.test(phone.val())){
+// 			alert("请输入正确11位手机号码!");
+// 			phone.focus();
+// 			return;
+// 		}
 
 		var oriData = {
 			name : name.val().trim(),

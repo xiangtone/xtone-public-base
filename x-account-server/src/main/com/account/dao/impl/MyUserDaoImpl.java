@@ -94,8 +94,6 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			return value;
 		}
 	
-	
-	
 	/**
 	 * 登录
 	 * @param name

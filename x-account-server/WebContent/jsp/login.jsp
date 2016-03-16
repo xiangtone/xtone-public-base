@@ -88,7 +88,7 @@
 			<input type="text" class="m_input" name="username" id="username" placeholder="请输入用户名"/><br />
 			<input type="password" class="m_input" name="pwd" id="pwd" placeholder="请输入密码"/><br />
 			<input type="button" class="login_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
-			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="#" class="foget_pwd_a text_a">忘记密码?</a>
+			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a>
 		</form>
 	</div>
 

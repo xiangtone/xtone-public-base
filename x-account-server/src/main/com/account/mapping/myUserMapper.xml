@@ -45,7 +45,7 @@
 	<update id="changePwd" parameterType="com.account.domain.MyUser">
 		update my_user set
 		pwd =
-		Md5(#{pwd})
+		Md5(#{newPwd})
 		where name = #{name};
 	</update>
 
