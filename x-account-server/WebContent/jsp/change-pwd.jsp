@@ -26,24 +26,24 @@
 		var re_new_pwd = $("#re_new_pwd");
 		
 		if(isNullOrEmpty(name.val())){
-			alert("登录异常,请重新登录后重试!");
+			webjs.toastShort("登录异常,请重新登录后重试!");
 			window.location.href="login.jsp";
 		}
 		
-		if(isNullOrEmpty(old_pwd.val())){
-			alert("旧密码不能为空!");
-			old_pwd.focus();
+		if(old_pwd.val().length<6||old_pwd.val().length>20){
+			webjs.toastShort("请输入旧的6-20位数密码!");
+			pwd.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(new_pwd.val())){
-			alert("新密码不能为空!");
-			new_pwd.focus();
+		if(new_pwd.val().length<6||new_pwd.val().length>20){
+			webjs.toastShort("请输入新的6-20位数密码!");
+			pwd.focus();
 			return;
 		}
 		
 		if (new_pwd.val()!= re_new_pwd.val()) {
-			alert("两次输入的新密码不一致!请重新输入!");
+			webjs.toastShort("两次输入的新密码不一致!请重新输入!");
 			re_new_pwd.value="";
 			re_new_pwd.focus();
 			return;
@@ -63,29 +63,35 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip='';
 				if (msg.status == "success") {
-					alert('密码修改成功!');
+					tip='密码修改成功!';
 					window.history.back(-1);
+				}else if (msg.status == "errPwd") {
+					tip='输入的旧密码不正确!';
+					old_pwd.focus();
 				} else {
-					alert('登录异常!请重新登录!');
+					tip='登录异常!请重新登录!';
 					window.location.href='login.jsp';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				var msg="密码修改失败!";
+				var tip="密码修改失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="密码修改失败!";
+						tip="密码修改失败!";
 				  		break;
 					default:
-						msg="网络异常，请稍后再试。";
+						tip="网络异常，请稍后再试。";
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 
@@ -110,9 +116,9 @@
 </head>
 <body>
 <input type="hidden" id="name" value="<%=user.getName()%>"/>
-<input type="password" class="m_input" id="old_pwd" placeholder="请输入旧密码"/><br/>
-<input type="password" class="m_input" id="new_pwd" placeholder="请输入新密码"/><br/>
-<input type="password" class="m_input" id="re_new_pwd" placeholder="请再次输入新密码"/><br/>
+<input type="password" class="m_input" id="old_pwd" maxlength="20" placeholder="请输入旧密码"/><br/>
+<input type="password" class="m_input" id="new_pwd" maxlength="20" placeholder="请输入新密码"/><br/>
+<input type="password" class="m_input" id="re_new_pwd" maxlength="20" placeholder="请再次输入新密码"/><br/>
 <input type="button" class="ok_button" value="确&nbsp;认&nbsp;修&nbsp;改" onclick="update()"/>
 <input type="button" class="cancle_button" value="取&nbsp;消&nbsp;修&nbsp;改" onclick="javascrip:window.history.back(1);"/>
 

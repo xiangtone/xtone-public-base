@@ -1,14 +1,16 @@
 package com.account.domain;
 
+import java.io.Serializable;
+
 public class MyUser{
 	
 	//实体类的属性和表的字段名称一一对应
 	private int id;
 	private String name;
 	private String pwd;
-	private String newPwd;
 	private String email;
 	private String phone;
+	private String newPwd;
 	private String uid;
 		 
 	public int getId() {

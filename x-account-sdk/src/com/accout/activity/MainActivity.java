@@ -1,7 +1,7 @@
-package com.onlinegamelogin.activity;
+package com.accout.activity;
 
+import com.accout.util.LoginUtils;
 import com.onlinegamelogin.R;
-import com.onlinegame.dao.LoginUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -35,7 +35,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		
 		context = this;
 		act = this;
 		btn_pay = (Button)findViewById(R.id.btn_pay);
@@ -49,49 +48,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				webpobView = LoginUtils.getInstances().showLoginDialog(context, url); //返回一個webview
-				webpobView.addJavascriptInterface(new JavascriptInterface(context), NAME_SPASE); //设置webview的javascript
-				
-				
+				webpobView = LoginUtils.getInstances().showWebDialog(context, url); //返回一個webview
 			}
 		});
 
-		
-		
 	}
 
-	/**
-	 * webView使用JavaScript获得网页传的数据
-	 * @author 28518
-	 *
-	 */
-	public class JavascriptInterface {
-		private Context context;
-		
-		public JavascriptInterface(Context context) {
-			this.context = context;
-		}
-
-		
-		@android.webkit.JavascriptInterface
-		public void getUid(final String uid) {
-			 getuid = uid;
-			runOnUiThread(new Runnable() {
-				public void run() {
-					
-					LoginUtils.getInstances().login_dialog.cancel();
-					
-					tx_islogin.setText("已登录");
-					tx_uuid.setText("uid = " + uid);
-					Toast.makeText(context, "已登录\n" + uid, Toast.LENGTH_SHORT)
-							.show();
-					btn_pay.setVisibility(View.VISIBLE); //修改为显示的btn
-					
-				}
-			});
-
-		}
-	}
-	
-	
 }

@@ -16,30 +16,41 @@
 		var re_pwd = $("#re_pwd");
 		var email = $("#email");
 		var phone = $("#phone");
-		if(isNullOrEmpty(name.val())){
-			alert("用户名不能为空!");
+		
+		var mail_reg=  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var num_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
+		var oriData;
+		
+		if(isNullOrEmpty(name.val())||name.val().length>20){
+			webjs.toastShort("请输入20字以内用户名!");
 			name.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(pwd.val())){
-			alert("密码不能为空!");
+		if(pwd.val().length<6||pwd.val().length>20){
+			webjs.toastShort("请输入6-20位数密码!");
 			pwd.focus();
 			return;
 		}
 		
 		if ( pwd.val()!= re_pwd.val()) {
-			alert("两次输入的密码不一致!请重新输入!");
+			webjs.toastShort("两次输入的密码不一致!请重新输入!");
 			re_pwd.value="";
 			re_pwd.focus();
 			return;
 		}
 		
-		if(!isNullOrEmpty(phone.val())&&phone.val().length!=11){
-			alert("输入11位手机号码!");
-			phone.focus();
-			return;
-		}
+// 		if(!mail_reg.test(email.val())){
+// 			webjs.toastShort("请输入正确的邮箱!");
+// 			email.focus();
+// 			return;
+// 		}
+		
+// 		if(!num_reg.test(phone.val())){
+// 			webjs.toastShort("请输入正确11位手机号码!");
+// 			phone.focus();
+// 			return;
+// 		}
 
 		var oriData = {
 			name : name.val().trim(),
@@ -56,19 +67,21 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip='';
 				if (msg.status == "success") {
-					alert('注册成功');
+					tip='注册成功';
 					window.history.back(-1);
 				} else if(msg.status == "errRepeat"){
-					alert('用户名已被注册!请更换您的用户名。');
+					tip='用户名已被注册!请更换您的用户名。';
 				} else{
-					alert('注册失败!请稍后重试。');
+					tip='注册失败!请稍后重试。';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				var msg="注册失败!";
+				var tip="注册失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
@@ -79,7 +92,8 @@
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 
@@ -92,8 +106,8 @@
 <body>
 
 <input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
-<input type="password" class="m_input" id="pwd" placeholder="请输入密码"/><br/>
-<input type="password" class="m_input" id="re_pwd" placeholder="请再次输入密码"/><br/>
+<input type="password" class="m_input" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
+<input type="password" class="m_input" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
 <input type="text" class="m_input" id="email" placeholder="请输入邮箱地址，方便日后找回账号"/><br/>
 <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/>
 <input type="button" class="login_button" value="注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册" onclick="regist()"/><br/>
