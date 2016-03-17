@@ -19,21 +19,21 @@
 			return;
 		}
 		
-		var mail_reg=  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		var num_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
 		var oriData;
-		if(mail_reg.test(emailorphone.val())){
+		if(emailIsErr(emailorphone.val())){
 			oriData = {
 					name : name.val().trim(),
 					email : emailorphone.val().trim()
 				};
-		}else if(num_reg.test(emailorphone.val())){
+		}else if(phoneIsErr(emailorphone.val())){
 			oriData = {
 					name : name.val().trim(),
 					phone : emailorphone.val().trim()
 				};
 		}else{
-			webjs.toastShort("请输入正确的邮箱或11位手机号码!");
+			var tip="请输入正确11位手机号码!";
+			alert(tip);
+			webjs.toastShort(tip);
 			emailorphone.focus();
 			return;
 		}		
@@ -63,7 +63,7 @@
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						tip="您输入的用户名或邮箱地址/手机号码不正确!";
+						tip="您输入的用户名或手机号码不正确!";
 				  		break;
 					default:
 						tip="网络异常，请稍后再试。";
@@ -98,7 +98,7 @@
 <!-- <a href="#" class="findby_email_a text_a">通过邮箱找回</a> -->
 <!-- <a href="#" class="findby_num_a text_a">通过手机号找回</a> -->
 <input type="text" class="m_input" id="name" placeholder="请输入用户名"/><br/>
-<input type="text" class="m_input" id="emailorphone" placeholder="请输入邮箱地址或手机号"/><br/>
+<input type="text" class="m_input" id="emailorphone" maxlength="11" placeholder="请输入手机号"/><br/>
 <input type="button" class="ok_button" value="确&nbsp;&nbsp;&nbsp;&nbsp;认" onclick="find()"/>
 <input type="button" class="cancle_button" value="取&nbsp;&nbsp;&nbsp;&nbsp;消" onclick="javascrip:window.history.back(1);"/>
 

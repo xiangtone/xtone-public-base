@@ -8,20 +8,25 @@
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
-
+<% request.getSession(true);
+session.invalidate();%>
 <script type="text/javascript">
 
 	function submitBtn() {
 		var name=$("#username");
 		var pwd=$("#pwd");
 		if(isNullOrEmpty(name.val())||name.val().length>20){
-			webjs.toastShort("请输入20字以内用户名!");
+			var tip="请输入1-20字用户名!";
+			alert(tip);
+			webjs.toastShort(tip);
 			name.focus();
 			return;
 		}
 		
 		if(pwd.val().length<6||pwd.val().length>20){
-			webjs.toastShort("请输入6-20位数密码!");
+			var tip="请输入6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
 			pwd.focus();
 			return;
 		}

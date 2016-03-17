@@ -14,30 +14,27 @@
 		var pwd=$("#pwd");
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
+		var email = $("#email");
 		var phone = $("#phone");
 		
+		var mail_reg=  /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		var num_reg = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/;
 		var oriData;
 		
 		if(isNullOrEmpty(name.val())||name.val().length>20){
-			var tip="请输入1-20字用户名!";
-			alert(tip);
-			webjs.toastShort(tip);
+			webjs.toastShort("请输入20字以内用户名!");
 			name.focus();
 			return;
 		}
 		
 		if(pwd.val().length<6||pwd.val().length>20){
-			var tip="请输入6-20位数密码!";
-			alert(tip);
-			webjs.toastShort(tip);
+			webjs.toastShort("请输入6-20位数密码!");
 			pwd.focus();
 			return;
 		}
 		
 		if ( pwd.val()!= re_pwd.val()) {
-			var tip="两次输入的密码不一致!请重新输入!";
-			alert(tip);
-			webjs.toastShort(tip);
+			webjs.toastShort("两次输入的密码不一致!请重新输入!");
 			re_pwd.value="";
 			re_pwd.focus();
 			return;
@@ -49,17 +46,16 @@
 // 			return;
 // 		}
 		
-		if(phoneIsErr(phone.val())){
-			var tip="请输入正确11位手机号码!";
-			alert(tip);
-			webjs.toastShort(tip);
-			phone.focus();
-			return;
-		}
+// 		if(!num_reg.test(phone.val())){
+// 			webjs.toastShort("请输入正确11位手机号码!");
+// 			phone.focus();
+// 			return;
+// 		}
 
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
+			email : email.val().trim(),
 			phone : phone.val().trim()
 		};
 
@@ -109,9 +105,7 @@
 </head>
 <body>
 
-<input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
-<input type="password" class="m_input" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
-<input type="password" class="m_input" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
+<input type="text" class="m_input" id="email" placeholder="请输入邮箱地址，方便日后找回账号"/><br/>
 <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/>
 <input type="button" class="login_button" value="注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册" onclick="regist()"/><br/>
 <a href="login.jsp" class="foget_pwd_a text_a">已有帐号</a>

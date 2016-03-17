@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>修改密码</title>
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
@@ -26,24 +26,32 @@
 		var re_new_pwd = $("#re_new_pwd");
 		
 		if(isNullOrEmpty(name.val())){
-			webjs.toastShort("登录异常,请重新登录后重试!");
+			var tip="登录异常,请重新登录后重试!";
+			alert(tip);
+			webjs.toastShort(tip);
 			window.location.href="login.jsp";
 		}
 		
 		if(old_pwd.val().length<6||old_pwd.val().length>20){
-			webjs.toastShort("请输入旧的6-20位数密码!");
+			var tip="请输入旧的6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
 			pwd.focus();
 			return;
 		}
 		
 		if(new_pwd.val().length<6||new_pwd.val().length>20){
-			webjs.toastShort("请输入新的6-20位数密码!");
+			var tip="请输入新的6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
 			pwd.focus();
 			return;
 		}
 		
 		if (new_pwd.val()!= re_new_pwd.val()) {
-			webjs.toastShort("两次输入的新密码不一致!请重新输入!");
+			var tip="两次输入的新密码不一致!请重新输入!";
+			alert(tip);
+			webjs.toastShort(tip);
 			re_new_pwd.value="";
 			re_new_pwd.focus();
 			return;

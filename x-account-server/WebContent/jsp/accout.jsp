@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>我</title>
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
@@ -33,9 +33,13 @@
 }
 </style>
 </head>
-<body class="divCenter">
+<body>
+	<div class="divCenter">
 	<img alt="head" src="../img/head1.jpeg" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
-	<a href="change-pwd.jsp">修改密码</a>
+	<input type="button" class="accout_button" value="修改密码" onclick="javascrip:window.location.href='change-pwd.jsp';"/><br>
+	<input type="button" class="accout_button" value="退出登录" onclick="window.location.href = 'login.jsp';"/><br>
+<!-- 	<input type="button" class="accout_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
+	</div>
 </body>
 </html>
