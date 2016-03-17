@@ -26,24 +26,24 @@
 		var re_new_pwd = $("#re_new_pwd");
 		
 		if(isNullOrEmpty(name.val())){
-			alert("登录异常,请重新登录后重试!");
+			webjs.toastShort("登录异常,请重新登录后重试!");
 			window.location.href="login.jsp";
 		}
 		
 		if(old_pwd.val().length<6||old_pwd.val().length>20){
-			alert("请输入旧的6-20位数密码!");
+			webjs.toastShort("请输入旧的6-20位数密码!");
 			pwd.focus();
 			return;
 		}
 		
 		if(new_pwd.val().length<6||new_pwd.val().length>20){
-			alert("请输入新的6-20位数密码!");
+			webjs.toastShort("请输入新的6-20位数密码!");
 			pwd.focus();
 			return;
 		}
 		
 		if (new_pwd.val()!= re_new_pwd.val()) {
-			alert("两次输入的新密码不一致!请重新输入!");
+			webjs.toastShort("两次输入的新密码不一致!请重新输入!");
 			re_new_pwd.value="";
 			re_new_pwd.focus();
 			return;
@@ -63,32 +63,35 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip='';
 				if (msg.status == "success") {
-					alert('密码修改成功!');
+					tip='密码修改成功!';
 					window.history.back(-1);
 				}else if (msg.status == "errPwd") {
-					alert('输入的旧密码不正确!');
+					tip='输入的旧密码不正确!';
 					old_pwd.focus();
 				} else {
-					alert('登录异常!请重新登录!');
+					tip='登录异常!请重新登录!';
 					window.location.href='login.jsp';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				var msg="密码修改失败!";
+				var tip="密码修改失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="密码修改失败!";
+						tip="密码修改失败!";
 				  		break;
 					default:
-						msg="网络异常，请稍后再试。";
+						tip="网络异常，请稍后再试。";
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 

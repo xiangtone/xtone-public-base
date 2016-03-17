@@ -33,9 +33,9 @@ public class RegsitServlet extends HttpServlet {
         
         String info = request.getParameter("info"); //获得信息
 		System.out.println(info);
-		
+		JSON.parseObject(info,MyUser.class);
 		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
-
+		
 		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
         
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库

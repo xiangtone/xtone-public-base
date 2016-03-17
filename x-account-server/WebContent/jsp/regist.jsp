@@ -22,32 +22,32 @@
 		var oriData;
 		
 		if(isNullOrEmpty(name.val())||name.val().length>20){
-			alert("请输入20字以内用户名!");
+			webjs.toastShort("请输入20字以内用户名!");
 			name.focus();
 			return;
 		}
 		
 		if(pwd.val().length<6||pwd.val().length>20){
-			alert("请输入6-20位数密码!");
+			webjs.toastShort("请输入6-20位数密码!");
 			pwd.focus();
 			return;
 		}
 		
 		if ( pwd.val()!= re_pwd.val()) {
-			alert("两次输入的密码不一致!请重新输入!");
+			webjs.toastShort("两次输入的密码不一致!请重新输入!");
 			re_pwd.value="";
 			re_pwd.focus();
 			return;
 		}
 		
 // 		if(!mail_reg.test(email.val())){
-// 			alert("请输入正确的邮箱!");
+// 			webjs.toastShort("请输入正确的邮箱!");
 // 			email.focus();
 // 			return;
 // 		}
 		
 // 		if(!num_reg.test(phone.val())){
-// 			alert("请输入正确11位手机号码!");
+// 			webjs.toastShort("请输入正确11位手机号码!");
 // 			phone.focus();
 // 			return;
 // 		}
@@ -67,19 +67,21 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip='';
 				if (msg.status == "success") {
-					alert('注册成功');
+					tip='注册成功';
 					window.history.back(-1);
 				} else if(msg.status == "errRepeat"){
-					alert('用户名已被注册!请更换您的用户名。');
+					tip='用户名已被注册!请更换您的用户名。';
 				} else{
-					alert('注册失败!请稍后重试。');
+					tip='注册失败!请稍后重试。';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				var msg="注册失败!";
+				var tip="注册失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
@@ -90,7 +92,8 @@
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 

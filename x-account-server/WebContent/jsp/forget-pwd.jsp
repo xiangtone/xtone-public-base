@@ -14,7 +14,7 @@
 		var name = $("#name");
 		var emailorphone = $("#emailorphone");
 		if(isNullOrEmpty(name.val())){
-			alert("用户名不能为空!");
+			webjs.toastShort("用户名不能为空!");
 			name.focus();
 			return;
 		}
@@ -33,7 +33,7 @@
 					phone : emailorphone.val().trim()
 				};
 		}else{
-			alert("请输入正确的邮箱或11位手机号码!");
+			webjs.toastShort("请输入正确的邮箱或11位手机号码!");
 			emailorphone.focus();
 			return;
 		}		
@@ -46,28 +46,32 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
+				var tip='';
 				if (msg.status == "success") {
-					alert('您的申请已提交!');
+					tip='您的申请已提交!';
 					window.history.back(-1);
 				} else if(msg.status == "errRepeat"){
-					alert('');
+					tip='';
 				} else{
-					alert('您的申请提交失败!请稍后重试。');
+					tip='您的申请提交失败!请稍后重试。';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				var msg="提交失败!";
+				var tip="提交失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="您输入的用户名或邮箱地址/手机号码不正确!";
+						tip="您输入的用户名或邮箱地址/手机号码不正确!";
 				  		break;
 					default:
-						msg="网络异常，请稍后再试。";
+						tip="网络异常，请稍后再试。";
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 

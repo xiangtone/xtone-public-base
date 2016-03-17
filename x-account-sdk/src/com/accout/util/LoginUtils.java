@@ -1,5 +1,4 @@
-package com.onlinegame.dao;
-
+package com.accout.util;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -22,12 +21,8 @@ import android.widget.Toast;
 public class LoginUtils {
 	
 	private static Context context;
-
 	
 	public Dialog login_dialog; //动态加载的dialog
-
-
-	
 	
 	private static LoginUtils loginUtils =null;
 	
@@ -37,14 +32,22 @@ public class LoginUtils {
 		}
 	return loginUtils;	
 	}
-
-	
 	
 	/**
-	 * 动态创建一个dialog窗口
-	 * @return 
+	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,String interfaceName),interfaceName默认为webjs。
+	 * @param interfaceName:为与web应用js交互的对象
+	 * @return WebView
 	 */
-	public  WebView showLoginDialog(Context context,String url) {
+	public WebView showWebDialog(Context context,String url){
+		return showWebDialog(context,url,"webjs");
+	}
+	/**
+	 * 动态创建一个dialog窗口
+	 * @param interfaceName:为与web应用js交互的对象
+	 * @return WebView
+	 */
+	public WebView showWebDialog(Context context,String url,String interfaceName) {
+		this.context=context;
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
@@ -75,7 +78,8 @@ public class LoginUtils {
 
 		// 设置支持javascript
 		webpobView.getSettings().setJavaScriptEnabled(true);
-
+		// js能调用android项目方法
+		webpobView.addJavascriptInterface(new WebJsInterface(context), interfaceName);
 		// 启动缓存
 		webpobView.getSettings().setAppCacheEnabled(true);
 
@@ -86,8 +90,6 @@ public class LoginUtils {
 				return true;
 			}
 		});
-
-		webpobView.setWebChromeClient(new WebChromeClient());//使webview能弹出alert
 
 		login_dialog = new Dialog(context,
 				android.R.style.Theme_Translucent_NoTitleBar);
@@ -116,13 +118,5 @@ public class LoginUtils {
 	  return webpobView;
 	}
 	
-//	public class JavascriptInterface {
-//		private Context context;
-//		
-//		public JavascriptInterface(Context context) {
-//			this.context = context;
-//		}
-//	}
-
 }
 
