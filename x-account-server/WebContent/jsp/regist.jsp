@@ -85,10 +85,10 @@
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="用户名不可用!请更换您的用户名。";
+						tip="用户名不可用!请更换您的用户名。";
 				  		break;
 					default:
-						msg="网络异常，请稍后再试。";
+						tip="网络异常，请稍后再试。";
 						break;
 				  			
 				}
