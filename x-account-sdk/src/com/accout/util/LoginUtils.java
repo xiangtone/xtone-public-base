@@ -3,11 +3,12 @@ package com.accout.util;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnKeyListener;
+
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -20,11 +21,15 @@ import android.widget.Toast;
 
 public class LoginUtils {
 	
-	private static Context context;
+	private Context context;
 	
 	public Dialog login_dialog; //动态加载的dialog
 	
 	private static LoginUtils loginUtils =null;
+	
+	private LoginUtils() {
+		super();
+	}
 	
 	public static LoginUtils getInstances(){
 		if(loginUtils == null){
@@ -64,7 +69,7 @@ public class LoginUtils {
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT));// 设置dialog宽度高度
 
-		WebView webpobView = null;
+		final WebView webpobView = new WebView(context);
 
 		// webview的Layoutparams
 		LayoutParams plaqueParams = new LayoutParams(
@@ -72,7 +77,6 @@ public class LoginUtils {
 						LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.MATCH_PARENT));
 
-		webpobView = new WebView(context);
 		webpobView.setLayoutParams(plaqueParams);
 		webpobView.loadUrl(url);
 
@@ -91,22 +95,39 @@ public class LoginUtils {
 			}
 		});
 
+		webpobView.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				if(keyCode == KeyEvent.KEYCODE_BACK) {  
+					if(webpobView.canGoBack()){
+						webpobView.goBack();
+					}else{
+						login_dialog.cancel();
+					}
+					
+                }
+				return false;
+			}
+		});
+		
 		login_dialog = new Dialog(context,
 				android.R.style.Theme_Translucent_NoTitleBar);
 		login_dialog.setCancelable(false);
 		login_dialog.show();
 
-		login_dialog.setOnKeyListener(new OnKeyListener() {
-
-			@Override
-			public boolean onKey(DialogInterface dialog, int keyCode,
-					KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_BACK) {  
-					dialog.cancel();
-                }  
-				return false;
-			}
-		});
+//		login_dialog.setOnKeyListener(new OnKeyListener() {
+//
+//			@Override
+//			public boolean onKey(DialogInterface dialog, int keyCode,
+//					KeyEvent event) {
+//				if(keyCode == KeyEvent.KEYCODE_BACK) {  
+//					dialog.cancel();
+//                }  
+//				return false;
+//			}
+//		});
 
 		// 相对布局装webview
 		plaqueRelative.addView(webpobView);
