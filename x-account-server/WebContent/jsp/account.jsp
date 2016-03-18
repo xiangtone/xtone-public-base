@@ -39,9 +39,9 @@
 			<div class="divCenter">
 	<img alt="head" src="../img/head1.jpeg" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
-	<input type="button" class="accout_button" value="修改密码" onclick="javascrip:window.location.href='change-pwd.jsp';"/><br>
-	<input type="button" class="accout_button" value="退出登录" onclick="window.location.href = 'login.jsp';"/><br>
-<!-- 	<input type="button" class="accout_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
+	<input type="button" class="account_button" value="修改密码" onclick="javascrip:window.location.href='change-pwd.jsp';"/><br>
+	<input type="button" class="account_button" value="退出登录" onclick="window.location.href = 'login.jsp';"/><br>
+<!-- 	<input type="button" class="account_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
 		</div>
 	</div>
 </body>

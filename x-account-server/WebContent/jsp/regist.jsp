@@ -49,7 +49,7 @@
 // 			return;
 // 		}
 		
-		if(phoneIsErr(phone.val())){
+		if(!phoneRight(phone.val())){
 			var tip="请输入正确11位手机号码!";
 			alert(tip);
 			webjs.toastShort(tip);

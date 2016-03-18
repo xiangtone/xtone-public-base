@@ -20,12 +20,12 @@
 		}
 		
 		var oriData;
-		if(emailIsErr(emailorphone.val())){
+		if(emailRight(emailorphone.val())){
 			oriData = {
 					name : name.val().trim(),
 					email : emailorphone.val().trim()
 				};
-		}else if(phoneIsErr(emailorphone.val())){
+		}else if(phoneRight(emailorphone.val())){
 			oriData = {
 					name : name.val().trim(),
 					phone : emailorphone.val().trim()
