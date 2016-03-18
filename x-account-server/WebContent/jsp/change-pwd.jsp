@@ -123,12 +123,16 @@
 </style>
 </head>
 <body>
+<jsp:include page="head.jsp"></jsp:include>
+		<div class="magin_lr">
+			<div class="divCenter">
 <input type="hidden" id="name" value="<%=user.getName()%>"/>
 <input type="password" class="m_input" id="old_pwd" maxlength="20" placeholder="请输入旧密码"/><br/>
 <input type="password" class="m_input" id="new_pwd" maxlength="20" placeholder="请输入新密码"/><br/>
 <input type="password" class="m_input" id="re_new_pwd" maxlength="20" placeholder="请再次输入新密码"/><br/>
 <input type="button" class="ok_button" value="确&nbsp;认&nbsp;修&nbsp;改" onclick="update()"/>
 <input type="button" class="cancle_button" value="取&nbsp;消&nbsp;修&nbsp;改" onclick="javascrip:window.history.back(1);"/>
-
+	</div>
+	</div>
 </body>
 </html>

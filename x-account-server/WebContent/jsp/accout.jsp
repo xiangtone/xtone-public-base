@@ -12,10 +12,10 @@
 <%
 	request.getSession(true);
 	MyUser user=(MyUser) session.getAttribute("user");
-	if (user == null) {
-		response.sendRedirect("login.jsp");
-		return;		
-	}
+// 	if (user == null) {
+// 		response.sendRedirect("login.jsp");
+// 		return;		
+// 	}
 %>
 <style type="text/css">
 .circle_head {
@@ -34,12 +34,15 @@
 </style>
 </head>
 <body>
-	<div class="divCenter">
+	<jsp:include page="head.jsp"></jsp:include>
+		<div class="magin_lr">
+			<div class="divCenter">
 	<img alt="head" src="../img/head1.jpeg" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
 	<input type="button" class="accout_button" value="修改密码" onclick="javascrip:window.location.href='change-pwd.jsp';"/><br>
 	<input type="button" class="accout_button" value="退出登录" onclick="window.location.href = 'login.jsp';"/><br>
 <!-- 	<input type="button" class="accout_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
+		</div>
 	</div>
 </body>
 </html>

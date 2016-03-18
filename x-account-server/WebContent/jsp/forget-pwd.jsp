@@ -95,12 +95,16 @@
 </style>
 </head>
 <body>
+<jsp:include page="head.jsp"></jsp:include>
+		<div class="magin_lr">
+			<div class="divCenter">
 <!-- <a href="#" class="findby_email_a text_a">通过邮箱找回</a> -->
 <!-- <a href="#" class="findby_num_a text_a">通过手机号找回</a> -->
 <input type="text" class="m_input" id="name" placeholder="请输入用户名"/><br/>
 <input type="text" class="m_input" id="emailorphone" maxlength="11" placeholder="请输入手机号"/><br/>
 <input type="button" class="ok_button" value="确&nbsp;&nbsp;&nbsp;&nbsp;认" onclick="find()"/>
 <input type="button" class="cancle_button" value="取&nbsp;&nbsp;&nbsp;&nbsp;消" onclick="javascrip:window.history.back(1);"/>
-
+	</div>
+	</div>
 </body>
 </html>

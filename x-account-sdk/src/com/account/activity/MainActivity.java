@@ -1,7 +1,7 @@
-package com.accout.activity;
+package com.account.activity;
 
-import com.accout.util.LoginUtils;
-import com.onlinegamelogin.R;
+import com.account.R;
+import com.account.util.AccountService;
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,7 +24,7 @@ public class MainActivity extends Activity {
 	private Button btn_login; //网页登陆
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
-	private String url = "http://192.168.1.222:8080/" + "x-account-server"; //登陆界面
+	private String url = "http://192.168.1.222:8080/x-account-server/jsp/login.jsp"; //登陆界面
 	private WebView webpobView ; 
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值
@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				webpobView = LoginUtils.getInstances().showWebDialog(context, url); //返回一個webview
+				webpobView = AccountService.getInstances().showWebDialog(context, url); //返回一個webview
 			}
 		});
 

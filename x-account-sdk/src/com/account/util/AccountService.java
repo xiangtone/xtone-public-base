@@ -1,14 +1,16 @@
-package com.accout.util;
+package com.account.util;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnKeyListener;
+//import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -19,21 +21,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-public class LoginUtils {
+public class AccountService {
 	
 	private Context context;
 	
 	public Dialog login_dialog; //动态加载的dialog
 	
-	private static LoginUtils loginUtils =null;
+	private static AccountService loginUtils =null;
 	
-	private LoginUtils() {
+	private AccountService() {
 		super();
 	}
 	
-	public static LoginUtils getInstances(){
+	public static AccountService getInstances(){
 		if(loginUtils == null){
-			loginUtils = new LoginUtils();
+			loginUtils = new AccountService();
 		}
 	return loginUtils;	
 	}
@@ -86,21 +88,45 @@ public class LoginUtils {
 		webpobView.addJavascriptInterface(new WebJsInterface(context), interfaceName);
 		// 启动缓存
 		webpobView.getSettings().setAppCacheEnabled(true);
+//		webpobView.getSettings().setCacheMode();
 
 		webpobView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
-				view.loadUrl(url);
-				return true;
+//				view.loadUrl(url);
+				return false;
 			}
 		});
 
-		webpobView.setOnKeyListener(new OnKeyListener() {
-			
+//		webpobView.setOnKeyListener(new OnKeyListener() {
+//			
+//			@Override
+//			public boolean onKey(View v, int keyCode, KeyEvent event) {
+//				// TODO Auto-generated method stub
+//				if(keyCode == KeyEvent.KEYCODE_BACK) {  
+//					if(webpobView.canGoBack()){
+//						webpobView.goBack();
+//						Log.i("", "1");
+//					}else{
+//						login_dialog.cancel();
+//					}
+//					
+//                }
+//				return false;
+//			}
+//		});
+		
+		login_dialog = new Dialog(context,
+				android.R.style.Theme_Translucent_NoTitleBar);
+		login_dialog.setCancelable(false);
+		login_dialog.show();
+
+		login_dialog.setOnKeyListener(new OnKeyListener() {
+
 			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
-				if(keyCode == KeyEvent.KEYCODE_BACK) {  
+			public boolean onKey(DialogInterface dialog, int keyCode,
+					KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN) {  
 					if(webpobView.canGoBack()){
 						webpobView.goBack();
 					}else{
@@ -111,23 +137,6 @@ public class LoginUtils {
 				return false;
 			}
 		});
-		
-		login_dialog = new Dialog(context,
-				android.R.style.Theme_Translucent_NoTitleBar);
-		login_dialog.setCancelable(false);
-		login_dialog.show();
-
-//		login_dialog.setOnKeyListener(new OnKeyListener() {
-//
-//			@Override
-//			public boolean onKey(DialogInterface dialog, int keyCode,
-//					KeyEvent event) {
-//				if(keyCode == KeyEvent.KEYCODE_BACK) {  
-//					dialog.cancel();
-//                }  
-//				return false;
-//			}
-//		});
 
 		// 相对布局装webview
 		plaqueRelative.addView(webpobView);

@@ -1,4 +1,4 @@
-package com.accout.util;
+package com.account.util;
 
 import android.content.Context;
 import android.widget.Toast;
