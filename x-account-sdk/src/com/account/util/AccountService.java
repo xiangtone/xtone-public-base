@@ -1,8 +1,12 @@
 package com.account.util;
 
+import com.account.bean.User;
+
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
 
 import android.util.Log;
@@ -28,6 +32,8 @@ public class AccountService {
 	public Dialog login_dialog; //动态加载的dialog
 	
 	private static AccountService loginUtils =null;
+	
+	private SharedPreferences sp=null;
 	
 	private AccountService() {
 		super();
@@ -55,6 +61,7 @@ public class AccountService {
 	 */
 	public WebView showWebDialog(Context context,String url,String interfaceName) {
 		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
@@ -146,6 +153,14 @@ public class AccountService {
 		login_dialog.setContentView(linearLayout);
 
 	  return webpobView;
+	}
+	
+	public String getUid() {
+		String Uid="请先登录!";
+		if(sp!=null){
+			Uid=sp.getString("uid",Uid);
+		}	
+		return Uid;
 	}
 	
 }

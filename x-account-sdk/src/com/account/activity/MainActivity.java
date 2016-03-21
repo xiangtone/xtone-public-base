@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 	private Context context;
 	private Button btn_pay; //支付
 	private Button btn_login; //网页登陆
+	private Button btn_uid;
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
 	private String url = "http://192.168.1.222:8080/x-account-server/jsp/login.jsp"; //登陆界面
@@ -39,6 +40,7 @@ public class MainActivity extends Activity {
 		act = this;
 		btn_pay = (Button)findViewById(R.id.btn_pay);
 		btn_login =(Button) findViewById(R.id.btn_login);
+		btn_uid =(Button) findViewById(R.id.btn_uid);
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
@@ -52,6 +54,13 @@ public class MainActivity extends Activity {
 			}
 		});
 
+		btn_uid.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				tx_uuid.setText(AccountService.getInstances().getUid()); //返回一個webview
+			}
+		});
 	}
 
 }

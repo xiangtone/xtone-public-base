@@ -126,6 +126,7 @@
 <jsp:include page="head.jsp"></jsp:include>
 		<div class="magin_lr">
 			<div class="divCenter">
+			<font class="top_tip">修改密码:</font><br>
 <input type="hidden" id="name" value="<%=user.getName()%>"/>
 <input type="password" class="m_input" id="old_pwd" maxlength="20" placeholder="请输入旧密码"/><br/>
 <input type="password" class="m_input" id="new_pwd" maxlength="20" placeholder="请输入新密码"/><br/>

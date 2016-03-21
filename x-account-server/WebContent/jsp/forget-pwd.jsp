@@ -98,6 +98,7 @@
 <jsp:include page="head.jsp"></jsp:include>
 		<div class="magin_lr">
 			<div class="divCenter">
+			<font class="top_tip">找回密码:</font><br>
 <!-- <a href="#" class="findby_email_a text_a">通过邮箱找回</a> -->
 <!-- <a href="#" class="findby_num_a text_a">通过手机号找回</a> -->
 <input type="text" class="m_input" id="name" placeholder="请输入用户名"/><br/>

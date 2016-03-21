@@ -25,6 +25,7 @@ public final class R {
     public static final class id {
         public static final int btn_login=0x7f060002;
         public static final int btn_pay=0x7f060004;
+        public static final int btn_uid=0x7f060005;
         public static final int islogin=0x7f060000;
         public static final int logout=0x7f060003;
         public static final int txuuid=0x7f060001;

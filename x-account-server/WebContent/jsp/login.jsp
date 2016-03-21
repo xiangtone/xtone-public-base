@@ -44,7 +44,10 @@ session.invalidate();%>
 				var tip='';
 				if (msg.status == "success") {
 					tip='登录成功!';
+					
 					window.location.href = 'account.jsp';
+					webjs.setUid(msg.uid);
+// 					webjs.setUid(msg.data);
 				}else {
 					tip='登录失败!请检查用户名和密码是否正确。';
 				}
@@ -84,10 +87,10 @@ session.invalidate();%>
 			<div class="divCenter">
 
 		<form action="/adTest/LoginServlet" method="get" id="login_form">
-			<font class="login_tip">请先登录:</font><br>
+			<font class="top_tip">请先登录：</font><br>
 			<input type="text" class="m_input" name="username" id="username" maxlength="20" placeholder="请输入用户名"/><br />
 			<input type="password" class="m_input" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/><br />
-			<input type="button" class="login_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
+			<input type="button" class="single_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
 			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br />
 		</form>
 			</div>

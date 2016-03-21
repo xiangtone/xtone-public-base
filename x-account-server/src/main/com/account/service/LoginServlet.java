@@ -52,12 +52,13 @@ public class LoginServlet extends HttpServlet {
 		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
 		
-		myUser = daoImpl.login(myUser);
+		MyUser loginUser = daoImpl.login(myUser);
 		
-		if (myUser != null) {
-			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
-			HttpSession session=request.getSession();
-			session.setAttribute("user", myUser);
+		if (loginUser != null) {
+			loginUser.setPwd(myUser.getPwd());
+			HttpSession session=request.getSession();			
+			session.setAttribute("user", loginUser);
+			response.getWriter().append("{\"status\":\"success\",\"name\":\"" + loginUser.getName() + "\",\"pwd\":\"" + loginUser.getPwd() + "\",\"uid\":\"" + loginUser.getUid() + "\"}");
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,
