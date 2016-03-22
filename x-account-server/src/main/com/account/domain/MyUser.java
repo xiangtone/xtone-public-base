@@ -55,7 +55,7 @@ public class MyUser{
 	public void setNewPwd(String newPwd) {
 		this.newPwd = newPwd;
 	}
-	public String getJson(){
-		return "{\"name\":\"" + getName() + "\",\"pwd\":\"" + getPwd() + "\",\"phone\":\"" + getPhone() + "\",\"uid\":\"" + getUid() + "\"}";		
-	}
+//	public String getJson(){
+//		return "{\"name\":\"" + getName() + "\",\"pwd\":\"" + getPwd() + "\",\"phone\":\"" + getPhone() + "\",\"uid\":\"" + getUid() + "\"}";		
+//	}
 }

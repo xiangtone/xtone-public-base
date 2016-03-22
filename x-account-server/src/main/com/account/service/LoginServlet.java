@@ -11,6 +11,7 @@ import javax.websocket.Session;
 
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
+import com.account.json.LoginRsp;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -56,9 +57,13 @@ public class LoginServlet extends HttpServlet {
 		
 		if (loginUser != null) {
 			loginUser.setPwd(myUser.getPwd());
-			HttpSession session=request.getSession();			
+			HttpSession session=request.getSession();		
 			session.setAttribute("user", loginUser);
-			response.getWriter().append("{\"status\":\"success\",\"name\":\"" + loginUser.getName() + "\",\"pwd\":\"" + loginUser.getPwd() + "\",\"uid\":\"" + loginUser.getUid() + "\"}");
+			LoginRsp rsp=new LoginRsp();
+			rsp.setStatus("success");
+			rsp.setData(loginUser);
+			System.out.println(JSONObject.toJSONString(rsp));
+			response.getWriter().append(JSONObject.toJSONString(rsp));
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,
@@ -76,5 +81,7 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
+	public static void main(String[] args) {
+		
+	}
 }

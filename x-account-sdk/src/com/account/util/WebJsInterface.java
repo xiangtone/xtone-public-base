@@ -1,8 +1,7 @@
 package com.account.util;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-
-import com.account.bean.User;
 
 import android.app.Activity;
 import android.content.Context;
@@ -36,22 +35,20 @@ public class WebJsInterface {
 	}
 	
 	@android.webkit.JavascriptInterface
-	public void setUser(JSONObject object) {
-//		if(user!=null){
-//			SharedPreferences sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
-//			SharedPreferences.Editor editor=sp.edit();  
-//			editor.putString("name",user.getName()); 
-//			editor.putString("pwd",user.getPwd()); 
-//			editor.putString("phone",user.getPhone()); 
-//			editor.putString("uid",user.getUid()); 
-//	        editor.commit();
-//		}	
-	}
-	
-	@android.webkit.JavascriptInterface
-	public void setUid(String uid) {
-		editor.putString("uid",uid); 
-        editor.commit();	
+	public void setUser(String json) {
+				
+		try {
+			Log.i("WebJsInterface", json);
+			JSONObject jsonObject=new JSONObject(json);
+			editor.putString("name",jsonObject.getString("name"));
+			editor.putString("pwd",jsonObject.getString("pwd"));
+			editor.putString("uid",jsonObject.getString("uid"));
+	        editor.commit();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

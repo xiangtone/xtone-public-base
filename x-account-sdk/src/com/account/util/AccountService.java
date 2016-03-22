@@ -1,7 +1,5 @@
 package com.account.util;
 
-import com.account.bean.User;
-
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
