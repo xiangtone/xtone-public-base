@@ -8,11 +8,12 @@
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
-<% request.getSession(true);
-session.invalidate();%>
+<%-- <% request.getSession(true); --%>
+<%-- session.invalidate();%> --%>
 <script type="text/javascript">
 
 	function submitBtn() {
+		
 		var name=$("#username");
 		var pwd=$("#pwd");
 		if(isNullOrEmpty(name.val())||name.val().length>20){
@@ -90,7 +91,8 @@ session.invalidate();%>
 			<input type="text" class="m_input" name="username" id="username" maxlength="20" placeholder="请输入用户名"/>
 			<input type="password" class="m_input" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
 			<input type="button" class="single_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
-			<a href="regist.jsp" class="regist_a text_a">注册</a><a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br />
+			<a href="regist.jsp" class="regist_a text_a">注册</a>
+<!-- 			<a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br /> -->
 		</form>
 			</div>
 	</div>

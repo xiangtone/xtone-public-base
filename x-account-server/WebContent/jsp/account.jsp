@@ -12,15 +12,33 @@
 <%
 	request.getSession(true);
 	MyUser user=(MyUser) session.getAttribute("user");
-// 	if (user == null) {
-// 		response.sendRedirect("login.jsp");
-// 		return;		
-// 	}
+	if (user == null) {
+		response.sendRedirect("login.jsp");
+		return;		
+	}
 %>
+<script type="text/javascript">
+
+	function exit() {
+		$.ajax({
+			type : "post",
+			url : "../AccountServlet",
+			async : false,
+			success : function(msg) {
+				window.location.href = 'login.jsp';
+				webjs.closeWeb();
+				webjs.toastShort('成功退出登录！');
+			},
+			error : function(){
+				window.location.href = 'login.jsp';
+			}	
+		});
+	}
+</script>
 <style type="text/css">
 .circle_head {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	margin:10px 0 10px 0;
 	-webkit-border-radius: 50%;
 	-moz-border-radius: 50%;
@@ -34,13 +52,12 @@
 </style>
 </head>
 <body>
-	<jsp:include page="head.jsp"></jsp:include>
 		<div class="magin_lr">
 			<div class="divCenter">
-	<img alt="head" src="../img/head1.jpeg" class="circle_head"><br>
+	<img alt="head" src="../img/ic_head01.png" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
 	<div class="account_button" onclick="javascrip:window.location.href='change-pwd.jsp';"><font class="account_select_l">修改密码</font><font class="account_select_r">></font></div>
-	<div class="account_button" onclick="javascrip:window.location.href='login.jsp';"><font class="account_select_l">退出登录</font><font class="account_select_r">></font></div>
+	<div class="account_button" onclick="exit()"><font class="account_select_l">退出登录</font><font class="account_select_r">></font></div>
 <!-- 	<input type="button" class="account_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
 		</div>
 	</div>

@@ -62,7 +62,6 @@ public class LoginServlet extends HttpServlet {
 			LoginRsp rsp=new LoginRsp();
 			rsp.setStatus("success");
 			rsp.setData(loginUser);
-			System.out.println(JSONObject.toJSONString(rsp));
 			response.getWriter().append(JSONObject.toJSONString(rsp));
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
@@ -80,8 +79,5 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
-	}
-	public static void main(String[] args) {
-		
 	}
 }
