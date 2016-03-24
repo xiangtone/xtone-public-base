@@ -38,7 +38,6 @@ public class WebJsInterface {
 	public void setUser(String json) {
 				
 		try {
-			Log.i("WebJsInterface", json);
 			JSONObject jsonObject=new JSONObject(json);
 			editor.putString("name",jsonObject.getString("name"));
 			editor.putString("pwd",jsonObject.getString("pwd"));
@@ -49,6 +48,11 @@ public class WebJsInterface {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@android.webkit.JavascriptInterface
+	public void closeWeb(){
+		AccountService.getInstances().close();
 	}
 	
 }

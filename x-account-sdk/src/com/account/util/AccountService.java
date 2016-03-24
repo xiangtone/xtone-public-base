@@ -6,12 +6,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
+import android.graphics.Bitmap;
 
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.CookieSyncManager;
+import android.webkit.CookieManager;
 //import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -32,6 +35,10 @@ public class AccountService {
 	private static AccountService loginUtils =null;
 	
 	private SharedPreferences sp=null;
+	
+	private SharedPreferences.Editor editor;
+	
+	private String cookieStr;
 	
 	private AccountService() {
 		super();
@@ -60,6 +67,7 @@ public class AccountService {
 	public WebView showWebDialog(Context context,String url,String interfaceName) {
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
@@ -85,8 +93,8 @@ public class AccountService {
 						LinearLayout.LayoutParams.MATCH_PARENT));
 
 		webpobView.setLayoutParams(plaqueParams);
+		
 		webpobView.loadUrl(url);
-
 		// 设置支持javascript
 		webpobView.getSettings().setJavaScriptEnabled(true);
 		// js能调用android项目方法
@@ -101,6 +109,26 @@ public class AccountService {
 //				view.loadUrl(url);
 				return false;
 			}
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				// TODO Auto-generated method stub
+				cookieStr=sp.getString("cookies",null);
+				if(cookieStr!=null){
+					CookieManager cookieManager = CookieManager.getInstance();
+					cookieManager.setAcceptCookie(true); 
+					cookieManager.setCookie(url, cookieStr);
+				}
+				super.onPageStarted(view, url, favicon);
+			}
+
+			public void onPageFinished(WebView view, String url) {
+				CookieManager cookieManager = CookieManager.getInstance();
+				cookieStr = cookieManager.getCookie(url);
+				editor.putString("cookies",cookieStr);
+		        editor.commit();
+				super.onPageFinished(view, url);
+			}
+
 		});
 
 //		webpobView.setOnKeyListener(new OnKeyListener() {
@@ -159,6 +187,10 @@ public class AccountService {
 			Uid=sp.getString("uid",Uid);
 		}	
 		return Uid;
+	}
+	
+	public void close(){
+		login_dialog.cancel();
 	}
 	
 }
