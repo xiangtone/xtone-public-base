@@ -108,15 +108,15 @@
 
 </head>
 <body>
-<jsp:include page="head.jsp"></jsp:include>
+<%-- <jsp:include page="head.jsp"></jsp:include> --%>
 		<div class="magin_lr">
 			<div class="divCenter">
-			<font class="top_tip">注册:</font><br>
-<input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
-<input type="password" class="m_input" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
-<input type="password" class="m_input" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
+			<font class="top_tip">注册</font><br>
+<input type="text" class="m_input input_border" id="name" placeholder="请输入用户名"/><br/>
+<input type="password" class="m_input input_border" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
+<input type="password" class="m_input input_border" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
 <!-- <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/> -->
-<input type="button" class="single_button" value="注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册" onclick="regist()"/><br/>
+<input type="button" class="btn_mp single_button input_border button_color" value="注册" onclick="regist()"/><br/>
 <a href="login.jsp" class="foget_pwd_a text_a">已有帐号</a>
 	</div>
 	</div>

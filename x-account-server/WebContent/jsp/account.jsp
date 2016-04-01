@@ -44,10 +44,12 @@
 	-moz-border-radius: 50%;
 	-o-border-radius: 50%;
 	border-radius: 50%;
+	margin-top: 10%;
 }
 
 .text_name{
 	font-size: 22px;
+	color: white;
 }
 </style>
 </head>
@@ -56,8 +58,8 @@
 			<div class="divCenter">
 	<img alt="head" src="../img/ic_head01.png" class="circle_head"><br>
 	<font class="text_name"><%=user.getName()%></font><br>
-	<div class="account_button" onclick="javascrip:window.location.href='change-pwd.jsp';"><font class="account_select_l">修改密码</font><font class="account_select_r">></font></div>
-	<div class="account_button" onclick="exit()"><font class="account_select_l">退出登录</font><font class="account_select_r">></font></div>
+	<div class="account_button input_border" onclick="javascrip:window.location.href='change-pwd.jsp';" style="margin-top: 20px;"><font class="account_select_l">修改密码</font><font class="account_select_r">></font></div>
+	<div class="account_button input_border" onclick="exit()"><font class="account_select_l">退出登录</font><font class="account_select_r">></font></div>
 <!-- 	<input type="button" class="account_button" value="修改账号信息" onclick="window.location.href = 'updateContent.jsp';"/><br> -->
 		</div>
 	</div>

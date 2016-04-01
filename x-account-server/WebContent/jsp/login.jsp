@@ -87,11 +87,11 @@
 			<div class="divCenter">
 
 		<form action="/adTest/LoginServlet" method="get" id="login_form">
-			<font class="top_tip">请先登录：</font><br>
-			<input type="text" class="m_input" name="username" id="username" maxlength="20" placeholder="请输入用户名"/>
-			<input type="password" class="m_input" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
-			<input type="button" class="single_button" id="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录" onclick="submitBtn()" /><br /> 
-			<a href="regist.jsp" class="regist_a text_a">注册</a>
+			<font class="top_tip ">登录</font><br>
+			<input type="text" class="m_input input_border" name="username" id="username" maxlength="20" placeholder="请输入用户名"/>
+			<input type="password" class="m_input input_border" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
+			<input type="button" class="btn_mp single_button input_border button_color" id="submit" value="登录" onclick="submitBtn()" /><br /> 
+			<a href="regist.jsp" class="regist_a text_a">注册新帐号</a>
 <!-- 			<a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br /> -->
 		</form>
 			</div>

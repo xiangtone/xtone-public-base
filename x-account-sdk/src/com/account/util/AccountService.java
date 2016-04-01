@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.CookieManager;
 //import android.view.View.OnKeyListener;
@@ -30,7 +31,9 @@ public class AccountService {
 	
 	private Context context;
 	
-	public Dialog login_dialog; //动态加载的dialog
+	public Dialog login_dialog=null; //动态加载的dialog
+	
+	private WebView webpobView=null;
 	
 	private static AccountService loginUtils =null;
 	
@@ -40,6 +43,10 @@ public class AccountService {
 	
 	private String cookieStr;
 	
+	private LayoutParams plaqueParams = null;
+	private LinearLayout linearLayout = null;
+	private RelativeLayout plaqueRelative = null;
+	private int jj=0;
 	private AccountService() {
 		super();
 	}
@@ -52,42 +59,70 @@ public class AccountService {
 	}
 	
 	/**
-	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,String interfaceName),interfaceName默认为webjs。
+	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),width默认为屏幕4/5,height默认为屏幕1/2,interfaceName默认为webjs。
+	 * @param width为弹出窗口的宽
+	 * @param height为弹出窗口的高
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
 	public WebView showWebDialog(Context context,String url){
-		return showWebDialog(context,url,"webjs");
+		WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+		 
+	     int width = wm.getDefaultDisplay().getWidth()*4/5;
+	     int height = wm.getDefaultDisplay().getHeight()*1/2;
+//		return showWebDialog(context,url,650,700,"webjs");
+	     return showWebDialog(context,url,width,height,"webjs");
 	}
 	/**
-	 * 动态创建一个dialog窗口
+	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),interfaceName默认为webjs。
+	 * @param width为弹出窗口的宽
+	 * @param height为弹出窗口的高
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,String interfaceName) {
+	public WebView showWebDialog(Context context,String url,int width,int height){
+		return showWebDialog(context,url,width,height,"webjs");
+	}
+	/**
+	 * 动态创建一个dialog窗口
+	 * @param width为弹出窗口的宽
+	 * @param height为弹出窗口的高
+	 * @param interfaceName:为与web应用js交互的对象
+	 * @return WebView
+	 */
+	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName) {
+		
+		if(jj==1&login_dialog!=null&&plaqueParams!=null&&this.context!=null&&plaqueRelative !=null&&linearLayout!=null){
+			Log.i("dialog", "full");
+			login_dialog.show();
+			return webpobView;
+		}
+		jj=1;
+		webpobView = new WebView(context);
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
-		LinearLayout linearLayout = new LinearLayout(context);
+		linearLayout = new LinearLayout(context);
 		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT));
-
-		RelativeLayout plaqueRelative = new RelativeLayout(context);
+		linearLayout.setGravity(Gravity.CENTER);//设置居中弹出
+		plaqueRelative = new RelativeLayout(context);
 
 		// 设置padding
-		plaqueRelative.setGravity(Gravity.CENTER);
+//		plaqueRelative.setGravity(Gravity.CENTER);
 		// 装webview的相对布局Layoutparams
-		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT));// 设置dialog宽度高度
-
-		final WebView webpobView = new WebView(context);
+//		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(
+//				LinearLayout.LayoutParams.MATCH_PARENT,
+//				LinearLayout.LayoutParams.MATCH_PARENT));// 设置dialog宽度高度
+		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(width,height));
+		
 
 		// webview的Layoutparams
-		LayoutParams plaqueParams = new LayoutParams(
+		plaqueParams = new LayoutParams(
 				new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.MATCH_PARENT));
@@ -160,12 +195,12 @@ public class AccountService {
 			public boolean onKey(DialogInterface dialog, int keyCode,
 					KeyEvent event) {
 				if(keyCode == KeyEvent.KEYCODE_BACK&&event.getAction()==KeyEvent.ACTION_DOWN) {  
-					if(webpobView.canGoBack()){
-						webpobView.goBack();
-					}else{
-						login_dialog.cancel();
-					}
-					
+//					if(webpobView.canGoBack()){
+//						webpobView.goBack();
+//					}else{
+//						login_dialog.cancel();
+//					}
+						login_dialog.hide();
                 }
 				return false;
 			}
@@ -190,7 +225,7 @@ public class AccountService {
 	}
 	
 	public void close(){
-		login_dialog.cancel();
+		login_dialog.hide();
 	}
 	
 }
