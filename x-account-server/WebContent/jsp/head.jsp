@@ -1,3 +1,5 @@
-<div style="background-color: #ffffff;height:35px;line-height:35px;">
-	<a style="font-size:20px;padding-left: 15px;padding-right: 15px;" onclick="javascrip:window.history.back(1);"><</a>
+<div style="background-color: #00000000; height: 10%;">
+	<a style="float: right; margin-right: 0px;"
+		onclick="javascrip:webjs.closeWeb();"><img
+		src="../img/close.png" alt="close" style="height: 20px; width: 20px"></a>
 </div>

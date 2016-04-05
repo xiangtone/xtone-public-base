@@ -55,7 +55,7 @@ public class AccountService {
 	}
 	
 	/**
-	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),width默认为屏幕4/5,height默认为屏幕1/2,interfaceName默认为webjs。
+	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),width默认为屏幕4/5,height默认为屏幕3/5,interfaceName默认为webjs。
 	 * @param width为弹出窗口的宽
 	 * @param height为弹出窗口的高
 	 * @param interfaceName:为与web应用js交互的对象
@@ -66,7 +66,7 @@ public class AccountService {
                 .getSystemService(Context.WINDOW_SERVICE);
 		 
 	     int width = wm.getDefaultDisplay().getWidth()*4/5;
-	     int height = wm.getDefaultDisplay().getHeight()*1/2;
+	     int height = wm.getDefaultDisplay().getHeight()*11/20;
 //		return showWebDialog(context,url,650,700,"webjs");
 	     return showWebDialog(context,url,width,height,"webjs");
 	}

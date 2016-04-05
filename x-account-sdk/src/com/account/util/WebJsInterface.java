@@ -48,9 +48,9 @@ public class WebJsInterface {
 		
 	}
 	
-//	@android.webkit.JavascriptInterface
-//	public void closeWeb(){
-//		AccountService.getInstances().close();
-//	}
+	@android.webkit.JavascriptInterface
+	public void closeWeb(){
+		AccountService.getInstances().close();
+	}
 	
 }

@@ -44,7 +44,7 @@
 	-moz-border-radius: 50%;
 	-o-border-radius: 50%;
 	border-radius: 50%;
-	margin-top: 10%;
+ 	margin-top: 15%;
 }
 
 .text_name{
@@ -54,6 +54,7 @@
 </style>
 </head>
 <body>
+<jsp:include page="head.jsp"></jsp:include>
 		<div class="magin_lr">
 			<div class="divCenter">
 	<img alt="head" src="../img/ic_head01.png" class="circle_head"><br>

@@ -47,7 +47,7 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 	margin: 10px auto 10px auto;
 	padding: 1px 0 1px 0;
 	background-color: white;
-	line-height:24px;
+	line-height:22px;
 	color:#a9a9a9;
 }
 
@@ -57,7 +57,7 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 }
 .top_tip{
 	float: left;
-	margin-top: 10%;
+	margin-top: 15%;
 	font-size: 19px;
 	color: white;
 }
