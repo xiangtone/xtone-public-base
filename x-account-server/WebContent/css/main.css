@@ -47,6 +47,7 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 	margin: 10px auto 10px auto;
 	padding: 1px 0 1px 0;
 	background-color: white;
+	line-height:24px;
 	color:#a9a9a9;
 }
 
@@ -77,7 +78,7 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 	float: right;
 }
 .text_a{
-	font-size: 19px;
+	font-size: 15px;
 }
 .account_select_l{
 	float: left;

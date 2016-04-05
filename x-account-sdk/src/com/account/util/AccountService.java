@@ -43,10 +43,6 @@ public class AccountService {
 	
 	private String cookieStr;
 	
-	private LayoutParams plaqueParams = null;
-	private LinearLayout linearLayout = null;
-	private RelativeLayout plaqueRelative = null;
-	private int jj=0;
 	private AccountService() {
 		super();
 	}
@@ -93,24 +89,22 @@ public class AccountService {
 	 */
 	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName) {
 		
-		if(jj==1&login_dialog!=null&&plaqueParams!=null&&this.context!=null&&plaqueRelative !=null&&linearLayout!=null){
-			Log.i("dialog", "full");
-			login_dialog.show();
-			return webpobView;
-		}
-		jj=1;
+//		if(login_dialog!=null){
+//			login_dialog.show();
+//			return webpobView;
+//		}
 		webpobView = new WebView(context);
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
-		linearLayout = new LinearLayout(context);
+		LinearLayout linearLayout = new LinearLayout(context);
 		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT));
 		linearLayout.setGravity(Gravity.CENTER);//设置居中弹出
-		plaqueRelative = new RelativeLayout(context);
+		RelativeLayout plaqueRelative = new RelativeLayout(context);
 
 		// 设置padding
 //		plaqueRelative.setGravity(Gravity.CENTER);
@@ -122,7 +116,7 @@ public class AccountService {
 		
 
 		// webview的Layoutparams
-		plaqueParams = new LayoutParams(
+		LayoutParams plaqueParams = new LayoutParams(
 				new LinearLayout.LayoutParams(
 						LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.MATCH_PARENT));
@@ -198,9 +192,9 @@ public class AccountService {
 //					if(webpobView.canGoBack()){
 //						webpobView.goBack();
 //					}else{
-//						login_dialog.cancel();
+						login_dialog.cancel();
 //					}
-						login_dialog.hide();
+//						login_dialog.hide();
                 }
 				return false;
 			}
@@ -225,7 +219,8 @@ public class AccountService {
 	}
 	
 	public void close(){
-		login_dialog.hide();
+//		login_dialog.hide();
+		login_dialog.cancel();
 	}
 	
 }

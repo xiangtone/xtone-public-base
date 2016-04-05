@@ -1,12 +1,10 @@
 package com.account.util;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -50,9 +48,9 @@ public class WebJsInterface {
 		
 	}
 	
-	@android.webkit.JavascriptInterface
-	public void closeWeb(){
-		AccountService.getInstances().close();
-	}
+//	@android.webkit.JavascriptInterface
+//	public void closeWeb(){
+//		AccountService.getInstances().close();
+//	}
 	
 }
