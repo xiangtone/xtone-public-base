@@ -100,26 +100,12 @@ public class AccountService {
 		// 打开登陆界面
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
-		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT));
+		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
 		linearLayout.setGravity(Gravity.CENTER);//设置居中弹出
-		RelativeLayout plaqueRelative = new RelativeLayout(context);
-
-		// 设置padding
-//		plaqueRelative.setGravity(Gravity.CENTER);
-		// 装webview的相对布局Layoutparams
-//		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(
-//				LinearLayout.LayoutParams.MATCH_PARENT,
-//				LinearLayout.LayoutParams.MATCH_PARENT));// 设置dialog宽度高度
-		plaqueRelative.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-		
 
 		// webview的Layoutparams
 		LayoutParams plaqueParams = new LayoutParams(
-				new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.MATCH_PARENT,
-						LinearLayout.LayoutParams.MATCH_PARENT));
+				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
 		
@@ -131,7 +117,7 @@ public class AccountService {
 		// 启动缓存
 		webpobView.getSettings().setAppCacheEnabled(true);
 //		webpobView.getSettings().setCacheMode();
-
+		webpobView.getSettings().setUseWideViewPort(false);//禁止缩放
 		webpobView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -155,9 +141,22 @@ public class AccountService {
 				cookieStr = cookieManager.getCookie(url);
 				editor.putString("cookies",cookieStr);
 		        editor.commit();
+		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
+	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
 			}
 
+			@Override
+			public void onReceivedError(WebView view, int errorCode,
+					String description, String failingUrl) {
+				// TODO Auto-generated method stub
+				if(errorCode>=400&&errorCode<500){
+					view.loadUrl("file:///android_asset/404.html");
+				}else if(errorCode>=500&&errorCode<600){
+					view.loadUrl("file:///android_asset/404.html");
+				}
+				super.onReceivedError(view, errorCode, description, failingUrl);
+			}
 		});
 
 //		webpobView.setOnKeyListener(new OnKeyListener() {
@@ -182,7 +181,6 @@ public class AccountService {
 				android.R.style.Theme_Translucent_NoTitleBar);
 		login_dialog.setCancelable(false);
 		login_dialog.show();
-
 		login_dialog.setOnKeyListener(new OnKeyListener() {
 
 			@Override
@@ -200,10 +198,8 @@ public class AccountService {
 			}
 		});
 
-		// 相对布局装webview
-		plaqueRelative.addView(webpobView);
-		// 线性布局装相对布局
-		linearLayout.addView(plaqueRelative);
+		// 线性布局装webview
+		linearLayout.addView(webpobView);
 		// dialog加载线性布局
 		login_dialog.setContentView(linearLayout);
 

@@ -53,4 +53,9 @@ public class WebJsInterface {
 		AccountService.getInstances().close();
 	}
 	
+	@android.webkit.JavascriptInterface
+	 public void showSource(String html) {
+         Log.i("HTML", html);
+     }
+	
 }

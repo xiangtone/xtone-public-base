@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width"><!-- 控制手机获取输入框焦点时不缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>修改密码</title>
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
