@@ -54,8 +54,12 @@ public class WebJsInterface {
 	}
 	
 	@android.webkit.JavascriptInterface
-	 public void showSource(String html) {
-         Log.i("HTML", html);
-     }
+	public void showSource(String html) {
+        Log.i("HTML", html);
+    }
 	
+	@android.webkit.JavascriptInterface
+	 public void refresh(String url) {
+		AccountService.getInstances().refresh();
+    }
 }

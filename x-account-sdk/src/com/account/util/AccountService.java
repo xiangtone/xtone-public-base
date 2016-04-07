@@ -150,12 +150,8 @@ public class AccountService {
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
 				// TODO Auto-generated method stub
-				if(errorCode>=400&&errorCode<500){
-					view.loadUrl("file:///android_asset/404.html");
-				}else if(errorCode>=500&&errorCode<600){
-					view.loadUrl("file:///android_asset/404.html");
-				}
-				super.onReceivedError(view, errorCode, description, failingUrl);
+				view.loadUrl("file:///android_asset/404.html");
+//				super.onReceivedError(view, errorCode, description, failingUrl);
 			}
 		});
 
@@ -217,6 +213,11 @@ public class AccountService {
 	public void close(){
 //		login_dialog.hide();
 		login_dialog.cancel();
+	}
+
+	public void refresh() {
+		// TODO Auto-generated method stub
+		webpobView.goBack();
 	}
 	
 }
