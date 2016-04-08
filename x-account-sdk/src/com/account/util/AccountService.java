@@ -43,6 +43,8 @@ public class AccountService {
 	
 	private String cookieStr;
 	
+	private String firstUrl;
+	
 	private AccountService() {
 		super();
 	}
@@ -55,7 +57,7 @@ public class AccountService {
 	}
 	
 	/**
-	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),width默认为屏幕4/5,height默认为屏幕3/5,interfaceName默认为webjs。
+	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),width默认为屏幕80%,height默认为屏幕55%,interfaceName默认为webjs。
 	 * @param width为弹出窗口的宽
 	 * @param height为弹出窗口的高
 	 * @param interfaceName:为与web应用js交互的对象
@@ -65,9 +67,8 @@ public class AccountService {
 		WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
 		 
-	     int width = wm.getDefaultDisplay().getWidth()*4/5;
-	     int height = wm.getDefaultDisplay().getHeight()*11/20;
-//		return showWebDialog(context,url,650,700,"webjs");
+	     int width = wm.getDefaultDisplay().getWidth()*80/100;
+	     int height = wm.getDefaultDisplay().getHeight()*55/100;
 	     return showWebDialog(context,url,width,height,"webjs");
 	}
 	/**
@@ -88,11 +89,6 @@ public class AccountService {
 	 * @return WebView
 	 */
 	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName) {
-		
-//		if(login_dialog!=null){
-//			login_dialog.show();
-//			return webpobView;
-//		}
 		webpobView = new WebView(context);
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
@@ -108,7 +104,7 @@ public class AccountService {
 				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
-		
+		firstUrl=url;
 		webpobView.loadUrl(url);
 		// 设置支持javascript
 		webpobView.getSettings().setJavaScriptEnabled(true);
@@ -116,8 +112,8 @@ public class AccountService {
 		webpobView.addJavascriptInterface(new WebJsInterface(context), interfaceName);
 		// 启动缓存
 		webpobView.getSettings().setAppCacheEnabled(true);
-//		webpobView.getSettings().setCacheMode();
-		webpobView.getSettings().setUseWideViewPort(false);//禁止缩放
+		//禁止缩放
+		webpobView.getSettings().setUseWideViewPort(false);
 		webpobView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -150,8 +146,9 @@ public class AccountService {
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
 				// TODO Auto-generated method stub
-				view.loadUrl("file:///android_asset/404.html");
-//				super.onReceivedError(view, errorCode, description, failingUrl);
+				//还不能实现重试功能
+//				view.loadUrl("file:///android_asset/404.html");
+				super.onReceivedError(view,errorCode,description,failingUrl);
 			}
 		});
 
@@ -188,7 +185,6 @@ public class AccountService {
 //					}else{
 						login_dialog.cancel();
 //					}
-//						login_dialog.hide();
                 }
 				return false;
 			}
@@ -211,13 +207,12 @@ public class AccountService {
 	}
 	
 	public void close(){
-//		login_dialog.hide();
 		login_dialog.cancel();
 	}
 
 	public void refresh() {
 		// TODO Auto-generated method stub
-		webpobView.goBack();
+		webpobView.loadUrl(firstUrl);
 	}
 	
 }

@@ -7,21 +7,27 @@
 body {
 	font-family:Microsoft YaHei;
 	margin: 0px;
-	background-color: #afafaf;
+	background-color: #f1f1f1;
 }
 font{
 font-size: 18px;color: red;
 }
 .btn{
-width: 30%;
+width: 33%;
+height: 30px;
 margin: 5px;
+font-size: 18px;
+background-color: #42b5c4;
+color: #ffffff;
+border-radius: 6px;
+border: 0;
 }
 </style>
 </head>
 <body>
 <div style="text-align: center;margin-top: 40%">
-<font>网络异常！请稍后重试！</font><br>
-<input type="button" class="btn" value="重试" onclick="javascrip:window.history.back(1);"/>
+<font>网络异常！请稍后重试！</font><br><br>
+<input type="button" class="btn" value="重试" onclick="javascrip:webjs.refresh();"/>
 <input type="button" class="btn" value="取消" onclick="javascrip:webjs.closeWeb();"/>
 </div>
 </body>

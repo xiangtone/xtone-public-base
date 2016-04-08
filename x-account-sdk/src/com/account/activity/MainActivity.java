@@ -25,7 +25,7 @@ public class MainActivity extends Activity {
 	private Button btn_uid;
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
-	private String url = "http://192.168.1.222:8080/x-account-server/"; //登陆界面
+	private String url = "http://192.168.1.222:8080/x-account-server/jsp/account.jsp"; //登陆界面
 	private WebView webpobView ; 
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 public class WebJsInterface {
@@ -18,21 +19,21 @@ public class WebJsInterface {
 		editor=sp.edit();
 	}
 
-	@android.webkit.JavascriptInterface
+	@JavascriptInterface
 	public void toastLong(String tip) {
 
 		Toast.makeText(context, tip, Toast.LENGTH_LONG).show();
 
 	}
 	
-	@android.webkit.JavascriptInterface
+	@JavascriptInterface
 	public void toastShort(String tip) {
 
 		Toast.makeText(context, tip, Toast.LENGTH_SHORT).show();
 
 	}
 	
-	@android.webkit.JavascriptInterface
+	@JavascriptInterface
 	public void setUser(String json) {
 				
 		try {
@@ -48,18 +49,19 @@ public class WebJsInterface {
 		
 	}
 	
-	@android.webkit.JavascriptInterface
+	@JavascriptInterface
 	public void closeWeb(){
 		AccountService.getInstances().close();
 	}
 	
-	@android.webkit.JavascriptInterface
+	@JavascriptInterface
 	public void showSource(String html) {
         Log.i("HTML", html);
     }
 	
-	@android.webkit.JavascriptInterface
-	 public void refresh(String url) {
+	@JavascriptInterface
+	 public void refresh() {
+		Log.i("刷新", "刷新");
 		AccountService.getInstances().refresh();
     }
 }
