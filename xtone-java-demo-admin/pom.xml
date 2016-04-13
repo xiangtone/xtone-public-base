@@ -118,5 +118,12 @@
 				<final.name>smzg-admin.xtonegame.com</final.name>
 			</properties>
 		</profile>
+		<profile>
+			<id>zy</id>
+			<properties>
+				<runtime.env>packageConfig\zy</runtime.env>
+				<final.name>zy-admin.xtonegame.com</final.name>
+			</properties>
+		</profile>
 	</profiles>
 </project>
