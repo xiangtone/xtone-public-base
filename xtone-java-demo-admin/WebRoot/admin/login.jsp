@@ -49,9 +49,20 @@
 						alert('邮箱或密码错误!');
 					}
 				},
-				error : function () {
-					alert('登录失败!');
-
+				error : function(XMLHttpRequest, textStatus, errorThrown) {
+					
+					var tip="登录失败!";
+					switch (XMLHttpRequest.status)
+					{
+						case 404:
+							tip="登录失败!请检查用户名和密码是否正确。";
+					  		break;
+						default:
+							tip="网络异常，请稍后再试。";
+							break;
+					  			
+					}
+					alert(tip);
 				}
 			});
 			

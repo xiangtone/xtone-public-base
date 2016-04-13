@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
+import com.account.json.LoginRsp;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -52,12 +52,16 @@ public class LoginServlet extends HttpServlet {
 		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
 		
-		myUser = daoImpl.login(myUser);
+		MyUser loginUser = daoImpl.login(myUser);
 		
-		if (myUser != null) {
-			response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
-			HttpSession session=request.getSession();
-			session.setAttribute("user", myUser);
+		if (loginUser != null) {
+			loginUser.setPwd(myUser.getPwd());
+			HttpSession session=request.getSession();		
+			session.setAttribute("user", loginUser);
+			LoginRsp rsp=new LoginRsp();
+			rsp.setStatus("success");
+			rsp.setData(loginUser);
+			response.getWriter().append(JSONObject.toJSONString(rsp));
 		} else {
 			response.getWriter().append("{\"status\":\"err\"}");
 			request.getRequestDispatcher("regist.jsp").forward(request,
@@ -75,5 +79,4 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
 }

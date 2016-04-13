@@ -98,5 +98,17 @@ function isPositiveInteger(value)
 	 return false;
 }
 
+function emailRight(value) {
+	if((/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/.test(value)) && value>0 )
+		return true;
+	 
+	 return false;
+}
 
+function phoneRight(value) {
+	if((/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/.test(value)) && value>0 )
+		return true;
+	 
+	 return false;
+}
 

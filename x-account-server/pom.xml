@@ -97,5 +97,12 @@
 				<final.name>account-test</final.name>
 			</properties>
 		</profile>
+		<profile>
+			<id>n8wan</id>
+			<properties>
+				<runtime.env>packageConfig\n8wan</runtime.env>
+				<final.name>account.n8wan.com</final.name>
+			</properties>
+		</profile>
 	</profiles>
 </project>
