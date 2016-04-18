@@ -58,7 +58,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				tx_uuid.setText(AccountService.getInstances().getUid()); //返回一個webview
+				if(AccountService.getInstances().getUid()!=null){
+					tx_uuid.setText(AccountService.getInstances().getUid());
+				}else{
+					tx_uuid.setText("uid为空");
+				}
 			}
 		});
 	}

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.MyUser;
-import com.account.json.LoginRsp;
+import com.account.json.Resp;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -58,14 +58,14 @@ public class LoginServlet extends HttpServlet {
 			loginUser.setPwd(myUser.getPwd());
 			HttpSession session=request.getSession();		
 			session.setAttribute("user", loginUser);
-			LoginRsp rsp=new LoginRsp();
+			Resp rsp=new Resp();
 			rsp.setStatus("success");
 			rsp.setData(loginUser);
-			response.getWriter().append(JSONObject.toJSONString(rsp));
+			response.getWriter().append(JSONObject.toJSONString(rsp));//登录成功
 		} else {
-			response.getWriter().append("{\"status\":\"err\"}");
-			request.getRequestDispatcher("regist.jsp").forward(request,
-			response);
+			response.getWriter().append("{\"status\":\"err\"}");//用户不存在
+//			request.getRequestDispatcher("regist.jsp").forward(request,
+//			response);
 		}
 
 	}

@@ -2,7 +2,7 @@ package com.account.json;
 
 import com.account.domain.MyUser;
 
-public class LoginRsp {
+public class Resp {
 	private String status;
 	private MyUser data;	
 	public MyUser getData() {

@@ -1,3 +1,4 @@
+<%@page import="com.account.domain.MyUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -76,7 +77,8 @@
 				var tip='';
 				if (msg.status == "success") {
 					tip='注册成功';
-					window.history.back(-1);
+					webjs.setUser(JSON.stringify(msg.data));
+					window.location.href = 'account.jsp';
 				} else if(msg.status == "errRepeat"){
 					tip='用户名已被注册!请更换您的用户名。';
 				} else{

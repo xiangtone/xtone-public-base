@@ -55,6 +55,14 @@ public class WebJsInterface {
 	}
 	
 	@JavascriptInterface
+	public void logout(){
+		editor.putString("name",null);
+		editor.putString("pwd",null);
+		editor.putString("uid",null);
+        editor.commit();
+	}
+	
+	@JavascriptInterface
 	public void showSource(String html) {
         Log.i("HTML", html);
     }

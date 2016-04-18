@@ -39,12 +39,12 @@ public class ChangePwdServlet extends HttpServlet {
 		if (user != null) {
 			int value=daoImpl.changePwd(myUser);
 			if(value==1){
-				response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");
+				response.getWriter().append("{\"status\":\"success\",\"data\":\"" + myUser.getUid() + "\"}");//更新数据库成功
 			}else{
-				response.getWriter().append("{\"status\":\"err\"}");
+				response.getWriter().append("{\"status\":\"err\"}");//更新数据库失败
 			}
 		} else {
-			response.getWriter().append("{\"status\":\"errPwd\"}");
+			response.getWriter().append("{\"status\":\"errPwd\"}");//旧密码输入错误
 		}
 		
 	}

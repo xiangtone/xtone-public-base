@@ -135,6 +135,7 @@ public class AccountService {
 			public void onPageFinished(WebView view, String url) {
 				CookieManager cookieManager = CookieManager.getInstance();
 				cookieStr = cookieManager.getCookie(url);
+				Log.i("cookie", cookieStr);
 				editor.putString("cookies",cookieStr);
 		        editor.commit();
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
@@ -147,7 +148,7 @@ public class AccountService {
 					String description, String failingUrl) {
 				// TODO Auto-generated method stub
 				//还不能实现重试功能
-//				view.loadUrl("file:///android_asset/404.html");
+				view.loadUrl("file:///android_asset/404.html");
 				super.onReceivedError(view,errorCode,description,failingUrl);
 			}
 		});
@@ -199,11 +200,11 @@ public class AccountService {
 	}
 	
 	public String getUid() {
-		String Uid="请先登录!";
+		String uid=null;
 		if(sp!=null){
-			Uid=sp.getString("uid",Uid);
-		}	
-		return Uid;
+			uid=sp.getString("uid",null);
+		}
+		return uid;
 	}
 	
 	public void close(){
