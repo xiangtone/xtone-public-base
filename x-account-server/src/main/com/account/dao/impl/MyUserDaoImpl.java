@@ -11,11 +11,11 @@ import com.account.domain.MyUser;
 public class MyUserDaoImpl extends BasicDaoImpl {
 
 	// 添加用户
-	public int add(MyUser MyUser) {
+	public int add(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 		int value = 0;
 		try {
-			value=sqlSession.insert("insertMyUser", MyUser);
+			value=sqlSession.insert("insertMyUser", user);
 			sqlSession.commit();
 		} catch (Exception e) {  
 			sqlSession.rollback();  
@@ -41,11 +41,11 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	}
 
 	// 更新用户
-	public int update(MyUser MyUser) {
+	public int update(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 		int value = 0;
 		try {
-			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", MyUser);
+			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", user);
 			sqlSession.commit();
 		} catch (Exception e) {  
 			sqlSession.rollback();  
@@ -80,11 +80,11 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	}
 
 	// 修改密码
-		public int changePwd(MyUser MyUser) {
+		public int changePwd(MyUser user) {
 			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 			int value = 0;
 			try {
-				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", MyUser);
+				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", user);
 				sqlSession.commit();
 			} catch (Exception e) {  
 				sqlSession.rollback();  
@@ -110,6 +110,19 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 		return myUser;
 	}
 	
-	
+	// 更新登录时间
+		public int updateTime(MyUser user) {
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			int value = 0;
+			try {
+				value=sqlSession.update("com.account.mapping.myUserMapper.updateTime", user);
+				sqlSession.commit();
+			} catch (Exception e) {  
+				sqlSession.rollback();  
+			}finally {
+				sqlSession.close();
+			}
+			return value;
+		}
 
 }

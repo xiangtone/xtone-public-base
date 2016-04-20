@@ -1,6 +1,6 @@
 package com.account.domain;
 
-import java.io.Serializable;
+import java.util.Date;
 
 public class MyUser{
 	
@@ -12,6 +12,8 @@ public class MyUser{
 	private String phone;
 	private String newPwd;
 	private String uid;
+	private long lastLoginTime;
+	private String token;
 		 
 	public int getId() {
 		return id;
@@ -55,6 +57,19 @@ public class MyUser{
 	public void setNewPwd(String newPwd) {
 		this.newPwd = newPwd;
 	}
+	public long getLastLoginTime() {
+		return lastLoginTime;
+	}
+	public void setLastLoginTime(long lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
 //	public String getJson(){
 //		return "{\"name\":\"" + getName() + "\",\"pwd\":\"" + getPwd() + "\",\"phone\":\"" + getPhone() + "\",\"uid\":\"" + getUid() + "\"}";		
 //	}

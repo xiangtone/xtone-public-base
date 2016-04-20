@@ -1,6 +1,7 @@
 package com.account.service;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -39,7 +40,7 @@ public class RegsitServlet extends HttpServlet {
 		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
 		
 		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
-        
+		myUser.setLastLoginTime(new Date().getTime());
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
 		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在

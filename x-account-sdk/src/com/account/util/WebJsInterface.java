@@ -2,6 +2,8 @@ package com.account.util;
 
 import org.json.JSONObject;
 
+import com.account.bean.UserInfo;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -41,6 +43,7 @@ public class WebJsInterface {
 			editor.putString("name",jsonObject.getString("name"));
 			editor.putString("pwd",jsonObject.getString("pwd"));
 			editor.putString("uid",jsonObject.getString("uid"));
+			editor.putBoolean("iflogin", true);
 	        editor.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -51,11 +54,11 @@ public class WebJsInterface {
 	
 	@JavascriptInterface
 	public void closeWeb(){
-		AccountService.getInstances().close();
+		AccountService.getInstances().closeWeb();
 	}
 	
 	@JavascriptInterface
-	public void logout(){
+	public void clearUser(){
 		editor.putString("name",null);
 		editor.putString("pwd",null);
 		editor.putString("uid",null);
@@ -67,9 +70,4 @@ public class WebJsInterface {
         Log.i("HTML", html);
     }
 	
-	@JavascriptInterface
-	 public void refresh() {
-		Log.i("刷新", "刷新");
-		AccountService.getInstances().refresh();
-    }
 }

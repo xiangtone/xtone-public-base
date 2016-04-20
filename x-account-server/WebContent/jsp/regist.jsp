@@ -77,8 +77,8 @@
 				var tip='';
 				if (msg.status == "success") {
 					tip='注册成功';
-					webjs.setUser(JSON.stringify(msg.data));
 					window.location.href = 'account.jsp';
+					webjs.setUser(JSON.stringify(msg.data));
 				} else if(msg.status == "errRepeat"){
 					tip='用户名已被注册!请更换您的用户名。';
 				} else{

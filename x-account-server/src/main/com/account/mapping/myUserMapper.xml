@@ -9,6 +9,7 @@
 		<result property="email" column="email" />
 		<result property="uid" column="uid" />
 		<result property="pwd" column="pwd" />
+		<result property="lastLoginTime" column="lastLoginTime" />
 	</resultMap>
 
 	<select id="getUser" parameterType="int" resultType="com.account.domain.MyUser">
@@ -18,8 +19,8 @@
 
 	<insert id="insertMyUser" parameterType="com.account.domain.MyUser">
 		insert into tbl_base_users
-		(name,phone,email,uid,pwd) values
-		(#{name},#{phone},#{email},#{uid},Md5(#{pwd}))
+		(name,phone,email,uid,pwd,lastLoginTime) values
+		(#{name},#{phone},#{email},#{uid},Md5(#{pwd}),#{lastLoginTime})
 	</insert>
 
 	<!-- 对应userDao中的updateUser方法 -->
@@ -58,10 +59,15 @@
 
 	<select id="login" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd from
+		id,name,phone,email,uid,pwd,lastLoginTime from
 		tbl_base_users where name = #{name} and
 		pwd = Md5(#{pwd});
 
 	</select>
 
+	<update id="updateTime" parameterType="com.account.domain.MyUser">
+		update tbl_base_users set
+		lastLoginTime = #{lastLoginTime} 
+		where name = #{name};
+	</update>
 </mapper>

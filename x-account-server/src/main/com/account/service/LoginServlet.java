@@ -1,6 +1,8 @@
 package com.account.service;
 
 import java.io.IOException;
+import java.util.Date;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,6 +57,10 @@ public class LoginServlet extends HttpServlet {
 		MyUser loginUser = daoImpl.login(myUser);
 		
 		if (loginUser != null) {
+			//更新登录时间
+			loginUser.setLastLoginTime(new Date().getTime());
+			daoImpl.updateTime(loginUser);
+			
 			loginUser.setPwd(myUser.getPwd());
 			HttpSession session=request.getSession();		
 			session.setAttribute("user", loginUser);

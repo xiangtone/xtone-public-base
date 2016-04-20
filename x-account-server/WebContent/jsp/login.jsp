@@ -18,6 +18,10 @@
 %>
 <script type="text/javascript">
 
+	$(document).ready(function(){
+		webjs.clearUser();
+	});
+
 	function submitBtn() {
 		
 		var name=$("#username");
@@ -45,15 +49,15 @@
 			type : "post",
 			url : "../LoginServlet",
 			async : false,
-			data : "info=" + JSON.stringify(oriData), 
+			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
 				var tip='';
 				if (msg.status == "success") {
 					tip='登录成功!';
-					window.location.href = 'account.jsp';
-					
+// 					window.location.href = 'account.jsp';
 					webjs.setUser(JSON.stringify(msg.data));
+					webjs.closeWeb();
 				}else {
 					tip='登录失败!请检查用户名和密码是否正确。';
 				}

@@ -1,5 +1,7 @@
 package com.account.util;
 
+import com.account.bean.UserInfo;
+
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -43,7 +45,11 @@ public class AccountService {
 	
 	private String cookieStr;
 	
-	private String firstUrl;
+	private UserInfo userInfo=null;
+	
+	private CallBack callBack;
+	
+	private boolean ifLogin=false;
 	
 	private AccountService() {
 		super();
@@ -63,13 +69,13 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url){
+	public WebView showWebDialog(Context context,String url,CallBack callBack){
 		WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
 		 
 	     int width = wm.getDefaultDisplay().getWidth()*80/100;
 	     int height = wm.getDefaultDisplay().getHeight()*55/100;
-	     return showWebDialog(context,url,width,height,"webjs");
+	     return showWebDialog(context,url,width,height,"webjs",callBack);
 	}
 	/**
 	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),interfaceName默认为webjs。
@@ -78,8 +84,8 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,int width,int height){
-		return showWebDialog(context,url,width,height,"webjs");
+	public WebView showWebDialog(Context context,String url,int width,int height,CallBack callBack){
+		return showWebDialog(context,url,width,height,"webjs",callBack);
 	}
 	/**
 	 * 动态创建一个dialog窗口
@@ -88,12 +94,18 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName) {
+	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName,final CallBack callBack) {
 		webpobView = new WebView(context);
 		this.context=context;
+		this.callBack = callBack;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
-		// 打开登陆界面
+		
+		if(ifLogin&&userInfo!=null){
+			Toast.makeText(context, "用户 "+userInfo.getUsername()+" 已登录", Toast.LENGTH_SHORT).show();
+			return null;
+		}
+		
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
 		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
@@ -104,7 +116,8 @@ public class AccountService {
 				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
-		firstUrl=url;
+		
+		
 		webpobView.loadUrl(url);
 		// 设置支持javascript
 		webpobView.getSettings().setJavaScriptEnabled(true);
@@ -123,26 +136,24 @@ public class AccountService {
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				// TODO Auto-generated method stub
-				cookieStr=sp.getString("cookies",null);
-				if(cookieStr!=null){
-					CookieManager cookieManager = CookieManager.getInstance();
-					cookieManager.setAcceptCookie(true); 
-					cookieManager.setCookie(url, cookieStr);
-				}
+//				cookieStr=sp.getString("cookies",null);
+//				if(cookieStr!=null){
+//					CookieManager cookieManager = CookieManager.getInstance();
+//					cookieManager.setAcceptCookie(true); 
+//					cookieManager.setCookie(url, cookieStr);
+//				}
 				super.onPageStarted(view, url, favicon);
 			}
-
+			@Override
 			public void onPageFinished(WebView view, String url) {
-				CookieManager cookieManager = CookieManager.getInstance();
-				cookieStr = cookieManager.getCookie(url);
-				Log.i("cookie", cookieStr);
-				editor.putString("cookies",cookieStr);
-		        editor.commit();
+//				CookieManager cookieManager = CookieManager.getInstance();
+//				cookieStr = cookieManager.getCookie(url);
+//				editor.putString("cookies",cookieStr);
+//		        editor.commit();
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
 	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
 			}
-
 			@Override
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
@@ -199,22 +210,31 @@ public class AccountService {
 	  return webpobView;
 	}
 	
-	public String getUid() {
-		String uid=null;
-		if(sp!=null){
-			uid=sp.getString("uid",null);
-		}
-		return uid;
+	public void logout() {
+		userInfo=null;
+		editor.putBoolean("iflogin", false);
+		editor.commit();
+//		Log.i("iflogin", sp.getBoolean("iflogin",false)+"");
 	}
 	
-	public void close(){
+	private Boolean loginSuccess(){
+		ifLogin=sp.getBoolean("iflogin",false);
+		if(ifLogin){
+			userInfo=new UserInfo();
+			userInfo.setUsername(sp.getString("name",null));
+			userInfo.setToken(MACUtil.getInstances().getMac());
+			userInfo.setUserID(sp.getString("uid",null));
+			return true;
+		}
+		return ifLogin;
+	}
+	
+	public void closeWeb(){
 		login_dialog.cancel();
+		if(loginSuccess()){
+			callBack.loginSuccess(userInfo);
+		}
 	}
 
-	public void refresh() {
-		// TODO Auto-generated method stub
-		webpobView.loadUrl(firstUrl);
-	}
-	
 }
 

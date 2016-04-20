@@ -26,7 +26,7 @@
 			async : false,
 			success : function(msg) {
 				window.location.href = 'login.jsp';
-				webjs.logout();
+				webjs.clearUser();
 				webjs.toastShort('成功退出登录！');
 			},
 			error : function(){
