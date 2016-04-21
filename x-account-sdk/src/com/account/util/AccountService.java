@@ -1,5 +1,25 @@
 package com.account.util;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EncodingUtils;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.account.bean.UserInfo;
 
 import android.app.Activity;
@@ -10,6 +30,9 @@ import android.content.SharedPreferences;
 import android.content.DialogInterface.OnKeyListener;
 import android.graphics.Bitmap;
 
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -51,6 +74,7 @@ public class AccountService {
 	
 	private boolean ifLogin=false;
 	
+	private static final String TAG="AccountService";
 	private AccountService() {
 		super();
 	}
@@ -101,10 +125,10 @@ public class AccountService {
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
 		
-		if(ifLogin&&userInfo!=null){
-			Toast.makeText(context, "用户 "+userInfo.getUsername()+" 已登录", Toast.LENGTH_SHORT).show();
-			return null;
-		}
+//		if(ifLogin&&userInfo.getUsername()!=null){
+//			Toast.makeText(context, "用户 "+userInfo.getUsername()+" 已登录", Toast.LENGTH_SHORT).show();
+//			return null;
+//		}
 		
 		// 装dialog的线性布局Layoutparams
 		LinearLayout linearLayout = new LinearLayout(context);
@@ -116,7 +140,6 @@ public class AccountService {
 				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
-		
 		
 		webpobView.loadUrl(url);
 		// 设置支持javascript
@@ -135,7 +158,6 @@ public class AccountService {
 			}
 			@Override
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				// TODO Auto-generated method stub
 //				cookieStr=sp.getString("cookies",null);
 //				if(cookieStr!=null){
 //					CookieManager cookieManager = CookieManager.getInstance();
@@ -157,7 +179,6 @@ public class AccountService {
 			@Override
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
-				// TODO Auto-generated method stub
 				//还不能实现重试功能
 				view.loadUrl("file:///android_asset/404.html");
 				super.onReceivedError(view,errorCode,description,failingUrl);
@@ -213,6 +234,9 @@ public class AccountService {
 	public void logout() {
 		userInfo=null;
 		editor.putBoolean("iflogin", false);
+		editor.putString("name",null);
+		editor.putString("pwd",null);
+		editor.putString("uid",null);
 		editor.commit();
 //		Log.i("iflogin", sp.getBoolean("iflogin",false)+"");
 	}
@@ -222,9 +246,8 @@ public class AccountService {
 		if(ifLogin){
 			userInfo=new UserInfo();
 			userInfo.setUsername(sp.getString("name",null));
-			userInfo.setToken(MACUtil.getInstances().getMac());
+			userInfo.setToken(sp.getString("token",null));
 			userInfo.setUserID(sp.getString("uid",null));
-			return true;
 		}
 		return ifLogin;
 	}
@@ -234,6 +257,55 @@ public class AccountService {
 		if(loginSuccess()){
 			callBack.loginSuccess(userInfo);
 		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void autoLogin(Context context,final String url,final CallBack callBack){
+		//如果有账号信息自动登录
+		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
+		final Handler handler = new Handler(){
+		    @Override
+		    public void handleMessage(Message msg) {
+		        super.handleMessage(msg);
+		        Bundle data = msg.getData();
+		        String val = data.getString("value");
+		        if(val!=null){
+		        	editor.putBoolean("iflogin",true);
+		        }
+		        Log.i(TAG,"请求结果:" + val);
+		        if(loginSuccess()){
+					callBack.loginSuccess(userInfo);
+				}
+		    }
+		};
+		
+		Runnable runnable= new Runnable() {
+			JSONObject stoneObject;
+			@Override
+			public void run() {
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				if(sp!=null&&sp.getString("uid",null)!=null&&sp.getBoolean("iflogin", true)){
+					stoneObject = new JSONObject();  
+		            try {
+						stoneObject.put("uid", sp.getString("uid",null));
+						params.add(new BasicNameValuePair("info", stoneObject.toString()));
+						String value=HttpUtils.httpPost(url,params);
+						Message msg = new Message();
+				        Bundle data = new Bundle();
+				        data.putString("value",value);
+				        msg.setData(data);
+				        handler.sendMessage(msg);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		new Thread(runnable).start();
+        	
 	}
 
 }

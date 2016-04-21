@@ -53,14 +53,17 @@ public class LoginServlet extends HttpServlet {
 		MyUser myUser = JSON.parseObject(info,MyUser.class);
 		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
-		
-		MyUser loginUser = daoImpl.login(myUser);
+		MyUser loginUser=null;
+		if(myUser.getUid()!=null){
+			loginUser = daoImpl.loginByUid(myUser);
+		}else{
+			loginUser = daoImpl.login(myUser);
+		}
 		
 		if (loginUser != null) {
 			//更新登录时间
 			loginUser.setLastLoginTime(new Date().getTime());
 			daoImpl.updateTime(loginUser);
-			
 			loginUser.setPwd(myUser.getPwd());
 			HttpSession session=request.getSession();		
 			session.setAttribute("user", loginUser);

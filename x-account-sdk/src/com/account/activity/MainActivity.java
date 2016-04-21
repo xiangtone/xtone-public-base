@@ -78,6 +78,15 @@ public class MainActivity extends Activity {
 //				}else{
 //					tx_uuid.setText("uid为空");
 //				}
+				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
+				AccountService.getInstances().autoLogin(context,url,new CallBack() {
+					
+					@Override
+					public void loginSuccess(UserInfo userInfo) {
+						// TODO Auto-generated method stub
+						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+					}
+				});
 			}
 		});
 		logout.setOnClickListener(new OnClickListener() {

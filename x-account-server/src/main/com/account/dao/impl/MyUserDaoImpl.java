@@ -110,6 +110,23 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 		return myUser;
 	}
 	
+	/**
+	 * 通过uid实现自动登录
+	 * @param name
+	 * @return
+	 */
+	public MyUser loginByUid(MyUser user) {
+		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		MyUser myUser=null;
+		try {
+		    myUser = sqlSession.selectOne("loginUid", user);
+		} finally {
+			sqlSession.close();
+		}
+		return myUser;
+	}
+	
+	
 	// 更新登录时间
 		public int updateTime(MyUser user) {
 			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();

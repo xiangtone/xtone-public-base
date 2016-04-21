@@ -14,6 +14,7 @@ public class MyUser{
 	private String uid;
 	private long lastLoginTime;
 	private String token;
+	private String flagid;
 		 
 	public int getId() {
 		return id;
@@ -68,6 +69,12 @@ public class MyUser{
 	}
 	public void setToken(String token) {
 		this.token = token;
+	}
+	public String getFlagid() {
+		return flagid;
+	}
+	public void setFlagid(String flagid) {
+		this.flagid = flagid;
 	}
 	
 //	public String getJson(){

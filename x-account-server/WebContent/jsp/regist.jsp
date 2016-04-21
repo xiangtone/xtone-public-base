@@ -18,7 +18,7 @@
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
 // 		var phone = $("#phone");
-		
+		var flagid=webjs.getFlagId();
 		var oriData;
 		
 		if(isNullOrEmpty(name.val())||name.val().length>20){
@@ -63,6 +63,7 @@
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
+			flagid : flagid
 // 			phone : phone.val().trim()
 		};
 
@@ -76,16 +77,20 @@
 			success : function(msg) {
 				var tip='';
 				if (msg.status == "success") {
-					tip='注册成功';
-					window.location.href = 'account.jsp';
+// 					tip='注册成功';
+// 					window.location.href = 'account.jsp';
 					webjs.setUser(JSON.stringify(msg.data));
+					webjs.closeWeb();
 				} else if(msg.status == "errRepeat"){
 					tip='用户名已被注册!请更换您的用户名。';
+					alert(tip);
+					webjs.toastShort(tip);
 				} else{
 					tip='注册失败!请稍后重试。';
+					alert(tip);
+					webjs.toastShort(tip);
 				}
-				alert(tip);
-				webjs.toastShort(tip);
+				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				

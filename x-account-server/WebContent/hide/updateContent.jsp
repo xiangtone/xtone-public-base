@@ -104,7 +104,7 @@
 
 </head>
 <body>
-<jsp:include page="head.jsp"></jsp:include>
+<%-- <jsp:include page="head.jsp"></jsp:include> --%>
 		<div class="magin_lr">
 			<div class="divCenter">
 			<font class="top_tip">完善信息:</font><br>

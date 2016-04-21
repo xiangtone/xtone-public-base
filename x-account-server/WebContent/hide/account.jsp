@@ -54,7 +54,7 @@
 </style>
 </head>
 <body>
-<jsp:include page="head.jsp"></jsp:include>
+<%-- <jsp:include page="head.jsp"></jsp:include> --%>
 		<div class="magin_lr">
 			<div class="divCenter">
 	<img alt="head" src="../img/ic_head01.png" class="circle_head"><br>

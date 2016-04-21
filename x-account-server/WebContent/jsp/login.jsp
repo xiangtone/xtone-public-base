@@ -14,14 +14,22 @@
 <% 
 // request.getSession(true);
 // session.invalidate();
-// MyUser user=(MyUser) session.getAttribute("user");
+// 	String uid=null;
+// 	try {
+// 		uid = new String(request.getParameter("UID").trim());
+// 		} catch (Exception e) {
+// 		}
 %>
 <script type="text/javascript">
-
-	$(document).ready(function(){
-		webjs.clearUser();
-	});
-
+// $(document).ready(function(){
+<%-- 	var uid=<%=uid%>; --%>
+// 	console.log("1");
+// 	if(uid!=null){
+// 		console.log("2");
+//  		submitBtn();
+		
+//  	}
+// });
 	function submitBtn() {
 		
 		var name=$("#username");
@@ -54,15 +62,18 @@
 			success : function(msg) {
 				var tip='';
 				if (msg.status == "success") {
-					tip='登录成功!';
+// 					tip='登录成功!';
 // 					window.location.href = 'account.jsp';
 					webjs.setUser(JSON.stringify(msg.data));
 					webjs.closeWeb();
+// 					webjs.setuser(JSON.stringify(msg.data));
+// 					webjs.closeweb();
 				}else {
 					tip='登录失败!请检查用户名和密码是否正确。';
+					alert(tip);
+					webjs.toastShort(tip);
 				}
-				alert(tip);
-				webjs.toastShort(tip);
+				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
@@ -87,6 +98,7 @@
 
 
 	}
+
 </script>
 
 
@@ -108,4 +120,14 @@
 			</div>
 	</div>
 </body>
+<script type="text/javascript">
+// window.onload=function(){
+//		webjs.clearUser();
+<%-- 	var uid=<%=uid%>; --%>
+// 	if(uid!=null){
+// 		window.location.href ='auto-login.jsp?uid='+uid;
+		
+// 	}
+// };
+</script>
 </html>
