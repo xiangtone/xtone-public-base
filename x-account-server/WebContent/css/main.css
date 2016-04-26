@@ -77,6 +77,9 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 .foget_pwd_a{
 	float: right;
 }
+.change_pwd_a{
+	float: left;
+}
 .text_a{
 	font-size: 15px;
 }

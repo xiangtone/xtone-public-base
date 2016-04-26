@@ -96,7 +96,6 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	
 	/**
 	 * 登录
-	 * @param name
 	 * @return
 	 */
 	public MyUser login(MyUser user) {
@@ -112,14 +111,13 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	
 	/**
 	 * 通过uid实现自动登录
-	 * @param name
 	 * @return
 	 */
 	public MyUser loginByUid(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
 		MyUser myUser=null;
 		try {
-		    myUser = sqlSession.selectOne("loginUid", user);
+		    myUser = sqlSession.selectOne("loginByUid", user);
 		} finally {
 			sqlSession.close();
 		}
@@ -140,6 +138,38 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 				sqlSession.close();
 			}
 			return value;
+		}
+
+		/**
+		 * 通过手机号登录
+		 * @return
+		 */
+		public MyUser loginByPhone(MyUser user) {
+			// TODO Auto-generated method stub
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			MyUser myUser=null;
+			try {
+			    myUser = sqlSession.selectOne("loginByPhone", user);
+			} finally {
+				sqlSession.close();
+			}
+			return myUser;
+		}
+		
+		/**
+		 * 通过邮箱登录
+		 * @return
+		 */
+		public MyUser loginByEmail(MyUser user) {
+			// TODO Auto-generated method stub
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			MyUser myUser=null;
+			try {
+			    myUser = sqlSession.selectOne("loginByEmail", user);
+			} finally {
+				sqlSession.close();
+			}
+			return myUser;
 		}
 
 }

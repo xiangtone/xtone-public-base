@@ -56,12 +56,17 @@ public class LoginServlet extends HttpServlet {
 		MyUser loginUser=null;
 		if(myUser.getUid()!=null){
 			loginUser = daoImpl.loginByUid(myUser);
+		}else if(myUser.getLoginType()==MyUser.LOGINBYPHONE&&myUser.getPhone()!=null){
+			loginUser = daoImpl.loginByPhone(myUser);
+		}else if(myUser.getLoginType()==MyUser.LOGINBYEMAIL&&myUser.getEmail()!=null){
+			loginUser = daoImpl.loginByEmail(myUser);
 		}else{
 			loginUser = daoImpl.login(myUser);
 		}
 		
 		if (loginUser != null) {
 			//更新登录时间
+			loginUser.setFlagid(myUser.getFlagid());
 			loginUser.setLastLoginTime(new Date().getTime());
 			daoImpl.updateTime(loginUser);
 			loginUser.setPwd(myUser.getPwd());

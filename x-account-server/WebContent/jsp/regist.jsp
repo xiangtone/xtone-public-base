@@ -18,53 +18,57 @@
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
 // 		var phone = $("#phone");
-		var flagid=webjs.getFlagId();
+		try {
+			var flagid = webjs.getFlagId();
+		} catch (e) {
+		}
+
 		var oriData;
-		
-		if(isNullOrEmpty(name.val())||name.val().length>20){
-			var tip="请输入1-20字用户名!";
+		if (allNum(name.val()) || nameForbidden(name.val()) || isNullOrEmpty(name.val())
+				|| name.val().length > 20) {
+			var tip = "用户名由1-20位字母和数字组成,不能由纯数字组成，且不能有特殊字符!";
 			alert(tip);
 			webjs.toastShort(tip);
 			name.focus();
 			return;
 		}
-		
-		if(pwd.val().length<6||pwd.val().length>20){
-			var tip="请输入6-20位数密码!";
+
+		if (pwd.val().length < 6 || pwd.val().length > 20) {
+			var tip = "请输入6-20位数密码!";
 			alert(tip);
 			webjs.toastShort(tip);
 			pwd.focus();
 			return;
 		}
-		
-		if ( pwd.val()!= re_pwd.val()) {
-			var tip="两次输入的密码不一致!请重新输入!";
+
+		if (pwd.val() != re_pwd.val()) {
+			var tip = "两次输入的密码不一致!请重新输入!";
 			alert(tip);
 			webjs.toastShort(tip);
-			re_pwd.value="";
+			re_pwd.value = "";
 			re_pwd.focus();
 			return;
 		}
-		
-// 		if(!mail_reg.test(email.val())){
-// 			webjs.toastShort("请输入正确的邮箱!");
-// 			email.focus();
-// 			return;
-// 		}
-		
-// 		if(!phoneRight(phone.val())){
-// 			var tip="请输入正确11位手机号码!";
-// 			alert(tip);
-// 			webjs.toastShort(tip);
-// 			phone.focus();
-// 			return;
-// 		}
+
+		// 		if(!mail_reg.test(email.val())){
+		// 			webjs.toastShort("请输入正确的邮箱!");
+		// 			email.focus();
+		// 			return;
+		// 		}
+
+		// 		if(!phoneRight(phone.val())){
+		// 			var tip="请输入正确11位手机号码!";
+		// 			alert(tip);
+		// 			webjs.toastShort(tip);
+		// 			phone.focus();
+		// 			return;
+		// 		}
 
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
 			flagid : flagid
-// 			phone : phone.val().trim()
+		// 			phone : phone.val().trim()
 		};
 
 		$.ajax({
@@ -75,35 +79,34 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-				var tip='';
+				var tip = '';
 				if (msg.status == "success") {
-// 					tip='注册成功';
-// 					window.location.href = 'account.jsp';
+					// 					tip='注册成功';
+					// 					window.location.href = 'account.jsp';
 					webjs.setUser(JSON.stringify(msg.data));
 					webjs.closeWeb();
-				} else if(msg.status == "errRepeat"){
-					tip='用户名已被注册!请更换您的用户名。';
+				} else if (msg.status == "errRepeat") {
+					tip = '用户名已被注册!请更换您的用户名。';
 					alert(tip);
 					webjs.toastShort(tip);
-				} else{
-					tip='注册失败!请稍后重试。';
+				} else {
+					tip = '注册失败!请稍后重试。';
 					alert(tip);
 					webjs.toastShort(tip);
 				}
-				
+
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				
-				var tip="注册失败!";
-				switch (XMLHttpRequest.status)
-				{
-					case 404:
-						tip="用户名不可用!请更换您的用户名。";
-				  		break;
-					default:
-						tip="网络异常，请稍后再试。";
-						break;
-				  			
+
+				var tip = "注册失败!";
+				switch (XMLHttpRequest.status) {
+				case 404:
+					tip = "用户名不可用!请更换您的用户名。";
+					break;
+				default:
+					tip = "网络异常，请稍后再试。";
+					break;
+
 				}
 				alert(tip);
 				webjs.toastShort(tip);

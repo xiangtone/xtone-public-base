@@ -34,12 +34,37 @@
 		
 		var name=$("#username");
 		var pwd=$("#pwd");
+		var oriData = {
+				name : undefined,
+				phone : undefined,
+				email : undefined,
+				pwd : pwd.val().trim(),
+				flagid : undefined,
+				loginType : <%=MyUser.LOGINBYNAME%>
+			}; 
+		
+		try {
+			oriData.flagid=webjs.getFlagId();
+		} catch (e) {
+		}
+		
 		if(isNullOrEmpty(name.val())||name.val().length>20){
 			var tip="请输入1-20字用户名!";
 			alert(tip);
 			webjs.toastShort(tip);
 			name.focus();
 			return;
+		}
+		console.log(emailRight(name.val()));
+		//判断登录方式并根据登录方式赋值
+		if(allNum(name.val())&&name.val().length==11){
+			oriData.phone=name.val();
+			oriData.loginType=<%=MyUser.LOGINBYPHONE%>;
+		}else if(emailRight(name.val())){
+			oriData.email=name.val();
+			oriData.loginType=<%=MyUser.LOGINBYEMAIL%>;
+		}else{
+			oriData.name=name.val();
 		}
 		
 		if(pwd.val().length<6||pwd.val().length>20){
@@ -49,10 +74,7 @@
 			pwd.focus();
 			return;
 		}
-		var oriData = {
-			name : name.val().trim(),
-			pwd : pwd.val().trim()
-		};
+		
 		$.ajax({
 			type : "post",
 			url : "../LoginServlet",
@@ -114,7 +136,8 @@
 			<input type="text" class="m_input input_border" name="username" id="username" maxlength="20" placeholder="请输入用户名"/>
 			<input type="password" class="m_input input_border" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
 			<input type="button" class="btn_mp single_button input_border button_color" id="submit" value="登录" onclick="submitBtn()" /><br /> 
-			<a href="regist.jsp" class="regist_a text_a">注册新帐号</a>
+<!-- 			<a href="change-pwd.jsp" class="change_pwd_a text_a">修改密码</a> -->
+			<a href="regist.jsp" class="regist_a text_a">注册新用户</a>			
 <!-- 			<a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br /> -->
 		</form>
 			</div>
