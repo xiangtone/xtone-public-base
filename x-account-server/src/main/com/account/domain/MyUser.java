@@ -19,6 +19,8 @@ public class MyUser{
 	private String token;
 	private String flagid;
 	private int loginType;//登录方式：手机号、用户名、邮箱
+	private String channel_id;//渠道号
+	private String appkey;//应用密钥
 		 
 	public int getId() {
 		return id;
@@ -85,6 +87,18 @@ public class MyUser{
 	}
 	public void setLoginType(int loginType) {
 		this.loginType = loginType;
+	}
+	public String getChannel_id() {
+		return channel_id;
+	}
+	public void setChannel_id(String channel_id) {
+		this.channel_id = channel_id;
+	}
+	public String getAppkey() {
+		return appkey;
+	}
+	public void setAppkey(String appkey) {
+		this.appkey = appkey;
 	}
 	
 	

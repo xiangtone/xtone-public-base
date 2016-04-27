@@ -40,14 +40,20 @@
 				email : undefined,
 				pwd : pwd.val().trim(),
 				flagid : undefined,
+				channel_id : undefined,
+				appkey : undefined,
 				loginType : <%=MyUser.LOGINBYNAME%>
 			}; 
 		
 		try {
 			oriData.flagid=webjs.getFlagId();
-		} catch (e) {
-		}
-		
+		} catch (e){}
+		try {
+			oriData.channel_id=webjs.getChannel();
+		} catch (e) {}
+		try {
+			oriData.appkey=webjs.getAppkey();
+		} catch (e) {}
 		if(isNullOrEmpty(name.val())||name.val().length>20){
 			var tip="请输入1-20字用户名!";
 			alert(tip);

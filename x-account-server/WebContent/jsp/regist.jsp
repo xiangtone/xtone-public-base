@@ -18,10 +18,24 @@
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
 // 		var phone = $("#phone");
+
+		var oriData = {
+			name : name.val().trim(),
+			pwd : pwd.val().trim(),
+			flagid : undefined,
+			channel_id : undefined,
+			appkey : undefined
+		// 			phone : phone.val().trim()
+		};
 		try {
-			var flagid = webjs.getFlagId();
-		} catch (e) {
-		}
+			oriData.flagid=webjs.getFlagId();
+		} catch (e){}
+		try {
+			oriData.channel_id=webjs.getChannel();
+		} catch (e) {}
+		try {
+			oriData.appkey=webjs.getAppkey();
+		} catch (e) {}
 
 		var oriData;
 		if (allNum(name.val()) || nameForbidden(name.val()) || isNullOrEmpty(name.val())
@@ -63,13 +77,6 @@
 		// 			phone.focus();
 		// 			return;
 		// 		}
-
-		var oriData = {
-			name : name.val().trim(),
-			pwd : pwd.val().trim(),
-			flagid : flagid
-		// 			phone : phone.val().trim()
-		};
 
 		$.ajax({
 			type : "post",
