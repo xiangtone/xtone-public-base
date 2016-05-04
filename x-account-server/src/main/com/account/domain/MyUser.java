@@ -21,6 +21,7 @@ public class MyUser{
 	private int loginType;//登录方式：手机号、用户名、邮箱
 	private String channel_id;//渠道号
 	private String appkey;//应用密钥
+	private int status;
 		 
 	public int getId() {
 		return id;
@@ -99,6 +100,12 @@ public class MyUser{
 	}
 	public void setAppkey(String appkey) {
 		this.appkey = appkey;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

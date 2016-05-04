@@ -11,40 +11,121 @@
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
+<%@page import="com.account.utils.CacheConfig"%>
+<%@page import="com.account.domain.Channel"%>
+<%
+Channel channel=new Channel();
+channel.setChannelId(request.getParameter("channel_id"));
+if(request.getParameter("channel_id")!=null){
+	 try {
+		 channel=CacheConfig.getInstance().getNameLoadingCache(channel.getChannelId());
+		} catch (Exception e) {
+		}
+}else{
+	channel.setRegisterType("email");
+}
+// Channel channel=CacheConfig.getInstance().getNameLoadingCache("uuu9");
+// Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
+%>
 <script type="text/javascript">
 
+$(document).ready(function(){
+	var registerType='<%=channel.getRegisterType()%>';
+	var input_mobile=document.getElementById("mobile");
+	var input_email=document.getElementById("email");
+	var input_name=document.getElementById("name");
+	if(registerType=='mobile'){
+		input_email.style.display='none';
+		input_name.style.display='none';
+	}else if(registerType=='email'){
+		input_mobile.style.display='none';
+		input_name.style.display='none';
+	}else{
+		input_email.style.display='none';
+		input_mobile.style.display='none';
+	}
+});
+
+	var wait = 60;
+	function getCode(o) {
+		if (wait == 0) {
+			o.removeAttribute("disabled");
+			o.value = "获取验证";
+			wait = 60;
+		} else {
+			o.setAttribute("disabled", true);
+			o.value = "重新发送(" + wait + ")";
+			wait--;
+			setTimeout(function() {
+				getCode(o)
+			}, 1000)
+		}
+
+	}
+
 	function regist() {
-		var pwd=$("#pwd");
+		var pwd = $("#pwd");
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
-// 		var phone = $("#phone");
+		var phone = $("#phone");
+		var email = $("#email");
+		// 		var input_num = document.getElementById("num");
+		// 		var input_name = document.getElementById("name");
 
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
+			phone : phone.val().trim(),
+			email : email.val().trim(),
 			flagid : undefined,
 			channel_id : undefined,
+			loginType : <%=MyUser.LOGINBYNAME%>,
 			appkey : undefined
-		// 			phone : phone.val().trim()
 		};
 		try {
-			oriData.flagid=webjs.getFlagId();
-		} catch (e){}
+			oriData.flagid = webjs.getFlagId();
+		} catch (e) {
+		}
 		try {
-			oriData.channel_id=webjs.getChannel();
-		} catch (e) {}
+			oriData.channel_id = webjs.getChannel();
+		} catch (e) {
+		}
 		try {
-			oriData.appkey=webjs.getAppkey();
-		} catch (e) {}
+			oriData.appkey = webjs.getAppkey();
+		} catch (e) {
+		}
 
-		var oriData;
-		if (allNum(name.val()) || nameForbidden(name.val()) || isNullOrEmpty(name.val())
-				|| name.val().length > 20) {
-			var tip = "用户名由1-20位字母和数字组成,不能由纯数字组成，且不能有特殊字符!";
+		if(document.getElementById("email").style.display!='none'){
+			oriData.loginType=<%=MyUser.LOGINBYEMAIL%>;
+		}else if(document.getElementById("name").style.display!='none'){
+			oriData.loginType=<%=MyUser.LOGINBYNAME%>;
+		}else if(document.getElementById("mobile").style.display!='none'){
+			oriData.loginType=<%=MyUser.LOGINBYPHONE%>;
+		}
+
+		if (!emailRight(email.val())&&document.getElementById("email").style.display!='none') {
+			webjs.toastShort("请输入正确的邮箱!");
+			email.focus();
+			return;
+		}
+
+		if (!phoneRight(phone.val())&&document.getElementById("mobile").style.display!='none') {
+			var tip = "请输入正确11位手机号码!";
+			phone.focus();
 			alert(tip);
 			webjs.toastShort(tip);
-			name.focus();
 			return;
+		}
+		
+		if(document.getElementById("name").style.display!='none'){
+			if (allNum(name.val()) || nameForbidden(name.val())
+					|| isNullOrEmpty(name.val()) || name.val().length > 20) {
+				var tip = "用户名由1-20位字母和数字组成,不能由纯数字组成，且不能有特殊字符!";
+				alert(tip);
+				webjs.toastShort(tip);
+				name.focus();
+				return;
+			}
 		}
 
 		if (pwd.val().length < 6 || pwd.val().length > 20) {
@@ -64,20 +145,6 @@
 			return;
 		}
 
-		// 		if(!mail_reg.test(email.val())){
-		// 			webjs.toastShort("请输入正确的邮箱!");
-		// 			email.focus();
-		// 			return;
-		// 		}
-
-		// 		if(!phoneRight(phone.val())){
-		// 			var tip="请输入正确11位手机号码!";
-		// 			alert(tip);
-		// 			webjs.toastShort(tip);
-		// 			phone.focus();
-		// 			return;
-		// 		}
-
 		$.ajax({
 			type : "post",
 			url : "../RegsitServlet",
@@ -88,12 +155,14 @@
 			success : function(msg) {
 				var tip = '';
 				if (msg.status == "success") {
-					// 					tip='注册成功';
-					// 					window.location.href = 'account.jsp';
+					if(msg.data.loginType==<%=MyUser.LOGINBYEMAIL%>){
+						window.location.href = 'send-email.jsp?email='+msg.data.email+'&uid='+msg.data.uid;
+						return;
+					}
 					webjs.setUser(JSON.stringify(msg.data));
 					webjs.closeWeb();
 				} else if (msg.status == "errRepeat") {
-					tip = '用户名已被注册!请更换您的用户名。';
+					tip = '该用户已被注册!';
 					alert(tip);
 					webjs.toastShort(tip);
 				} else {
@@ -130,13 +199,19 @@
 <jsp:include page="head.jsp"></jsp:include>
 		<div class="magin_lr">
 			<div class="divCenter">
-			<font class="top_tip">注册</font><br>
+			<font class="top_tip">注册</font><br/>
+<input type="text" class="m_input input_border" id="email" placeholder="请输入邮箱地址"/>
 <input type="text" class="m_input input_border" id="name" maxlength="20" placeholder="请输入用户名"/><br/>
+<div id="mobile">
+			<input type="text" class="m_input input_border" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号"/>
+<input type="text" class="input_border" style="width: 57%;height:30px;margin-top: 20px;text-indent:12px;IME-MODE: disabled;" maxlength="6" placeholder="请输入验证码"/>
+<input type="button" class="input_border" id="getCode" style="width: 41%;height:30px;margin-top: 20px;" value="获取验证" onclick="getCode(this)"/><br/>
+</div>
 <input type="password" class="m_input input_border" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
 <input type="password" class="m_input input_border" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
-<!-- <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/> -->
-<input type="button" class="btn_mp single_button input_border button_color" value="注册" onclick="regist()"/><br/>
-<a href="login.jsp" class="foget_pwd_a text_a">已有帐号</a>
+<input type="button" class="double_btn_mp double_button input_border button_color" value="注册" onclick="regist()"/>
+<input type="button" class="double_btn_mp double_button input_border button_color" value="取消" onclick="window.location.href = 'login.jsp';"/><br/>
+<!-- <a href="login.jsp" class="foget_pwd_a text_a">已有帐号</a> -->
 	</div>
 	</div>
 </body>

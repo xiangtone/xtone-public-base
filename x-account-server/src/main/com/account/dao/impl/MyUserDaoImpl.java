@@ -67,18 +67,42 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 		return MyUsers;
 	}
 
-	// 根据名字模糊查询
+	// 根据名字查询
 	public MyUser findByName(String name) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		MyUser students;
+		MyUser user;
 		try {
-			students = sqlSession.selectOne("com.account.mapping.myUserMapper.findByName", name);
+			user = sqlSession.selectOne("com.account.mapping.myUserMapper.findByName", name);
 		} finally {
 			sqlSession.close();
 		}
-		return students;
+		return user;
 	}
 
+	// 根据手机号查询
+	public MyUser findByPhone(String phone) {
+		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		MyUser user;
+		try {
+			user = sqlSession.selectOne("com.account.mapping.myUserMapper.findByPhone", phone);
+		} finally {
+			sqlSession.close();
+		}
+		return user;
+	}
+
+	// 根据邮箱查询
+	public MyUser findByEmail(String email) {
+		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		MyUser user;
+		try {
+			user = sqlSession.selectOne("com.account.mapping.myUserMapper.findByEmail", email);
+		} finally {
+			sqlSession.close();
+		}
+		return user;
+	}
+	
 	// 修改密码
 		public int changePwd(MyUser user) {
 			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
@@ -126,19 +150,34 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	
 	
 	// 更新登录时间
-		public int updateTime(MyUser user) {
-			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-			int value = 0;
-			try {
-				value=sqlSession.update("com.account.mapping.myUserMapper.updateTime", user);
-				sqlSession.commit();
-			} catch (Exception e) {  
-				sqlSession.rollback();  
-			}finally {
-				sqlSession.close();
+			public int updateTime(MyUser user) {
+				SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+				int value = 0;
+				try {
+					value=sqlSession.update("com.account.mapping.myUserMapper.updateTime", user);
+					sqlSession.commit();
+				} catch (Exception e) {  
+					sqlSession.rollback();  
+				}finally {
+					sqlSession.close();
+				}
+				return value;
 			}
-			return value;
-		}
+			
+			// 更新用户状态
+			public int updateStatus(MyUser user) {
+				SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+				int value = 0;
+				try {
+					value=sqlSession.update("com.account.mapping.myUserMapper.updateStatus", user);
+					sqlSession.commit();
+				} catch (Exception e) {  
+					sqlSession.rollback();  
+				}finally {
+					sqlSession.close();
+				}
+				return value;
+			}
 
 		/**
 		 * 通过手机号登录

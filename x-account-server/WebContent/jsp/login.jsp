@@ -30,6 +30,23 @@
 		
 //  	}
 // });
+function regist(){
+	var appkey=null;
+	var channel_id=null;
+	try {
+		appkey=webjs.getAppkey();
+	} catch (e){}
+	try {
+		channel_id=webjs.getChannel();
+	} catch (e) {}
+	var url="regist.jsp";
+	if(appkey!=null&&channel_id!=null){
+		url="regist.jsp?channel_id="+channel_id+"&appkey="+appkey;
+	}
+	
+	window.location.href=url;
+// 	window.location.href="regist.jsp";
+}
 	function submitBtn() {
 		
 		var name=$("#username");
@@ -143,7 +160,7 @@
 			<input type="password" class="m_input input_border" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
 			<input type="button" class="btn_mp single_button input_border button_color" id="submit" value="登录" onclick="submitBtn()" /><br /> 
 <!-- 			<a href="change-pwd.jsp" class="change_pwd_a text_a">修改密码</a> -->
-			<a href="regist.jsp" class="regist_a text_a">注册新用户</a>			
+			<a href="#" class="regist_a text_a" onclick="regist()">注册新用户</a>			
 <!-- 			<a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br /> -->
 		</form>
 			</div>
