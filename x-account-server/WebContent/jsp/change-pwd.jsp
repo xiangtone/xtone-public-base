@@ -5,7 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<meta name="viewport" content="width=device-width"><!-- 控制手机获取输入框焦点时不缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>修改密码</title>
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
 <script type="text/javascript" src="../js/base.js"></script>
@@ -26,24 +28,32 @@
 		var re_new_pwd = $("#re_new_pwd");
 		
 		if(isNullOrEmpty(name.val())){
-			alert("登录异常,请重新登录后重试!");
+			var tip="登录异常,请重新登录后重试!";
+			alert(tip);
+			webjs.toastShort(tip);
 			window.location.href="login.jsp";
 		}
 		
-		if(isNullOrEmpty(old_pwd.val())){
-			alert("旧密码不能为空!");
-			old_pwd.focus();
+		if(old_pwd.val().length<6||old_pwd.val().length>20){
+			var tip="请输入旧的6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
+			pwd.focus();
 			return;
 		}
 		
-		if(isNullOrEmpty(new_pwd.val())){
-			alert("新密码不能为空!");
-			new_pwd.focus();
+		if(new_pwd.val().length<6||new_pwd.val().length>20){
+			var tip="请输入新的6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
+			pwd.focus();
 			return;
 		}
 		
 		if (new_pwd.val()!= re_new_pwd.val()) {
-			alert("两次输入的新密码不一致!请重新输入!");
+			var tip="两次输入的新密码不一致!请重新输入!";
+			alert(tip);
+			webjs.toastShort(tip);
 			re_new_pwd.value="";
 			re_new_pwd.focus();
 			return;
@@ -63,29 +73,35 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip='';
 				if (msg.status == "success") {
-					alert('密码修改成功!');
+					tip='密码修改成功!';
 					window.history.back(-1);
+				}else if (msg.status == "errPwd") {
+					tip='输入的旧密码不正确!';
+					old_pwd.focus();
 				} else {
-					alert('登录异常!请重新登录!');
+					tip='登录异常!请重新登录!';
 					window.location.href='login.jsp';
 				}
+				alert(tip);
+				webjs.toastShort(tip);
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
 				
-				var msg="密码修改失败!";
+				var tip="密码修改失败!";
 				switch (XMLHttpRequest.status)
 				{
 					case 404:
-						msg="密码修改失败!";
+						tip="密码修改失败!";
 				  		break;
 					default:
-						msg="网络异常，请稍后再试。";
+						tip="网络异常，请稍后再试。";
 						break;
 				  			
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 
@@ -93,28 +109,31 @@
 </script>
 <style type="text/css">
 .ok_button{
-	width: 50%;
+	width: 47%;
 	height:35px;
 	font-size: 15px;
-	margin: 20px 0 10px 0;
-	padding: 1px 0 1px 0;
 }
 .cancle_button{
-	width: 50%;
+	width: 47%;
 	height:35px;
 	font-size: 15px;
-	margin: 20px -5px 10px 0;
-	padding: 1px 0 1px 0;
+	margin-left:3%;
 }
+.btn_
 </style>
 </head>
 <body>
+<jsp:include page="head.jsp"></jsp:include>
+		<div class="magin_lr">
+			<div class="divCenter">
+			<font class="top_tip">修改密码</font><br>
 <input type="hidden" id="name" value="<%=user.getName()%>"/>
-<input type="password" class="m_input" id="old_pwd" placeholder="请输入旧密码"/><br/>
-<input type="password" class="m_input" id="new_pwd" placeholder="请输入新密码"/><br/>
-<input type="password" class="m_input" id="re_new_pwd" placeholder="请再次输入新密码"/><br/>
-<input type="button" class="ok_button" value="确&nbsp;认&nbsp;修&nbsp;改" onclick="update()"/>
-<input type="button" class="cancle_button" value="取&nbsp;消&nbsp;修&nbsp;改" onclick="javascrip:window.history.back(1);"/>
-
+<input type="password" class="m_input input_border" id="old_pwd" maxlength="20" placeholder="请输入旧密码"/><br/>
+<input type="password" class="m_input input_border" id="new_pwd" maxlength="20" placeholder="请输入新密码"/><br/>
+<input type="password" class="m_input input_border" id="re_new_pwd" maxlength="20" placeholder="请再次输入新密码"/><br/>
+<input type="button" class="btn_mp ok_button input_border button_color" value="确认修改" onclick="update()"/>
+<input type="button" class="btn_mp cancle_button input_border button_color" value="取消修改" onclick="javascrip:window.history.back(1);"/>
+	</div>
+	</div>
 </body>
 </html>

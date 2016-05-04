@@ -7,18 +7,19 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import com.account.domain.MyUser;
-import com.account.domain.User;
 
 public class MyUserDaoImpl extends BasicDaoImpl {
 
 	// 添加用户
-	public int add(MyUser MyUser) {
+	public int add(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
-			value=sqlSession.insert("insertMyUser", MyUser);
+			value=sqlSession.insert("insertMyUser", user);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
@@ -27,24 +28,28 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	// 删除用户
 	public int delete(int id) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
-			value=sqlSession.insert("com.account.mapping.myUserMapper.deleteMyUser", id);
+			value=sqlSession.delete("com.account.mapping.myUserMapper.deleteMyUser", id);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
 	}
 
 	// 更新用户
-	public int update(MyUser MyUser) {
+	public int update(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		int value;
+		int value = 0;
 		try {
-			value=sqlSession.insert("com.account.mapping.myUserMapper.updateMyUser", MyUser);
+			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", user);
 			sqlSession.commit();
-		} finally {
+		} catch (Exception e) {  
+			sqlSession.rollback();  
+		}finally {
 			sqlSession.close();
 		}
 		return value;
@@ -75,46 +80,96 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 	}
 
 	// 修改密码
-		public int changePwd(MyUser MyUser) {
+		public int changePwd(MyUser user) {
 			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-			int value;
+			int value = 0;
 			try {
-				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", MyUser);
+				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", user);
 				sqlSession.commit();
-			} finally {
+			} catch (Exception e) {  
+				sqlSession.rollback();  
+			}finally {
 				sqlSession.close();
 			}
 			return value;
 		}
 	
-	
-	
 	/**
 	 * 登录
-	 * @param name
 	 * @return
 	 */
-	public MyUser login(String name,String pwd) {
+	public MyUser login(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
-		MyUser user = null;
+		MyUser myUser=null;
 		try {
-			
-			Map<String, Object> param=new HashMap<String, Object>();             
-		     param.put("name", name);             
-		     param.put("pwd", pwd);  
-		     
-		     
-//		     MyUser myUser = new MyUser();
-//		     myUser.setName(name);
-//		     myUser.setPwd(pwd);
-//			
-		     user = sqlSession.selectOne("login", param);
+		     myUser = sqlSession.selectOne("login", user);
 		} finally {
 			sqlSession.close();
 		}
-		return user;
+		return myUser;
+	}
+	
+	/**
+	 * 通过uid实现自动登录
+	 * @return
+	 */
+	public MyUser loginByUid(MyUser user) {
+		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+		MyUser myUser=null;
+		try {
+		    myUser = sqlSession.selectOne("loginByUid", user);
+		} finally {
+			sqlSession.close();
+		}
+		return myUser;
 	}
 	
 	
+	// 更新登录时间
+		public int updateTime(MyUser user) {
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			int value = 0;
+			try {
+				value=sqlSession.update("com.account.mapping.myUserMapper.updateTime", user);
+				sqlSession.commit();
+			} catch (Exception e) {  
+				sqlSession.rollback();  
+			}finally {
+				sqlSession.close();
+			}
+			return value;
+		}
+
+		/**
+		 * 通过手机号登录
+		 * @return
+		 */
+		public MyUser loginByPhone(MyUser user) {
+			// TODO Auto-generated method stub
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			MyUser myUser=null;
+			try {
+			    myUser = sqlSession.selectOne("loginByPhone", user);
+			} finally {
+				sqlSession.close();
+			}
+			return myUser;
+		}
+		
+		/**
+		 * 通过邮箱登录
+		 * @return
+		 */
+		public MyUser loginByEmail(MyUser user) {
+			// TODO Auto-generated method stub
+			SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
+			MyUser myUser=null;
+			try {
+			    myUser = sqlSession.selectOne("loginByEmail", user);
+			} finally {
+				sqlSession.close();
+			}
+			return myUser;
+		}
 
 }

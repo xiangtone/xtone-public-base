@@ -1,9 +1,12 @@
+<%@page import="com.account.domain.MyUser"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width"><!-- 控制手机获取输入框焦点时不缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>用户注册</title>
 <link rel="stylesheet" href="../css/main.css">
 <script type="text/javascript" src="../js/jquery-1.7.js"></script>
@@ -14,38 +17,58 @@
 		var pwd=$("#pwd");
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
-		var email = $("#email");
-		var phone = $("#phone");
-		if(isNullOrEmpty(name.val())){
-			alert("用户名不能为空!");
+// 		var phone = $("#phone");
+		try {
+			var flagid = webjs.getFlagId();
+		} catch (e) {
+		}
+
+		var oriData;
+		if (allNum(name.val()) || nameForbidden(name.val()) || isNullOrEmpty(name.val())
+				|| name.val().length > 20) {
+			var tip = "用户名由1-20位字母和数字组成,不能由纯数字组成，且不能有特殊字符!";
+			alert(tip);
+			webjs.toastShort(tip);
 			name.focus();
 			return;
 		}
-		
-		if(isNullOrEmpty(pwd.val())){
-			alert("密码不能为空!");
+
+		if (pwd.val().length < 6 || pwd.val().length > 20) {
+			var tip = "请输入6-20位数密码!";
+			alert(tip);
+			webjs.toastShort(tip);
 			pwd.focus();
 			return;
 		}
-		
-		if ( pwd.val()!= re_pwd.val()) {
-			alert("两次输入的密码不一致!请重新输入!");
-			re_pwd.value="";
+
+		if (pwd.val() != re_pwd.val()) {
+			var tip = "两次输入的密码不一致!请重新输入!";
+			alert(tip);
+			webjs.toastShort(tip);
+			re_pwd.value = "";
 			re_pwd.focus();
 			return;
 		}
-		
-		if(!isNullOrEmpty(phone.val())&&phone.val().length!=11){
-			alert("输入11位手机号码!");
-			phone.focus();
-			return;
-		}
+
+		// 		if(!mail_reg.test(email.val())){
+		// 			webjs.toastShort("请输入正确的邮箱!");
+		// 			email.focus();
+		// 			return;
+		// 		}
+
+		// 		if(!phoneRight(phone.val())){
+		// 			var tip="请输入正确11位手机号码!";
+		// 			alert(tip);
+		// 			webjs.toastShort(tip);
+		// 			phone.focus();
+		// 			return;
+		// 		}
 
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
-			email : email.val().trim(),
-			phone : phone.val().trim()
+			flagid : flagid
+		// 			phone : phone.val().trim()
 		};
 
 		$.ajax({
@@ -56,30 +79,37 @@
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-
+				var tip = '';
 				if (msg.status == "success") {
-					alert('注册成功');
-					window.history.back(-1);
-				} else if(msg.status == "errRepeat"){
-					alert('用户名已被注册!请更换您的用户名。');
-				} else{
-					alert('注册失败!请稍后重试。');
+					// 					tip='注册成功';
+					// 					window.location.href = 'account.jsp';
+					webjs.setUser(JSON.stringify(msg.data));
+					webjs.closeWeb();
+				} else if (msg.status == "errRepeat") {
+					tip = '用户名已被注册!请更换您的用户名。';
+					alert(tip);
+					webjs.toastShort(tip);
+				} else {
+					tip = '注册失败!请稍后重试。';
+					alert(tip);
+					webjs.toastShort(tip);
 				}
+
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				
-				var msg="注册失败!";
-				switch (XMLHttpRequest.status)
-				{
-					case 404:
-						msg="用户名不可用!请更换您的用户名。";
-				  		break;
-					default:
-						msg="网络异常，请稍后再试。";
-						break;
-				  			
+
+				var tip = "注册失败!";
+				switch (XMLHttpRequest.status) {
+				case 404:
+					tip = "用户名不可用!请更换您的用户名。";
+					break;
+				default:
+					tip = "网络异常，请稍后再试。";
+					break;
+
 				}
-				alert(msg);
+				alert(tip);
+				webjs.toastShort(tip);
 			}
 		});
 
@@ -90,14 +120,17 @@
 
 </head>
 <body>
-
-<input type="text" class="m_input" id="name" placeholder="请输入用户名,一旦注册,不能更改"/><br/>
-<input type="password" class="m_input" id="pwd" placeholder="请输入密码"/><br/>
-<input type="password" class="m_input" id="re_pwd" placeholder="请再次输入密码"/><br/>
-<input type="text" class="m_input" id="email" placeholder="请输入邮箱地址，方便日后找回账号"/><br/>
-<input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/>
-<input type="button" class="login_button" value="注&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;册" onclick="regist()"/><br/>
+<jsp:include page="head.jsp"></jsp:include>
+		<div class="magin_lr">
+			<div class="divCenter">
+			<font class="top_tip">注册</font><br>
+<input type="text" class="m_input input_border" id="name" maxlength="20" placeholder="请输入用户名"/><br/>
+<input type="password" class="m_input input_border" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
+<input type="password" class="m_input input_border" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>
+<!-- <input type="text" class="m_input" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号，方便日后找回账号"/><br/> -->
+<input type="button" class="btn_mp single_button input_border button_color" value="注册" onclick="regist()"/><br/>
 <a href="login.jsp" class="foget_pwd_a text_a">已有帐号</a>
-
+	</div>
+	</div>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<!-- 配置数据库连接信息 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://120.26.78.220:3306/account_n8wan?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
+				<property name="username" value="accountn8" />
+				<property name="password" value="7d89eaf7890fa87890" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+        <!-- 注册userMapper.xml文件， 
+         userMapper.xml位于me.gacl.mapping这个包下，所以resource写成me/gacl/mapping/userMapper.xml-->
+        <!--  <mapper resource="com/account/mapping/userMapper.xml"/> -->
+<!--          <mapper resource="com/account/mapping/statisticsCurrentMapper.xml"/> -->
+<!--          <mapper resource="com/account/mapping/statisticsDayMapper.xml"/> -->
+         <mapper resource="com/account/mapping/myUserMapper.xml"/>
+     </mappers>
+	
+
+</configuration>

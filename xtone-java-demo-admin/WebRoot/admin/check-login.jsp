@@ -71,13 +71,10 @@
 			ps.setLong(2, user.getId());
 			ps.executeUpdate();
 		} else {
-			String msg = "check user failure!";
-			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
+			out.print("{\"status\":\"error\"}");
 		}
 
 	} catch (Exception e) {
-		String msg = "check user failure!";
-		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		e.printStackTrace();
 	} finally {
 		if (con != null) {

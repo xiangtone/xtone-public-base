@@ -46,9 +46,18 @@
 					alert(action+'失败!');
 				}
 			},
-			error : function() {
-				alert(action+'失败!');
-
+			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				
+				var tip=action+"失败!";
+				switch (XMLHttpRequest.status)
+				{
+					case 404:
+				  		break;
+					default:
+						tip="网络异常，请稍后再试。";
+						break;
+				}
+				alert(tip);
 			}
 		});
 	}

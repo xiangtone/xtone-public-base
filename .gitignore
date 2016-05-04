@@ -15,3 +15,5 @@ hs_err_pid*
 /xtone-java-demo-admin/target
 /xtone-demo-hit-mouse/target
 /xtone-interface-redirect/target
+/x-account-server/target/
+/x-account-sdk/bin
