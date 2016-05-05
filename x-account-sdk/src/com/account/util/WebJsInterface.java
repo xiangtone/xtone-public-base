@@ -16,6 +16,7 @@ public class WebJsInterface {
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
 	private static final String TAG="WebJsInterface";
+	
 	public WebJsInterface(Context context) {
 		this.context = context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
@@ -76,6 +77,16 @@ public class WebJsInterface {
 	public String getFlagId() {
 		SharedPreferences sp=context.getSharedPreferences("com_epplus_sdk_prefer",Activity.MODE_PRIVATE);
 		return sp.getString("flag_id", null);
+    }
+	
+	@JavascriptInterface
+	public String getChannel() {
+		return MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null);
+    }
+	
+	@JavascriptInterface
+	public String getAppkey() {
+		return MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null);
     }
 	
 }

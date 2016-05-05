@@ -21,6 +21,7 @@
 <!--          <mapper resource="com/account/mapping/statisticsCurrentMapper.xml"/> -->
 <!--          <mapper resource="com/account/mapping/statisticsDayMapper.xml"/> -->
          <mapper resource="com/account/mapping/myUserMapper.xml"/>
+         <mapper resource="com/account/mapping/channelMapper.xml"/>
      </mappers>
 	
 

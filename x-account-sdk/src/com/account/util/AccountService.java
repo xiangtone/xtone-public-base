@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import com.account.bean.UserInfo;
 
+import android.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -45,8 +46,10 @@ import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -93,13 +96,13 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,CallBack callBack){
+	public WebView showWebDialog(Context context,CallBack callBack){
 		WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
 		 
 	     int width = wm.getDefaultDisplay().getWidth()*80/100;
 	     int height = wm.getDefaultDisplay().getHeight()*55/100;
-	     return showWebDialog(context,url,width,height,"webjs",callBack);
+	     return showWebDialog(context,width,height,"webjs",callBack);
 	}
 	/**
 	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),interfaceName默认为webjs。
@@ -108,8 +111,8 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,int width,int height,CallBack callBack){
-		return showWebDialog(context,url,width,height,"webjs",callBack);
+	public WebView showWebDialog(Context context,int width,int height,CallBack callBack){
+		return showWebDialog(context,width,height,"webjs",callBack);
 	}
 	/**
 	 * 动态创建一个dialog窗口
@@ -118,7 +121,7 @@ public class AccountService {
 	 * @param interfaceName:为与web应用js交互的对象
 	 * @return WebView
 	 */
-	public WebView showWebDialog(Context context,String url,int width,int height,String interfaceName,final CallBack callBack) {
+	public WebView showWebDialog(Context context,int width,int height,String interfaceName,final CallBack callBack) {
 		webpobView = new WebView(context);
 		this.context=context;
 		this.callBack = callBack;
@@ -130,18 +133,25 @@ public class AccountService {
 //			return null;
 //		}
 		
-		// 装dialog的线性布局Layoutparams
-		LinearLayout linearLayout = new LinearLayout(context);
-		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-		linearLayout.setGravity(Gravity.CENTER);//设置居中弹出
+		// 装dialog的叠层布局Layoutparams
+		FrameLayout linearLayout = new FrameLayout(context);
+		LayoutParams plaqueParams = new LayoutParams(
+				new LinearLayout.LayoutParams(width,height));//布局和webview大小
+		plaqueParams.gravity=Gravity.CENTER;//设置居中显示
+//		linearLayout.setGravity(Gravity.CENTER);//设置居中显示
+		linearLayout.setLayoutParams(plaqueParams);
+		//进度条
+		final ProgressBar progressBar=new ProgressBar(context);
+		LayoutParams barParams = new LayoutParams(
+				new LinearLayout.LayoutParams(200,200));//进度条大小
+		barParams.gravity=Gravity.CENTER;//设置居中显示
+		progressBar.setLayoutParams(barParams);
 
 		// webview的Layoutparams
-		LayoutParams plaqueParams = new LayoutParams(
-				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
 		
-		webpobView.loadUrl(url);
+		webpobView.loadUrl(Constant.URLLOGIN);
 		// 设置支持javascript
 		webpobView.getSettings().setJavaScriptEnabled(true);
 		// js能调用android项目方法
@@ -172,6 +182,7 @@ public class AccountService {
 //				cookieStr = cookieManager.getCookie(url);
 //				editor.putString("cookies",cookieStr);
 //		        editor.commit();
+				progressBar.setVisibility(View.GONE);
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
 	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
@@ -184,7 +195,12 @@ public class AccountService {
 				super.onReceivedError(view,errorCode,description,failingUrl);
 			}
 		});
-
+		
+//		webpobView.setWebChromeClient(new WebChromeClient() {
+//			public void onProgressChanged(WebView view, int progress) {
+//				progressBar.setProgress(progress * 100);
+//			}
+//			});
 //		webpobView.setOnKeyListener(new OnKeyListener() {
 //			
 //			@Override
@@ -225,6 +241,8 @@ public class AccountService {
 
 		// 线性布局装webview
 		linearLayout.addView(webpobView);
+		linearLayout.addView(progressBar);
+		
 		// dialog加载线性布局
 		login_dialog.setContentView(linearLayout);
 
@@ -260,7 +278,7 @@ public class AccountService {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void autoLogin(Context context,final String url,final CallBack callBack){
+	public void autoLogin(final Context context,final CallBack callBack){
 		//如果有账号信息自动登录
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
@@ -274,7 +292,6 @@ public class AccountService {
 		        if(val!=null){
 		        	editor.putBoolean("iflogin",true);
 		        }
-		        Log.i(TAG,"请求结果:" + val);
 		        if(loginSuccess()){
 					callBack.loginSuccess(userInfo);
 				}
@@ -290,8 +307,10 @@ public class AccountService {
 					stoneObject = new JSONObject();  
 		            try {
 						stoneObject.put("uid", sp.getString("uid",null));
+						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
+						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(url,params);
+						String value=HttpUtils.httpPost(Constant.URLAUTOLOGIN,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);

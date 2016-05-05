@@ -28,10 +28,13 @@ public final class R {
         public static final int btn_uid=0x7f060005;
         public static final int islogin=0x7f060000;
         public static final int logout=0x7f060003;
+        public static final int progressBar1=0x7f060007;
+        public static final int textView1=0x7f060006;
         public static final int txuuid=0x7f060001;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int x=0x7f030001;
     }
     public static final class string {
         public static final int apk=0x7f040004;

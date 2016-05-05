@@ -65,8 +65,14 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		if (loginUser != null) {
+			if(loginUser.getStatus()==MyUser.FREEZE){
+				response.getWriter().append("{\"status\":\"frezze\"}");//账号没有激活
+				return;
+			}
 			//更新登录时间
 			loginUser.setFlagid(myUser.getFlagid());
+			loginUser.setChannel_id(myUser.getChannel_id());
+			loginUser.setAppkey(myUser.getAppkey());
 			loginUser.setLastLoginTime(new Date().getTime());
 			daoImpl.updateTime(loginUser);
 			loginUser.setPwd(myUser.getPwd());
