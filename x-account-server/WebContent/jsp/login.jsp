@@ -45,7 +45,6 @@ function regist(){
 	}
 	
 	window.location.href=url;
-// 	window.location.href="regist.jsp";
 }
 	function submitBtn() {
 		
@@ -113,7 +112,11 @@ function regist(){
 					webjs.closeWeb();
 // 					webjs.setuser(JSON.stringify(msg.data));
 // 					webjs.closeweb();
-				}else {
+				}else if(msg.status == "frezze"){
+					tip='该用户没有被激活，请先激活。';
+					alert(tip);
+					webjs.toastShort(tip);
+				}else{
 					tip='登录失败!请检查用户名和密码是否正确。';
 					alert(tip);
 					webjs.toastShort(tip);

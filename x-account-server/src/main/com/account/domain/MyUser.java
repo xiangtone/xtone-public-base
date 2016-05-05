@@ -7,6 +7,8 @@ public class MyUser{
 	public static final int LOGINBYNAME=1;
 	public static final int LOGINBYPHONE=2;
 	public static final int LOGINBYEMAIL=3;
+	public static final int FREEZE=0;
+	public static final int ACTIVATION=1;
 	//实体类的属性和表的字段名称一一对应
 	private int id;
 	private String name;

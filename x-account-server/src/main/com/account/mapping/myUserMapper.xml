@@ -73,28 +73,28 @@
 
 	<select id="login" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where name = #{name} and
-		pwd = Md5(#{pwd}) and status = 1;
+		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByPhone" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where phone = #{phone} and
 		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByEmail" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where email = #{email} and
 		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByUid" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where uid = #{uid};
 	</select>
 

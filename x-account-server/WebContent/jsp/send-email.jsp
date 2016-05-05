@@ -41,7 +41,7 @@ $(document).ready(function(){
 </script>
 <style type="text/css">
 .m_t{
-	margin-top: 20%;
+	margin-top: 30%;
 	float: left;
 }
 </style>

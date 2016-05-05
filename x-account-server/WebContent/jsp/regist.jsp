@@ -22,7 +22,7 @@ if(request.getParameter("channel_id")!=null){
 		} catch (Exception e) {
 		}
 }else{
-	channel.setRegisterType("email");
+	channel.setRegisterType("name");
 }
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("uuu9");
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
@@ -46,16 +46,17 @@ $(document).ready(function(){
 	}
 });
 
-	var wait = 60;
+	var waitTime = 60;
+	var t = waitTime;
 	function getCode(o) {
-		if (wait == 0) {
+		if (t == 0) {
 			o.removeAttribute("disabled");
 			o.value = "获取验证";
-			wait = 60;
+			t = waitTime;
 		} else {
 			o.setAttribute("disabled", true);
-			o.value = "重新发送(" + wait + ")";
-			wait--;
+			o.value = "重新发送(" + t + ")";
+			t--;
 			setTimeout(function() {
 				getCode(o)
 			}, 1000)
@@ -69,8 +70,6 @@ $(document).ready(function(){
 		var re_pwd = $("#re_pwd");
 		var phone = $("#phone");
 		var email = $("#email");
-		// 		var input_num = document.getElementById("num");
-		// 		var input_name = document.getElementById("name");
 
 		var oriData = {
 			name : name.val().trim(),
