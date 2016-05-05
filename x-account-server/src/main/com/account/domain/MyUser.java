@@ -7,6 +7,8 @@ public class MyUser{
 	public static final int LOGINBYNAME=1;
 	public static final int LOGINBYPHONE=2;
 	public static final int LOGINBYEMAIL=3;
+	public static final int FREEZE=0;
+	public static final int ACTIVATION=1;
 	//实体类的属性和表的字段名称一一对应
 	private int id;
 	private String name;
@@ -21,6 +23,7 @@ public class MyUser{
 	private int loginType;//登录方式：手机号、用户名、邮箱
 	private String channel_id;//渠道号
 	private String appkey;//应用密钥
+	private int status;
 		 
 	public int getId() {
 		return id;
@@ -99,6 +102,12 @@ public class MyUser{
 	}
 	public void setAppkey(String appkey) {
 		this.appkey = appkey;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
 	}
 	
 	

@@ -25,6 +25,19 @@
     <servlet-name>LoginServlet</servlet-name>
     <servlet-class>com.account.service.LoginServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>RegsitServlet</servlet-name>
+    <servlet-class>com.account.service.RegsitServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ConfrimAccountServlet</servlet-name>
+    <servlet-class>com.account.service.ConfrimAccountServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>EmailServlet</servlet-name>
+    <servlet-class>com.account.service.EmailServlet</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet/*</url-pattern>

@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import com.account.bean.UserInfo;
 
+import android.R;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -45,6 +46,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.FrameLayout;
 import android.widget.FrameLayout.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -131,14 +133,21 @@ public class AccountService {
 //			return null;
 //		}
 		
-		// 装dialog的线性布局Layoutparams
-		LinearLayout linearLayout = new LinearLayout(context);
-		linearLayout.setLayoutParams(new LinearLayout.LayoutParams(width,height));
-		linearLayout.setGravity(Gravity.CENTER);//设置居中弹出
+		// 装dialog的叠层布局Layoutparams
+		FrameLayout linearLayout = new FrameLayout(context);
+		LayoutParams plaqueParams = new LayoutParams(
+				new LinearLayout.LayoutParams(width,height));//布局和webview大小
+		plaqueParams.gravity=Gravity.CENTER;//设置居中显示
+//		linearLayout.setGravity(Gravity.CENTER);//设置居中显示
+		linearLayout.setLayoutParams(plaqueParams);
+		//进度条
+		final ProgressBar progressBar=new ProgressBar(context);
+		LayoutParams barParams = new LayoutParams(
+				new LinearLayout.LayoutParams(200,200));//进度条大小
+		barParams.gravity=Gravity.CENTER;//设置居中显示
+		progressBar.setLayoutParams(barParams);
 
 		// webview的Layoutparams
-		LayoutParams plaqueParams = new LayoutParams(
-				new LinearLayout.LayoutParams(width,height));
 
 		webpobView.setLayoutParams(plaqueParams);
 		
@@ -173,6 +182,7 @@ public class AccountService {
 //				cookieStr = cookieManager.getCookie(url);
 //				editor.putString("cookies",cookieStr);
 //		        editor.commit();
+				progressBar.setVisibility(View.GONE);
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
 	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
@@ -186,8 +196,6 @@ public class AccountService {
 			}
 		});
 		
-//		final ProgressBar progressBar=new ProgressBar(context);
-//		progressBar.
 //		webpobView.setWebChromeClient(new WebChromeClient() {
 //			public void onProgressChanged(WebView view, int progress) {
 //				progressBar.setProgress(progress * 100);
@@ -233,6 +241,8 @@ public class AccountService {
 
 		// 线性布局装webview
 		linearLayout.addView(webpobView);
+		linearLayout.addView(progressBar);
+		
 		// dialog加载线性布局
 		login_dialog.setContentView(linearLayout);
 
