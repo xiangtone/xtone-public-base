@@ -46,12 +46,11 @@
 			String rsp = gson.toJson(codeRsp);
 			out.print(rsp);
 		} else {
-			out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
+			out.print("{\"status\":\"error\"}");
 		}
 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
 		e.printStackTrace();
 	} finally {
 		if (con != null) {

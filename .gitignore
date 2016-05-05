@@ -1,4 +1,20 @@
+#java below
+*.class
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
 /xtone-java-common/target
 /xtone-java-demo-admin/target
 /xtone-demo-hit-mouse/target
 /xtone-interface-redirect/target
+/x-account-server/target/
+/x-account-sdk/bin
+/x-java-app-wechat-token/packageConfig/vgame

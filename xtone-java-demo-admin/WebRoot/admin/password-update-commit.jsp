@@ -39,11 +39,11 @@
 	    rs = ps.executeQuery();
 	    if (rs.next()) {
 	    	if(rs.getLong("id")!=userChange.getId()){
-	    		out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
+	    		out.print("{\"status\":\"error\"}");
 		    	return;
 	    	}
 	    }else{
-	    	out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
+	    	out.print("{\"status\":\"errOldPwd\"}");
 	    	return;
 	    }
 		
@@ -62,12 +62,11 @@
 			String rsp = gson.toJson(loginRsp);
 			out.print(rsp);
 		} else {
-			out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
+			out.print("{\"status\":\"error\"}");
 		}
 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		out.print("{\"status\":\"error\",\"data\":\"" + info + "\"}");
 		e.printStackTrace();
 	} finally {
 		if (con != null) {

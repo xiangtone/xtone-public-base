@@ -1,0 +1,118 @@
+
+body {
+	font-family:Microsoft YaHei;
+	margin: 0px;
+	background-color: #42b5c4;
+}
+
+a {text-decoration:none;}
+a:link {color:#ffffff;text-decoration:none;}     /* 未被访问的链接     */
+a:visited {color:#ffffff}  /* 已被访问过的链接    */
+a:hover {text-decoration:none}    /* 鼠标悬浮在上的链接  */
+a:active {color:#ffffff}   /* 鼠标点中激活链接    */
+
+.divCenter {
+	width:100%;
+	max-width: 1200px;
+	height:100%;
+	margin: 0px auto;
+	text-align: center
+}
+
+.input_border{
+	border-radius: 6px;
+    border: 0;
+}
+.magin_lr{
+	margin:0 15%;
+}
+
+.m_input{
+	width: 100%;
+	height:30px;
+	margin-top: 20px;
+	text-indent:12px;
+}
+
+.phone_input{
+	width: 55%;
+	height:30px;
+	margin-top: 20px;
+	text-indent:12px;
+}
+
+.single_button{
+	width: 100%;
+	height:35px;
+	font-size: 20px;
+}
+
+.double_button{
+	width: 49%;
+	height:35px;
+	font-size: 20px;
+}
+
+.account_button{
+	width: 70%;
+	height:24px;
+	font-size: 14px;
+	margin: 10px auto 10px auto;
+	padding: 1px 0 1px 0;
+	background-color: white;
+	line-height:22px;
+	color:#a9a9a9;
+}
+
+.button_color{
+	background-color: #c3df21;
+	color: #289daf;
+}
+.top_tip{
+	float: left;
+	margin-top: 15%;
+	padding-right: 70%;
+	font-size: 19px;
+	color: white;
+}
+
+.regist_a {
+	float: right;
+}
+
+.findby_email_a{
+	float: left;
+}
+
+.findby_num_a{
+	float: right;
+}
+
+.foget_pwd_a{
+	float: right;
+}
+.change_pwd_a{
+	float: left;
+}
+.text_a{
+	font-size: 15px;
+}
+.account_select_l{
+	float: left;
+	margin-left: 10px;
+}
+
+.account_select_r{
+	float: right;
+	margin-right: 10px;
+}
+
+.btn_mp{
+	margin: 40px 0 10px 0;
+	padding: 1px 0 1px 0;
+}
+
+.double_btn_mp{
+	margin: 30px 0 10px 0;
+	padding: 1px 0 1px 0;
+}

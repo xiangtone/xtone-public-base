@@ -18,7 +18,6 @@
 	PreparedStatement ps = null;
 	Connection con = null;
 	int adds = 0;
-	String msg = "添加失败!";
 	try {
 		
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -40,13 +39,11 @@
 			String rsp = gson.toJson(catalogRsp);
 			out.print(rsp);
 		} else {	
-			out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
+			out.print("{\"status\":\"error\"}");
 		}
 
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
-		
-		out.print("{\"status\":\"error\",\"data\":\"" + msg + "\"}");
 		e.printStackTrace();
 	} finally {
 		if (con != null) {
