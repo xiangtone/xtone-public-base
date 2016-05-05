@@ -85,8 +85,8 @@ public class TokenGet {
   public static void main(String[] args) {
     try {
       TokenGet token = new TokenGet();
-      token.setAppId("wx26d9b9ff5f0fc4ed");
-      token.setSecret("8b1de189eefa9c0d78c1a847122eaf38");
+      token.setAppId("xxxxxxx");
+      token.setSecret("yyyyyyyyy");
       System.out.println(token.get());
 
     } catch (Exception e) {

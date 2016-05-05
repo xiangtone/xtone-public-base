@@ -57,6 +57,7 @@ public class RspToken {
     if (accessToken != null && accessToken.length() > 0 && expiresIn > 0) {
       return true;
     } else {
+      LOG.error("verify fail:" + this);
       return false;
     }
   }
