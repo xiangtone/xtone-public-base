@@ -289,12 +289,20 @@ public class AccountService {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
-		        if(val!=null){
-		        	editor.putBoolean("iflogin",true);
+		        userInfo=new UserInfo();
+		        userInfo.setUserByJson(val);
+		        Log.i(TAG, userInfo.getStatus());
+		        if(userInfo.getStatus().equals("success")){
+//		        	editor.putBoolean("iflogin",true);
+		        	callBack.loginSuccess(userInfo);
+		        }else if(userInfo.getStatus().equals("frezze")){
+		        	
+		        }else if(userInfo.getStatus().equals("err")){
+		        	
 		        }
-		        if(loginSuccess()){
-					callBack.loginSuccess(userInfo);
-				}
+//		        if(loginSuccess()){
+//					
+//				}
 		    }
 		};
 		
@@ -310,7 +318,7 @@ public class AccountService {
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(Constant.URLAUTOLOGIN,params);
+						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);

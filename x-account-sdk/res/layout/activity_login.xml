@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:hint="请输入11位手机号"
+        android:maxLength="11"
+        android:layout_marginTop="50dp"/>
+
+    <EditText
+        android:id="@+id/et_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入密码" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="登录" />
+    
+    <Button
+        android:id="@+id/btn_to_regist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_gravity="right"
+        android:text="注册" />
+
+</LinearLayout>

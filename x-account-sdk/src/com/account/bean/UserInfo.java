@@ -1,5 +1,9 @@
 package com.account.bean;
 
+import org.json.JSONObject;
+
+import com.account.util.MACUtil;
+
 public class UserInfo {
 	private String channelCode;
 	private String userID;
@@ -8,6 +12,8 @@ public class UserInfo {
 	private String productCode;
 	private String channelUserId;
 	private String channelLabel;
+	private String status;
+	
 	public String getChannelCode() {
 		return channelCode;
 	}
@@ -50,5 +56,23 @@ public class UserInfo {
 	public void setChannelLabel(String channelLabel) {
 		this.channelLabel = channelLabel;
 	}
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setUserByJson(String json){
+		try {
+			JSONObject jsonObject=new JSONObject(json);
+			this.setStatus(jsonObject.getString("status"));
+			JSONObject data=new JSONObject(jsonObject.getString("data"));
+			this.setUsername(data.getString("name"));
+			this.setUserID(data.getString("uid"));
+			this.setToken(MACUtil.getInstances().getMac());
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
 }

@@ -3,6 +3,7 @@ package com.account.activity;
 import java.net.NetworkInterface;
 
 import com.account.R;
+import com.account.Server.RawService;
 import com.account.bean.UserInfo;
 import com.account.util.AccountService;
 import com.account.util.CallBack;
@@ -61,14 +62,17 @@ public class MainActivity extends Activity {
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
-					
-					@Override
-					public void loginSuccess(UserInfo userInfo) {
-						// TODO Auto-generated method stub
-						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-					}
-				}); //返回一個webview
+//				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
+//					
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+//					}
+//				}); //返回一個webview
+				Intent intent=new Intent(MainActivity.this, LoginActivity.class);
+				startActivity(intent);
+				
 			}
 		});
 
@@ -85,7 +89,6 @@ public class MainActivity extends Activity {
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
 				AccountService.getInstances().autoLogin(context,new CallBack() {
-					
 					@Override
 					public void loginSuccess(UserInfo userInfo) {
 						// TODO Auto-generated method stub
