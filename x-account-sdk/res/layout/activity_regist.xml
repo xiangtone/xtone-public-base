@@ -18,6 +18,7 @@
         android:id="@+id/et_reg_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:password="true"
         android:singleLine="true"
         android:hint="请输入6-20位密码" />
 

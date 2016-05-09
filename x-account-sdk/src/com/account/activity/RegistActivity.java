@@ -7,7 +7,6 @@ import com.account.util.CallBack;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View.OnClickListener;
@@ -17,20 +16,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity {
-	private Button btnLogin;
-	private Button btnToRegist;
-	private EditText etName;
-	private EditText etPwd;
+public class RegistActivity extends Activity {
+	private Button btnRegOk;
+	private Button btnRegCancle;
+	private EditText etRegName;
+	private EditText etRegPwd;
 	private Context context;
-	private static final String TAG = "LoginActivity";
+	private static final String TAG = "RegistActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+		setContentView(R.layout.activity_regist);
 		init();
 		findView();
 		setClick();
@@ -38,21 +37,21 @@ public class LoginActivity extends Activity {
 
 	private void init() {
 		// TODO Auto-generated method stub
-		context=LoginActivity.this;
+		context=RegistActivity.this;
 	}
 
 	private void setClick() {
 		// TODO Auto-generated method stub
-		btnLogin.setOnClickListener(clickListener);
-		btnToRegist.setOnClickListener(clickListener);
+		btnRegOk.setOnClickListener(clickListener);
+		btnRegCancle.setOnClickListener(clickListener);
 	}
 
 	private void findView() {
 		// TODO Auto-generated method stub
-		btnLogin = (Button) findViewById(R.id.btn_login);
-		btnToRegist = (Button) findViewById(R.id.btn_to_regsit);
-		etName = (EditText) findViewById(R.id.et_name);
-		etPwd = (EditText) findViewById(R.id.et_pwd);
+		btnRegOk = (Button) findViewById(R.id.btn_reg_ok);
+		btnRegCancle = (Button) findViewById(R.id.btn_reg_cancle);
+		etRegName = (EditText) findViewById(R.id.et_reg_name);
+		etRegPwd = (EditText) findViewById(R.id.et_reg_pwd);
 	}
 
 	OnClickListener clickListener = new OnClickListener() {
@@ -61,11 +60,11 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.btn_login:
-				login();
+			case R.id.btn_reg_ok:
+				regist();
 				break;
-			case R.id.btn_to_regsit:
-				toRegist();
+			case R.id.btn_reg_cancle:
+				finish();
 				break;
 
 			default:
@@ -74,41 +73,34 @@ public class LoginActivity extends Activity {
 		}
 	};
 
-	protected void login() {
-		String phone=etName.getText().toString().trim();
-		String password=etPwd.getText().toString().trim();
+	protected void regist() {
+		String phone=etRegName.getText().toString().trim();
+		String password=etRegPwd.getText().toString().trim();
 		if(phone.length()!=11||phone==null){
 			Toast.makeText(context, "请输入11位手机号", Toast.LENGTH_SHORT).show();
-			etName.requestFocus();
+			etRegName.requestFocus();
 			return;
 		}
 		if(password.length()<6||password==null){
 			Toast.makeText(context, "请输入六位数密码", Toast.LENGTH_SHORT).show();
-			etPwd.requestFocus();
+			etRegPwd.requestFocus();
 			return;
 		}
+		
 		// TODO Auto-generated method stub
-		RawService.getInstances().login(context, phone, password, new CallBack() {
-			
+		RawService.getInstances().regist(context, phone, password, new CallBack() {
 			@Override
-			public void loginSuccess(UserInfo userInfo) {
+			public void registSuccess(UserInfo userInfo) {
 				// TODO Auto-generated method stub
 				Log.i(TAG, userInfo.getPhone()+"/"+userInfo.getUserID());
 				finish();
 			}
-			
 			@Override
-			public void loginFailure(String massage) {
+			public void registFailure(String massage) {
 				// TODO Auto-generated method stub
 				Toast.makeText(context, massage, Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
-
-	protected void toRegist() {
-		// TODO Auto-generated method stub
-		Intent intent=new Intent(context,RegistActivity.class);
-		startActivity(intent);
 	}
 
 }

@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值
 	private Activity act ;
+	private static final String TGA="MainActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +57,6 @@ public class MainActivity extends Activity {
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
-		ProgressBar progressBar=new ProgressBar(context);
-		progressBar.setLayoutParams(new LinearLayout.LayoutParams(500,100));
 		//登陆按钮点击事件
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
@@ -70,7 +69,7 @@ public class MainActivity extends Activity {
 //						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
 //					}
 //				}); //返回一個webview
-				Intent intent=new Intent(MainActivity.this, LoginActivity.class);
+				Intent intent=new Intent(context, LoginActivity.class);
 				startActivity(intent);
 				
 			}
@@ -88,20 +87,33 @@ public class MainActivity extends Activity {
 //				}
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
-				AccountService.getInstances().autoLogin(context,new CallBack() {
+//				AccountService.getInstances().autoLogin(context,new CallBack() {
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+//					}
+//				});
+				
+				RawService.getInstances().autoLogin(context, new CallBack() {
 					@Override
 					public void loginSuccess(UserInfo userInfo) {
 						// TODO Auto-generated method stub
-						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+						Toast.makeText(context, userInfo.getUserID(), Toast.LENGTH_SHORT).show();
+					}
+					@Override
+					public void loginFailure(String massage) {
+						// TODO Auto-generated method stub
+						Toast.makeText(context, massage, Toast.LENGTH_SHORT).show();
 					}
 				});
 			}
 		});
 		logout.setOnClickListener(new OnClickListener() {
-			@Override
+			@Override 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				AccountService.getInstances().logout();
+				RawService.getInstances().logOut();
 			}
 		});
 	}

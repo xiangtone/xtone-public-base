@@ -64,21 +64,33 @@ public class RawService {
 	@SuppressWarnings("deprecation")
 	public void login(final Context context,final String phone,final String password,final CallBack callBack){
 		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
+		        if(val==null){
+		        	callBack.loginFailure("网络异常");
+		        	return;
+		        }
 		        userInfo=new UserInfo();
 		        userInfo.setUserByJson(val);
-		        Log.i(TAG, "login"+userInfo.getStatus());
+		        Log.i(TAG, "login/"+userInfo.getStatus());
+		        ifLogin=false;
 		        if(userInfo.getStatus().equals("success")){
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+		        	editor.commit();
+		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
 		        }else if(userInfo.getStatus().equals("frezze")){//用户未激活
-		        	
+		        	callBack.loginFailure("该用户未激活");
 		        }else if(userInfo.getStatus().equals("err")){//用户不存在
-		        	
+		        	callBack.loginFailure("用户名或密码错误");
+		        }else{
+		        	callBack.loginFailure("登录失败，请稍后重试");
 		        }
 		    }
 		};
@@ -95,7 +107,7 @@ public class RawService {
 						stoneObject.put("loginType", BYPHONE);
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
 						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
-						Message msg = new Message();
+				        Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);
 				        msg.setData(data);
@@ -117,22 +129,32 @@ public class RawService {
 	@SuppressWarnings("deprecation")
 	public void regist(final Context context,final String phone,final String password,final CallBack callBack){
 		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
+		
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
+		        if(val==null){
+		        	callBack.loginFailure("网络异常");
+		        	return;
+		        }
 		        userInfo=new UserInfo();
 		        userInfo.setUserByJson(val);
-		        Log.i(TAG, "regist"+userInfo.getStatus());
+		        Log.i(TAG, "regist/"+userInfo.getStatus());
+		        ifLogin=false;
 		        if(userInfo.getStatus().equals("success")){
-		        	callBack.loginSuccess(userInfo);
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+		        	editor.commit();
+				    ifLogin=true;
+		        	callBack.registSuccess(userInfo);
 		        }else if(userInfo.getStatus().equals("errRepeat")){//用户已存在
-		        	
-		        }else if(userInfo.getStatus().equals("errInsert")){//插入数据库失败
-		        	
-		        	
+		        	callBack.registFailure("该用户已存在");
+		        }else{//插入数据库失败
+		        	callBack.registFailure("注册失败，请稍后重试");
 		        }
 		    }
 		};
@@ -176,15 +198,25 @@ public class RawService {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
+		        if(val==null){
+		        	callBack.loginFailure("网络异常");
+		        	return;
+		        }
 		        userInfo=new UserInfo();
 		        userInfo.setUserByJson(val);
-		        Log.i(TAG, "autoLogin"+userInfo.getStatus());
+		        Log.i(TAG, "autoLogin/"+userInfo.getStatus());
+		        ifLogin=false;
 		        if(userInfo.getStatus().equals("success")){
+		        	editor.putString("uid", userInfo.getUserID());
+		        	editor.commit();
+		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
 		        }else if(userInfo.getStatus().equals("frezze")){//用户未激活
-		        	
+		        	callBack.loginFailure("该用户未激活");
 		        }else if(userInfo.getStatus().equals("err")){//用户不存在
-		        	
+		        	callBack.loginFailure("该用户不存在");
+		        }else{
+		        	callBack.loginFailure("登录失败，请稍后重试");
 		        }
 		    }
 		};
@@ -216,5 +248,12 @@ public class RawService {
 		};
 		new Thread(runnable).start();
         	
+	}
+	
+	public void logOut(){
+		if(editor!=null){
+			editor.clear();
+			editor.commit();
+		}
 	}
 }

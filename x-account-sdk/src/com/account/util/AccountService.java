@@ -251,11 +251,10 @@ public class AccountService {
 	
 	public void logout() {
 		userInfo=null;
-		editor.putBoolean("iflogin", false);
-		editor.putString("name",null);
-		editor.putString("pwd",null);
-		editor.putString("uid",null);
-		editor.commit();
+		if(editor!=null){
+			editor.clear();
+			editor.commit();
+		}
 //		Log.i("iflogin", sp.getBoolean("iflogin",false)+"");
 	}
 	
@@ -310,7 +309,7 @@ public class AccountService {
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(Constant.URLAUTOLOGIN,params);
+						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);

@@ -8,11 +8,12 @@ public class UserInfo {
 	private String channelCode;
 	private String userID;
 	private String username;
+	private String phone;
 	private String token;
 	private String productCode;
 	private String channelUserId;
 	private String channelLabel;
-	private String status;
+	private String status;//服务端返回的账号状态
 	
 	public String getChannelCode() {
 		return channelCode;
@@ -31,6 +32,12 @@ public class UserInfo {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getToken() {
 		return token;
@@ -63,16 +70,30 @@ public class UserInfo {
 		this.status = status;
 	}
 	public void setUserByJson(String json){
+		JSONObject data=null;
 		try {
 			JSONObject jsonObject=new JSONObject(json);
 			this.setStatus(jsonObject.getString("status"));
-			JSONObject data=new JSONObject(jsonObject.getString("data"));
-			this.setUsername(data.getString("name"));
-			this.setUserID(data.getString("uid"));
-			this.setToken(MACUtil.getInstances().getMac());
+			data=new JSONObject(jsonObject.getString("data"));
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}
+		try {
+			this.setUsername(data.getString("name"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setPhone(data.getString("phone"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setUserID(data.getString("uid"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setToken(MACUtil.getInstances().getMac());
+		} catch (Exception e) {
 		}
 	}
 }
