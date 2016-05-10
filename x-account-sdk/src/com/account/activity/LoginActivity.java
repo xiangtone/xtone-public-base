@@ -39,6 +39,7 @@ public class LoginActivity extends Activity {
 	private void init() {
 		// TODO Auto-generated method stub
 		context=LoginActivity.this;
+		RawService.getInstances().init(context);
 	}
 
 	private void setClick() {
@@ -88,7 +89,7 @@ public class LoginActivity extends Activity {
 			return;
 		}
 		// TODO Auto-generated method stub
-		RawService.getInstances().login(context, phone, password, new CallBack() {
+		RawService.getInstances().login(phone, password, new CallBack() {
 			
 			@Override
 			public void loginSuccess(UserInfo userInfo) {

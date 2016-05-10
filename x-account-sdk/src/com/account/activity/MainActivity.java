@@ -57,6 +57,7 @@ public class MainActivity extends Activity {
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
+		RawService.getInstances().init(context);
 		//登陆按钮点击事件
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
@@ -95,7 +96,7 @@ public class MainActivity extends Activity {
 //					}
 //				});
 				
-				RawService.getInstances().autoLogin(context, new CallBack() {
+				RawService.getInstances().autoLogin(new CallBack() {
 					@Override
 					public void loginSuccess(UserInfo userInfo) {
 						// TODO Auto-generated method stub

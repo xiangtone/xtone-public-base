@@ -34,9 +34,11 @@ public class RawService {
 
 	private static RawService instances = null;
 
-	private SharedPreferences sp = null;
+	private SharedPreferences spAccount = null;
 
 	private SharedPreferences.Editor editor;
+	
+	private SharedPreferences spSDK;
 
 	private UserInfo userInfo = null;
 
@@ -47,9 +49,16 @@ public class RawService {
 	private static final String TAG = "RawService";
 
 	private RawService() {
-		super();
+		
 	}
 
+	public void init(Context context){
+		this.context=context;
+		spAccount=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		spSDK=context.getSharedPreferences("com_epplus_sdk_prefer",Activity.MODE_PRIVATE);
+		editor=spAccount.edit();
+	}
+	
 	public static RawService getInstances() {
 		if (instances == null) {
 			instances = new RawService();
@@ -62,10 +71,8 @@ public class RawService {
 	 * 
 	 */
 	@SuppressWarnings("deprecation")
-	public void login(final Context context,final String phone,final String password,final CallBack callBack){
-		this.context=context;
-		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
-		editor=sp.edit();
+	public void login(final String phone,final String password,final CallBack callBack){
+
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
@@ -96,16 +103,19 @@ public class RawService {
 		};
 		
 		Runnable runnable= new Runnable() {
-			JSONObject stoneObject;
+			JSONObject object;
 			@Override
 			public void run() {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-					stoneObject = new JSONObject();  
+					object = new JSONObject();  
 		            try {
-						stoneObject.put("phone", phone);
-						stoneObject.put("pwd", password);
-						stoneObject.put("loginType", BYPHONE);
-						params.add(new BasicNameValuePair("info", stoneObject.toString()));
+						object.put("phone", phone);
+						object.put("pwd", password);
+						object.put("loginType", BYPHONE);
+						object.put("flagid", spSDK.getString("flag_id", null));
+						object.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
+						object.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
+						params.add(new BasicNameValuePair("info", object.toString()));
 						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
 				        Message msg = new Message();
 				        Bundle data = new Bundle();
@@ -127,10 +137,7 @@ public class RawService {
 	 * 
 	 */
 	@SuppressWarnings("deprecation")
-	public void regist(final Context context,final String phone,final String password,final CallBack callBack){
-		this.context=context;
-		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
-		editor=sp.edit();
+	public void regist(final String phone,final String password,final CallBack callBack){
 		
 		final Handler handler = new Handler(){
 		    @Override
@@ -160,16 +167,19 @@ public class RawService {
 		};
 		
 		Runnable runnable= new Runnable() {
-			JSONObject stoneObject;
+			JSONObject object;
 			@Override
 			public void run() {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-					stoneObject = new JSONObject();  
+					object = new JSONObject();  
 		            try {
-						stoneObject.put("phone", phone);
-						stoneObject.put("pwd", password);
-						stoneObject.put("loginType", BYPHONE);
-						params.add(new BasicNameValuePair("info", stoneObject.toString()));
+						object.put("phone", phone);
+						object.put("pwd", password);
+						object.put("loginType", BYPHONE);
+						object.put("flagid", spSDK.getString("flag_id", null));
+						object.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
+						object.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
+						params.add(new BasicNameValuePair("info", object.toString()));
 						String value=HttpUtils.httpPost(Constant.URLREGISTSERVLET,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();
@@ -187,11 +197,8 @@ public class RawService {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void autoLogin(final Context context,final CallBack callBack){
+	public void autoLogin(final CallBack callBack){
 		//如果有账号信息自动登录
-		this.context=context;
-		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
-		editor=sp.edit();
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
@@ -222,17 +229,18 @@ public class RawService {
 		};
 		
 		Runnable runnable= new Runnable() {
-			JSONObject stoneObject;
+			JSONObject object;
 			@Override
 			public void run() {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				if(sp!=null&&sp.getString("uid",null)!=null&&sp.getBoolean("iflogin", true)){
-					stoneObject = new JSONObject();  
+				if(spAccount!=null&&spAccount.getString("uid",null)!=null){
+					object = new JSONObject();  
 		            try {
-						stoneObject.put("uid", sp.getString("uid",null));
-						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
-						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
-						params.add(new BasicNameValuePair("info", stoneObject.toString()));
+						object.put("uid", spAccount.getString("uid",null));
+						object.put("flagid", spSDK.getString("flag_id", null));
+						object.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
+						object.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
+						params.add(new BasicNameValuePair("info", object.toString()));
 						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();

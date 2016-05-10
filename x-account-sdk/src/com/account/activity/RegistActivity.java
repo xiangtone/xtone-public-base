@@ -38,6 +38,7 @@ public class RegistActivity extends Activity {
 	private void init() {
 		// TODO Auto-generated method stub
 		context=RegistActivity.this;
+		RawService.getInstances().init(context);
 	}
 
 	private void setClick() {
@@ -88,7 +89,7 @@ public class RegistActivity extends Activity {
 		}
 		
 		// TODO Auto-generated method stub
-		RawService.getInstances().regist(context, phone, password, new CallBack() {
+		RawService.getInstances().regist(phone, password, new CallBack() {
 			@Override
 			public void registSuccess(UserInfo userInfo) {
 				// TODO Auto-generated method stub
