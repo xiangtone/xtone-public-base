@@ -288,12 +288,16 @@ public class AccountService {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
-		        if(val!=null){
+		        userInfo=new UserInfo();
+		        userInfo.setUserByJson(val);
+		        ifLogin=false;
+		        if(userInfo.getStatus().equals("success")){
 		        	editor.putBoolean("iflogin",true);
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+		        	editor.commit();
+		        	ifLogin=true;
+		        	callBack.loginSuccess(userInfo);
 		        }
-		        if(loginSuccess()){
-					callBack.loginSuccess(userInfo);
-				}
 		    }
 		};
 		

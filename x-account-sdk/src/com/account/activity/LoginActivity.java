@@ -13,8 +13,10 @@ import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout.LayoutParams;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
@@ -40,6 +42,11 @@ public class LoginActivity extends Activity {
 		// TODO Auto-generated method stub
 		context=LoginActivity.this;
 		RawService.getInstances().init(context);
+		WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+	    int width = wm.getDefaultDisplay().getWidth()*80/100;
+	    int height = wm.getDefaultDisplay().getHeight()*55/100;
+		getWindow().setLayout(width, height);
 	}
 
 	private void setClick() {
@@ -83,8 +90,8 @@ public class LoginActivity extends Activity {
 			etName.requestFocus();
 			return;
 		}
-		if(password.length()<6||password==null){
-			Toast.makeText(context, "请输入六位数密码", Toast.LENGTH_SHORT).show();
+		if(password.length()<6||password.length()>20||password==null){
+			Toast.makeText(context, "请输入6-20位数密码", Toast.LENGTH_SHORT).show();
 			etPwd.requestFocus();
 			return;
 		}

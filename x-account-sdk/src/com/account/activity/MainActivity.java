@@ -4,6 +4,7 @@ import java.net.NetworkInterface;
 
 import com.account.R;
 import com.account.Server.RawService;
+import com.account.UI.LoginDialog;
 import com.account.bean.UserInfo;
 import com.account.util.AccountService;
 import com.account.util.CallBack;
@@ -72,7 +73,6 @@ public class MainActivity extends Activity {
 //				}); //返回一個webview
 				Intent intent=new Intent(context, LoginActivity.class);
 				startActivity(intent);
-				
 			}
 		});
 
@@ -96,18 +96,18 @@ public class MainActivity extends Activity {
 //					}
 //				});
 				
-				RawService.getInstances().autoLogin(new CallBack() {
-					@Override
-					public void loginSuccess(UserInfo userInfo) {
-						// TODO Auto-generated method stub
-						Toast.makeText(context, userInfo.getUserID(), Toast.LENGTH_SHORT).show();
-					}
-					@Override
-					public void loginFailure(String massage) {
-						// TODO Auto-generated method stub
-						Toast.makeText(context, massage, Toast.LENGTH_SHORT).show();
-					}
-				});
+//				RawService.getInstances().autoLogin(new CallBack() {
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Toast.makeText(context, userInfo.getUserID(), Toast.LENGTH_SHORT).show();
+//					}
+//					@Override
+//					public void loginFailure(String massage) {
+//						// TODO Auto-generated method stub
+//						Toast.makeText(context, massage, Toast.LENGTH_SHORT).show();
+//					}
+//				});
 			}
 		});
 		logout.setOnClickListener(new OnClickListener() {

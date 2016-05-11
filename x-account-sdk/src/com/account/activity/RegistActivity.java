@@ -4,6 +4,7 @@ import com.account.R;
 import com.account.Server.RawService;
 import com.account.bean.UserInfo;
 import com.account.util.CallBack;
+import com.account.util.RegistUtils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -39,6 +41,11 @@ public class RegistActivity extends Activity {
 		// TODO Auto-generated method stub
 		context=RegistActivity.this;
 		RawService.getInstances().init(context);
+		WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+	    int width = wm.getDefaultDisplay().getWidth()*80/100;
+	    int height = wm.getDefaultDisplay().getHeight()*55/100;
+		getWindow().setLayout(width, height);
 	}
 
 	private void setClick() {
@@ -77,13 +84,13 @@ public class RegistActivity extends Activity {
 	protected void regist() {
 		String phone=etRegName.getText().toString().trim();
 		String password=etRegPwd.getText().toString().trim();
-		if(phone.length()!=11||phone==null){
+		if(!RegistUtils.isMobileNO(phone)){
 			Toast.makeText(context, "请输入11位手机号", Toast.LENGTH_SHORT).show();
 			etRegName.requestFocus();
 			return;
 		}
-		if(password.length()<6||password==null){
-			Toast.makeText(context, "请输入六位数密码", Toast.LENGTH_SHORT).show();
+		if(password.length()<6||password.length()>20||password==null){
+			Toast.makeText(context, "请输入6-20位数密码", Toast.LENGTH_SHORT).show();
 			etRegPwd.requestFocus();
 			return;
 		}
