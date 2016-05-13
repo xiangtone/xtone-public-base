@@ -146,7 +146,7 @@ public class RawService {
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
 		        if(val==null){
-		        	callBack.loginFailure("网络异常");
+		        	callBack.registFailure("网络异常");
 		        	return;
 		        }
 		        userInfo=new UserInfo();
@@ -258,6 +258,10 @@ public class RawService {
         	
 	}
 	
+	/**
+	 * 注销，清空账号信息
+	 * 
+	 */
 	public void logOut(){
 		if(editor!=null){
 			editor.clear();
