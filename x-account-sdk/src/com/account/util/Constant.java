@@ -14,4 +14,5 @@ public class Constant {
 	public static final String URLLOGIN=URL+"/jsp/login.jsp"; //登录页面
 	public static final String URLLOGINSERVLET=URL+"/LoginServlet";//登录Servlet
 	public static final String URLREGISTSERVLET=URL+"/RegsitServlet";//注册Servlet
+
 }

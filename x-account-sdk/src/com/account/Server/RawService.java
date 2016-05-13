@@ -138,7 +138,6 @@ public class RawService {
 	 */
 	@SuppressWarnings("deprecation")
 	public void regist(final String phone,final String password,final CallBack callBack){
-		
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
@@ -257,7 +256,6 @@ public class RawService {
 		new Thread(runnable).start();
         	
 	}
-	
 	/**
 	 * 注销，清空账号信息
 	 * 
