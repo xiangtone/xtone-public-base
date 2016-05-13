@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="zh-cn" />
+<meta name="keywords" content="万荟数码,手机网站,微信营销" />
+<meta name="description" content="万荟数码" />
+<meta name="author" content="万荟数码" />
+<title>万荟数码</title>
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.js" type="text/javascript"></script>
+<script src="js/jquery.easing.js" type="text/javascript"></script>
+<script src="js/jquery.MogFocus.js" type="text/javascript"></script>
+<script src="js/jquery.navigation.js" type="text/javascript"></script>
+<script src="js/jquery.tabSlide.js" type="text/javascript"></script>
+<script src="js/MSClass.js" type="text/javascript"></script>
+<script type="text/javascript">
+//banner
+$(function(){$("#banner").mogFocus({btnStyle:'noNumber',prevNextPos:0,prevNextToggle:"hide"});});
+//navigation
+$(document).ready(function(){$('#Solution').bxCarousel({display_num:4,move:1,margin:0});});
+//news
+$(document).ready(function($){$("#news").tabSlide({cntSelect:"#newsList",tabEvent:"mouseover",tabStyle:"move-animate",direction:"top"});});
+
+//adbox
+$(document).ready(function(){
+	//$("#adbox").show();
+	//$("#adbox").animate({top:0},200);
+	$("#menu-sub-bg").css("display","none");
+	$("#menu-sub").css("display","none");
+	$("#adbox").slideDown(2000);
+	//$("#adbox").animate({height:"300px"},700,'easeOutExpo');
+	setTimeout(function(){
+        var obj = document.getElementById("adbox");
+        
+		$("#adbox").stop().animate({height:"0px"},700,'easeOutExpo',function(){
+		
+		$("#menu-sub-bg").css("display","block");
+		$("#menu-sub").css("display","block");
+		});
+		$("#adbox").fadeOut(500);
+    },6000);
+	$(".close").click(function(){
+		$("#adbox").stop().animate({height:"0px"},700,'easeOutExpo',function(){
+		
+		$("#menu-sub-bg").css("display","block");
+		$("#menu-sub").css("display","block");
+		});
+		$("#adbox").fadeOut(500);
+	})
+})
+</script>
+</head>
+
+<body>
+
+
+
+<div id="adbox">
+	<div class="adpic">
+		<a href='' target="_blank"><img src="images/web/ad.png" style="width:100%" /></a>
+		<a href='' class="close">关闭</a>
+	</div>	
+</div>
+<div id="top-index">
+	<ul>
+        <li class="logo"><a href=''><img src="images/web/logo.png" /></a></li>
+        <li id="menu">
+            <a href='' id="m1">首 页</a>
+            <a href='' id="m2">解决方案</a>
+            <a href='' id="m3">产品&amp;服务</a>
+            <a href='' id="m4">案例&amp;体验</a>
+            <a href='' id="m5">服务&amp;支持</a>
+            <a href='' id="m6">关于我们</a>
+        </li>
+    </ul>
+</div>
+<div id="menu-sub-bg"></div>
+<div id="menu-sub" class="submargin-index">
+	<div class="sub-index">
+    	<div id="s1">&nbsp;</div>
+        <div id="s2">
+            <a href=''>电子政务系统</a>
+            <a href=''>医院网站系统</a>
+            <a href=''>集团网站群</a>
+            <a href=''>企业品牌网站</a>
+            <a href=''>企业外贸网站</a>
+            <a href=''>企业营销网站</a>
+            <a href=''>电商运营</a>
+        </div>
+        <div id="s3">
+            <a href=''>域名空间邮箱</a>
+            <a href=''>网站设计服务</a>
+            <a href=''>网站SEO优化</a>
+            <a href=''>淘宝阿里装修</a>
+            <a href=''>手机网站</a>
+            <a href=''>应用软件开发</a>
+            <a href=''>增值设计服务</a>
+        </div>
+        <div id="s4">
+            <a href=''>网站开发</a>
+            <a href=''>移动互联</a>
+            <a href=''>电子政务</a>
+            <a href=''>软件开发</a>
+            <a href=''>电商运营</a>
+            <a href=''>品牌设计</a>
+        </div>
+        <div id="s5">
+            <a href=''>服务理念</a>
+            <a href=''>FAQ</a>
+            <a href=''>提交反馈</a>
+        </div>
+        <div id="s6">
+            <a href=''>企业简介</a>
+            <a href=''>我们的优势</a>
+            <a href=''>资讯动态</a>
+            <!--<a href='' target="_blank">Weibo/微博</a>-->
+            <a href=''>联系方式</a>
+        </div>
+    </div>
+</div>
+<script src="js/menu-index.js" type="text/javascript"></script><div id="banner">
+	<div class="imgWarp">
+    	<ul class="imgList">
+            <li><div style="background:url(images/banner/2_bg.jpg) repeat-x left center;"><span style="background:url(images/banner/2.jpg) no-repeat center center;"></span></div></li>
+            <li><div style="background:url(images/banner/3_bg.jpg) repeat-x left center;"><span style="background:url(images/banner/3.jpg) no-repeat center center;"></span></div></li>
+        	<li><a href=''><div style="background:url(images/banner/1_bg.jpg) repeat-x left center;"><span style="background:url(images/banner/1.jpg) no-repeat center center;"></span></div></a></li>
+        </ul>
+        <ul class="slogans">
+        	<li><a href=''><img src="images/banner/text_1.png" /></a></li>
+            <li><img src="images/banner/text_2.png" /></li>
+            <li><img src="images/banner/text_3.png" /></li>
+        </ul>
+    </div>
+</div><!-- 解决方案开始-->
+<div id="navigation">
+	<div class="bx_wrap">
+    	<div class="bx_container">
+            <ul id="Solution">
+            	<li><a href=''><img src="images/web/navigation-img_web.jpg" width="209" /></a></li>
+            	<li><a href=''><img src="images/web/navigation-img_phone.jpg" width="209" /></a></li>                
+                <li><a href=''><img src="images/web/navigation-img_seo.jpg" width="209" /></a></li>
+                <li><a href=''><img src="images/web/navigation-img_shopping.jpg" width="209" /></a></li>
+                <li><a href=''><img src="images/web/navigation-img_email.jpg" width="209" /></a></li>
+                <li><a href=''><img src="images/web/navigation-img_store.jpg" width="209" /></a></li>
+                <li><a href=''><img src="images/web/navigation-img_value-added.jpg" width="209" /></a></li>
+            </ul>
+        </div>        
+    </div>
+    <div class="shadow"></div>
+</div>
+<!-- 解决方案结束-->
+<!-- 案例开始-->
+<div id="cases-index">
+	<div class="title"><a href='' class="more"></a></div>
+    <div class="brand">
+        	<li>  
+            	      
+            	<a href='' ><img alt="馋猫网" src="./uploads/icon/2014051516085445.png" /></a>
+                      
+            	<a href='' ><img alt="深圳市合一康生物科技有限公司" src="./uploads/icon/201405151556047.png" /></a>
+                      
+            	<a href='' ><img alt="合一康生物-博客" src="./uploads/icon/2014051516011183.jpg" /></a>
+                      
+            	<a href='' ><img alt="特百惠企业app" src="./uploads/icon/2014051616240940.jpg" /></a>
+                      
+            	<a href='' ><img alt="乐视网" src="./uploads/icon/2014051615550171.png" /></a>
+                      
+            	<a href='' ><img alt="银鹭" src="./uploads/icon/2014051615484167.png" /></a>
+                      
+            	<a href='' ><img alt="深圳梅红餐饮官网" src="./uploads/icon/2014051615360681.png" /></a>
+                      
+            	<a href='' ><img alt="藏之韵商城" src="./uploads/icon/2014051615271062.jpg" /></a>
+                      
+            	<a href='' ><img alt="广东省少生优生有奖知识大挑战" src="./uploads/icon/2014051615060554.png" /></a>
+                      
+            	<a href='' ><img alt="立白" src="./uploads/icon/2014051614584911.png" /></a>
+                      
+            	<a href='' ><img alt="唯品会" src="./uploads/icon/2014051614495482.png" /></a>
+                      
+            	<a href='' ><img alt="北京网络广播电视台" src="./uploads/icon/2014051614121222.png" /></a>
+                      
+            	<a href='' ><img alt="溢彩年华" src="./uploads/icon/2014051613531589.png" /></a>
+                      
+            	<a href='' ><img alt="安桥官方旗舰店" src="./uploads/icon/2014051612114155.png" /></a>
+                      
+            	<a href='' ><img alt="猫人官方旗舰店" src="./uploads/icon/2014051612052722.png" /></a>
+                            </li>
+        	
+        </div>
+    <div class="shadow"></div>
+</div>
+<!-- 案例结束-->
+<!-- 新闻开始-->
+<div id="news_superiority">
+	<div id="news-index">
+    	<div class="title" id="news">
+            <li class="current"><a href=''>公司新闻</a></li><li><a href=''>行业动态</a></li>
+        </div>
+        <div class="title_shadow"></div>
+        <div class="con" id="newsList">
+        	<div class="box">
+                <div class="list">
+                                      <a href=''><span class="heading">《心动恋人》评测：完美的游戏女神</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">《樱花大战：百花缭乱梦物语》即将再现：小</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">《蜡笔小新天天向上》评测：嘿嘿~我叫野原</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">20年的眷恋《仙剑奇侠传》MMORPG内</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">《小小盗贼》评测：挥挥手，深藏功与名</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">《天诛》厂商移动平台首作《勇者要塞》即将</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">《去吧皮卡丘》评测：更多的是情怀的重温</span><span class="time">2015-02-09</span></a>
+                                      <a href=''><span class="heading">誓死夺回大奶牛 射击跑酷《蒸汽赛车》上架</span><span class="time">2015-02-06</span></a>
+                                       <a href='' class="more"></a>
+                </div>
+                <div class="list">
+                	                    <a href=''><span class="heading">2014年手机游戏发展趋势大预测</span><span class="time">2014-05-13</span></a>
+                                       <a href=''><span class="heading">“网游十强”全力搏手游</span><span class="time">2014-05-13</span></a>
+                                       <a href=''><span class="heading">MO9张臣：从改变移动游戏支付方式提升用</span><span class="time">2014-05-12</span></a>
+                                       <a href=''><span class="heading">﻿ Superdata：预计2014年中</span><span class="time">2014-05-12</span></a>
+                        
+                    <a href='' class="more"></a>
+                </div>                
+            </div>
+        </div>
+    </div>
+    <div id="superiority-index">
+    	<div class="title"></div>
+        <div class="con">
+        	<a href=''><p class="num">1</p><p>多年服务经验<span><br />多年经验 成就非凡</span></p></a>
+            <a href=''><p class="num">2</p><p>7×24小时服务<span><br />持续服务 用心服务</span></p></a>
+            <a href=''><p class="num">3</p><p>强大的技术支持<span><br />独立研发团队</span></p></a>
+            <a href=''><p class="num">4</p><p>高素质客服人员<span><br />全程把握您的需求</span></p></a>
+            <a href=''><p class="num">5</p><p>庞大的客户群体<span><br />已服务千万家客户</span></p></a>
+        </div>
+    </div>
+</div>
+<!-- 新闻结束-->
+
+<div id="boot">
+  <div class="quick">
+    <ul>
+      <li class="site">
+        <p>
+            <a href='' class="title">解决方案</a>
+            <a href=''>电子政务系统</a>
+            <a href=''>医院网站系统</a>
+            <a href=''>集团网站群</a>
+            <a href=''>企业品牌网站</a>
+            <a href=''>企业外贸网站</a>
+            <a href=''>企业营销网站</a>
+            <a href=''>电商运营</a> 
+        </p>
+        <p>
+            <a href='' class="title">产品&amp;服务</a>
+            <a href=''>域名空间邮箱</a>
+            <a href=''>网站设计服务</a>
+            <a href=''>网站SEO优化</a>
+            <a href=''>淘宝阿里装修</a>
+            <a href=''>手机网站</a>
+            <a href=''>应用软件开发</a>
+            <a href=''>增值设计服务</a>
+        </p>
+        <p>
+            <a href='' class="title">案例&amp;体验</a>
+            <a href=''>网站开发</a>
+            <a href=''>移动互联</a>
+            <a href=''>电子政务</a>
+            <a href=''>软件开发</a>
+            <a href=''>电商运营</a>
+            <a href=''>品牌设计</a>
+        </p>
+        <p>
+            <a href='' class="title">服务&amp;支持</a>
+            <a href=''>服务理念</a>
+            <a href=''>FAQ</a>
+            <a href=''>提交反馈</a>
+        </p>
+        <p class="noseparated">
+            <a href='' class="title">关于我们</a>
+            <a href=''>企业简介</a>
+            <a href=''>我们的优势</a>
+            <a href=''>资讯动态</a>
+            <!--<a href='' target="_blank">Weibo/微博</a>-->
+            <a href=''>联系方式</a>
+        </p>
+      </li>
+      <li class="Two-dimensional-code"><img src="images/web/Two-dimensional-code.jpg" /></li>
+    </ul>
+  </div>
+  <div class="contact">
+    <ul>
+      <li class="title">联系</li>
+      <li>
+        <p>
+        <div id="share" class="bshare-custom icon-medium">
+        <div class="bsPromo bsPromo2"></div>
+        <a title="分享到微信" class="bshare-weixin" href="javascript:void(0);"></a><a title="分享到腾讯微博" class="bshare-qqmb" href="javascript:void(0);"></a>
+        <a title="分享到新浪微博" class="bshare-sinaminiblog" href="javascript:void(0);"></a><a title="分享到QQ空间" class="bshare-qzone"></a>
+        <a title="分享到人人网" class="bshare-renren"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+        </div>
+		<script src="http://static.bshare.cn/b/buttonLite.js#style=-1&uuid=&pophcol=2&lang=zh" type="text/javascript" charset="utf-8"></script><script src="../static.bshare.cn/b/bshareC0.js" type="text/javascript" charset="utf-8"></script>
+        </p>
+      </li>
+    </ul>
+  </div>
+  <div class="copy">
+    <div> 
+    <p>万荟数码 广州万荟数码科技有限公司 版权所有 版权所有 <a href=''>粤ICP备15009974号-1</a> </p>
+    <p>联系电话：020-29866206　　客服邮箱：<a href=''>623770651@qq.com</a></p>
+    <p>抵制不良游戏 拒绝盗版游戏 注意自我保护 谨防受骗上当 适度游戏益脑 沉迷游戏伤身 合理安排时间 享受健康生活</p></div>
+  </div>
+</div>
+</body>
+</html>
