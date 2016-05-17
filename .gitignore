@@ -17,3 +17,4 @@ hs_err_pid*
 /xtone-interface-redirect/target
 /x-account-server/target/
 /x-account-sdk/bin
+/x-java-app-wechat-token/packageConfig/vgame
