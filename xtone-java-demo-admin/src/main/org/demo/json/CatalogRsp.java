@@ -3,7 +3,7 @@ package org.demo.json;
 import org.demo.info.Catalog;
 
 public class CatalogRsp {
-	private String status;
+	private String status;          
 	private Catalog data;
 	public String getStatus() {
 		return status;
