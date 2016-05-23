@@ -118,7 +118,7 @@
 		<profile>
 			<id>product</id>
 			<properties>
-				<runtime.env>packageConfig\product</runtime.env>
+				<runtime.env>packageConfig\smzg</runtime.env>
 				<final.name>smzg-admin.xtonegame.com</final.name>
 			</properties>
 			<activation>
@@ -151,6 +151,8 @@
 			<properties>
 				<runtime.env>packageConfig\smzg</runtime.env>
 				<final.name>smzg-admin.xtonegame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.137.243/tomcat_9010/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
 		<profile>
