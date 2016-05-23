@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.account.mapping.channelMapper">
+
+	<resultMap type="com.account.domain.Channel" id="channelMap">
+		<id property="channelId" column="id" />
+		<result property="registerType" column="registerType" />
+	</resultMap>
+
+	<select id="findByChannelId" parameterType="String" resultType="com.account.domain.Channel">
+		select * from tbl_account_channel_configs where id=#{id}
+	</select>
+
+</mapper>

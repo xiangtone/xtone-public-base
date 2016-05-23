@@ -34,8 +34,21 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 	text-indent:12px;
 }
 
+.phone_input{
+	width: 55%;
+	height:30px;
+	margin-top: 20px;
+	text-indent:12px;
+}
+
 .single_button{
 	width: 100%;
+	height:35px;
+	font-size: 20px;
+}
+
+.double_button{
+	width: 49%;
 	height:35px;
 	font-size: 20px;
 }
@@ -58,6 +71,7 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 .top_tip{
 	float: left;
 	margin-top: 15%;
+	padding-right: 70%;
 	font-size: 19px;
 	color: white;
 }
@@ -95,5 +109,10 @@ a:active {color:#ffffff}   /* 鼠标点中激活链接    */
 
 .btn_mp{
 	margin: 40px 0 10px 0;
+	padding: 1px 0 1px 0;
+}
+
+.double_btn_mp{
+	margin: 30px 0 10px 0;
 	padding: 1px 0 1px 0;
 }

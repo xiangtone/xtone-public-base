@@ -7,9 +7,9 @@
 			<!-- 配置数据库连接信息 -->
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://120.26.78.220:3306/account_n8wan?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
-				<property name="username" value="accountn8" />
-				<property name="password" value="7d89eaf7890fa87890" />
+				<property name="url" value="jdbc:mysql://10.168.31.189:3306/account_n8wan?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
+				<property name="username" value="account_n8wan" />
+				<property name="password" value="7vba6df32qrafda" />
 			</dataSource>
 		</environment>
 	</environments>
@@ -21,6 +21,7 @@
 <!--          <mapper resource="com/account/mapping/statisticsCurrentMapper.xml"/> -->
 <!--          <mapper resource="com/account/mapping/statisticsDayMapper.xml"/> -->
          <mapper resource="com/account/mapping/myUserMapper.xml"/>
+         <mapper resource="com/account/mapping/channelMapper.xml"/>
      </mappers>
 	
 

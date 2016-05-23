@@ -43,7 +43,18 @@ public class RegsitServlet extends HttpServlet {
 		myUser.setLastLoginTime(new Date().getTime());
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
-		MyUser user = daoImpl.findByName(myUser.getName()); //查看数据是否存在
+		MyUser user; //查看数据是否存在
+		if(myUser.getLoginType()==MyUser.LOGINBYEMAIL){
+			user = daoImpl.findByEmail(myUser.getEmail());
+			myUser.setStatus(0);//将账号设置为未激活状态
+		}else if(myUser.getLoginType()==MyUser.LOGINBYPHONE){
+			user = daoImpl.findByPhone(myUser.getPhone());
+			myUser.setStatus(1);
+		}else{
+			user = daoImpl.findByName(myUser.getName());
+			myUser.setStatus(1);
+		}
+		
 		if (user != null) {
 			response.getWriter().append("{\"status\":\"errRepeat\"}");//用户名已存在
 		} else {

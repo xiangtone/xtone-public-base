@@ -11,6 +11,9 @@
 		<result property="pwd" column="pwd" />
 		<result property="lastLoginTime" column="lastLoginTime" />
 		<result property="flagid" column="flagid" />
+		<result property="channel_id" column="channel_id" />
+		<result property="appkey" column="appkey" />
+		<result property="status" column="status" />
 	</resultMap>
 
 	<select id="getUser" parameterType="int" resultType="com.account.domain.MyUser">
@@ -20,8 +23,8 @@
 
 	<insert id="insertMyUser" parameterType="com.account.domain.MyUser">
 		insert into tbl_base_users
-		(name,phone,email,uid,pwd,lastLoginTime,flagid) values
-		(#{name},#{phone},#{email},#{uid},Md5(#{pwd}),#{lastLoginTime},#{flagid})
+		(name,phone,email,uid,pwd,lastLoginTime,flagid,channel_id,appkey,status) values
+		(#{name},#{phone},#{email},#{uid},Md5(#{pwd}),#{lastLoginTime},#{flagid},#{channel_id},#{appkey},#{status})
 	</insert>
 
 	<!-- 对应userDao中的updateUser方法 -->
@@ -56,37 +59,55 @@
 		tbl_base_users where name =#{name};
 	</select>
 
+	<select id="findByEmail" parameterType="String" resultMap="userMap">
+		select
+		id,name,phone,email,uid,pwd from
+		tbl_base_users where email =#{email};
+	</select>
+	
+	<select id="findByPhone" parameterType="String" resultMap="userMap">
+		select
+		id,name,phone,email,uid,pwd from
+		tbl_base_users where phone =#{phone};
+	</select>
+
 	<select id="login" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where name = #{name} and
 		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByPhone" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where phone = #{phone} and
 		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByEmail" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where email = #{email} and
 		pwd = Md5(#{pwd});
 	</select>
 	
 	<select id="loginByUid" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,pwd,lastLoginTime from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where uid = #{uid};
 	</select>
 
 	<update id="updateTime" parameterType="com.account.domain.MyUser">
 		update tbl_base_users set
 		lastLoginTime = #{lastLoginTime} ,
-		flagid = #{flagid}
+		flagid = #{flagid},
+		channel_id = #{channel_id},
+		appkey = #{appkey}
 		where name = #{name};
+	</update>
+	
+	<update id="updateStatus" parameterType="com.account.domain.MyUser">
+		update tbl_base_users set status = 1 where email = #{email}	and uid = #{uid};
 	</update>
 </mapper>
