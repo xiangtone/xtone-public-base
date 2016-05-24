@@ -251,11 +251,10 @@ public class AccountService {
 	
 	public void logout() {
 		userInfo=null;
-		editor.putBoolean("iflogin", false);
-		editor.putString("name",null);
-		editor.putString("pwd",null);
-		editor.putString("uid",null);
-		editor.commit();
+		if(editor!=null){
+			editor.clear();
+			editor.commit();
+		}
 //		Log.i("iflogin", sp.getBoolean("iflogin",false)+"");
 	}
 	
@@ -289,12 +288,16 @@ public class AccountService {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
-		        if(val!=null){
+		        userInfo=new UserInfo();
+		        userInfo.setUserByJson(val);
+		        ifLogin=false;
+		        if(userInfo.getStatus().equals("success")){
 		        	editor.putBoolean("iflogin",true);
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+		        	editor.commit();
+		        	ifLogin=true;
+		        	callBack.loginSuccess(userInfo);
 		        }
-		        if(loginSuccess()){
-					callBack.loginSuccess(userInfo);
-				}
 		    }
 		};
 		
@@ -310,7 +313,7 @@ public class AccountService {
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(Constant.URLAUTOLOGIN,params);
+						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
 						Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);

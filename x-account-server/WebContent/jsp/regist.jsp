@@ -22,7 +22,7 @@ if(request.getParameter("channel_id")!=null){
 		} catch (Exception e) {
 		}
 }else{
-	channel.setRegisterType("name");
+	channel.setRegisterType("email");
 }
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("uuu9");
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
@@ -78,8 +78,8 @@ $(document).ready(function(){
 			email : email.val().trim(),
 			flagid : undefined,
 			channel_id : undefined,
-			loginType : <%=MyUser.LOGINBYNAME%>,
-			appkey : undefined
+			appkey : undefined,
+			loginType : <%=MyUser.LOGINBYNAME%>
 		};
 		try {
 			oriData.flagid = webjs.getFlagId();

@@ -1,13 +1,20 @@
 package com.account.bean;
 
+import org.json.JSONObject;
+
+import com.account.util.MACUtil;
+
 public class UserInfo {
 	private String channelCode;
 	private String userID;
 	private String username;
+	private String phone;
 	private String token;
 	private String productCode;
 	private String channelUserId;
 	private String channelLabel;
+	private String status;//服务端返回的账号状态
+	
 	public String getChannelCode() {
 		return channelCode;
 	}
@@ -25,6 +32,12 @@ public class UserInfo {
 	}
 	public void setUsername(String username) {
 		this.username = username;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	public String getToken() {
 		return token;
@@ -50,5 +63,37 @@ public class UserInfo {
 	public void setChannelLabel(String channelLabel) {
 		this.channelLabel = channelLabel;
 	}
-	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public void setUserByJson(String json){
+		JSONObject data=null;
+		try {
+			JSONObject jsonObject=new JSONObject(json);
+			this.setStatus(jsonObject.getString("status"));
+			data=new JSONObject(jsonObject.getString("data"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		try {
+			this.setUsername(data.getString("name"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setPhone(data.getString("phone"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setUserID(data.getString("uid"));
+		} catch (Exception e) {
+		}
+		try {
+			this.setToken(MACUtil.getInstances().getMac());
+		} catch (Exception e) {
+		}
+	}
 }

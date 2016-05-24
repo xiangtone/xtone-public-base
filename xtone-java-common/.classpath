@@ -12,6 +12,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.maven.ide.eclipse.MAVEN2_CLASSPATH_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
@@ -21,7 +22,15 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
 		<attributes>
+<<<<<<< HEAD
 			<attribute name="maven.pomderived" value="true"/>
+=======
+<<<<<<< HEAD
+			<attribute name="maven.pomderived" value="true"/>
+=======
+			<attribute name="owner.project.facets" value="java"/>
+>>>>>>> e87294a490e5951e0cf7c22ebdecc895cc58c9ed
+>>>>>>> 5aeb4568d1e977bbf34cbff7edeada96e51149d1
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
