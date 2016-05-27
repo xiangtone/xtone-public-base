@@ -46,7 +46,7 @@ public class RegsitServlet extends HttpServlet {
 		MyUser user; //查看数据是否存在
 		if(myUser.getLoginType()==MyUser.LOGINBYEMAIL){
 			user = daoImpl.findByEmail(myUser.getEmail());
-			myUser.setStatus(0);
+			myUser.setStatus(0);//将账号设置为未激活状态
 		}else if(myUser.getLoginType()==MyUser.LOGINBYPHONE){
 			user = daoImpl.findByPhone(myUser.getPhone());
 			myUser.setStatus(1);

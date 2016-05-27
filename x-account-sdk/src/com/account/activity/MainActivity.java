@@ -3,6 +3,8 @@ package com.account.activity;
 import java.net.NetworkInterface;
 
 import com.account.R;
+import com.account.Server.RawService;
+import com.account.UI.LoginDialog;
 import com.account.bean.UserInfo;
 import com.account.util.AccountService;
 import com.account.util.CallBack;
@@ -40,6 +42,7 @@ public class MainActivity extends Activity {
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值
 	private Activity act ;
+	private static final String TGA="MainActivity";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +58,21 @@ public class MainActivity extends Activity {
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
-		ProgressBar progressBar=new ProgressBar(context);
-		progressBar.setLayoutParams(new LinearLayout.LayoutParams(500,100));
+		RawService.getInstances().init(context);
 		//登陆按钮点击事件
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
-					
-					@Override
-					public void loginSuccess(UserInfo userInfo) {
-						// TODO Auto-generated method stub
-						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-					}
-				}); //返回一個webview
+//				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
+//					
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+//					}
+//				}); //返回一個webview
+				Intent intent=new Intent(context, LoginActivity.class);
+				startActivity(intent);
 			}
 		});
 
@@ -84,21 +88,33 @@ public class MainActivity extends Activity {
 //				}
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
-				AccountService.getInstances().autoLogin(context,new CallBack() {
-					
-					@Override
-					public void loginSuccess(UserInfo userInfo) {
-						// TODO Auto-generated method stub
-						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-					}
-				});
+//				AccountService.getInstances().autoLogin(context,new CallBack() {
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+//					}
+//				});
+				
+//				RawService.getInstances().autoLogin(new CallBack() {
+//					@Override
+//					public void loginSuccess(UserInfo userInfo) {
+//						// TODO Auto-generated method stub
+//						Toast.makeText(context, userInfo.getUserID(), Toast.LENGTH_SHORT).show();
+//					}
+//					@Override
+//					public void loginFailure(String massage) {
+//						// TODO Auto-generated method stub
+//						Toast.makeText(context, massage, Toast.LENGTH_SHORT).show();
+//					}
+//				});
 			}
 		});
 		logout.setOnClickListener(new OnClickListener() {
-			@Override
+			@Override 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				AccountService.getInstances().logout();
+				RawService.getInstances().logOut();
 			}
 		});
 	}
