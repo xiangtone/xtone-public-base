@@ -232,7 +232,7 @@ public class AccountService {
 //					if(webpobView.canGoBack()){
 //						webpobView.goBack();
 //					}else{
-						login_dialog.cancel();
+						login_dialog.dismiss();
 //					}
                 }
 				return false;
@@ -270,7 +270,7 @@ public class AccountService {
 	}
 	
 	public void closeWeb(){
-		login_dialog.cancel();
+		login_dialog.dismiss();
 		if(loginSuccess()){
 			callBack.loginSuccess(userInfo);
 		}

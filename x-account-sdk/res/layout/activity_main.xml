@@ -51,5 +51,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="getUid" />
+    <Button
+        android:id="@+id/btn_html"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="H5登录" />
 
 </LinearLayout>

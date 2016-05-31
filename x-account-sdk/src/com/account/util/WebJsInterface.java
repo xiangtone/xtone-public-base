@@ -39,19 +39,22 @@ public class WebJsInterface {
 	
 	@JavascriptInterface
 	public void setUser(String json) {
-		Log.i(TAG, "setUser");
-		try {
-			JSONObject jsonObject=new JSONObject(json);
-			editor.putString("name",jsonObject.getString("name"));
-			editor.putString("pwd",jsonObject.getString("pwd"));
-			editor.putString("uid",jsonObject.getString("uid"));
-			editor.putString("token",MACUtil.getInstances().getMac());
-			editor.putBoolean("iflogin", true);
-	        editor.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		UserInfo user=new UserInfo();
+		user.setUserByJson(json);
+		if(user.getStatus().equals("success"));
+		Log.i(TAG, json.toString());
+//		try {
+//			JSONObject jsonObject=new JSONObject(json);
+//			editor.putString("name",jsonObject.getString("name"));
+//			editor.putString("pwd",jsonObject.getString("pwd"));
+//			editor.putString("uid",jsonObject.getString("uid"));
+//			editor.putString("token",MACUtil.getInstances().getMac());
+//			editor.putBoolean("iflogin", true);
+//	        editor.commit();
+//		} catch (Exception e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
 	}
 	
 	@JavascriptInterface
