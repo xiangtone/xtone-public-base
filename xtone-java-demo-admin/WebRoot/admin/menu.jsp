@@ -56,6 +56,7 @@
 <div style="margin-top: 5px; margin-left: 10px; margin-bottom: 10px">
 	<a href="stat-all.jsp" class="menus" style="margin-left: 0px;">文章列表</a>
 	<a href="code-all.jsp" class="menus">兑换码列表</a>
+<!-- 	<a href="seldown-all.jsp" class="menus">下载链接点击量查询</a> -->
 	<%
 			if(user.getAdmin() == 1){
 				out.write("<a href='user-all.jsp' class='menus'>用户管理</a>");
