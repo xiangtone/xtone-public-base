@@ -182,7 +182,7 @@ public class RawService {
 						object.put("flagid", spSDK.getString("flag_id", null));
 						object.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						object.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
-						Log.i(TAG, object.toString());
+//						Log.i(TAG, object.toString());
 						params.add(new BasicNameValuePair("info", object.toString()));
 						String value=HttpUtils.httpPost(Constant.URLREGISTSERVLET,params);
 						Message msg = new Message();
