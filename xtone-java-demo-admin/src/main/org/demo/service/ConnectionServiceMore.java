@@ -1,4 +1,4 @@
-package org.common.util;
+package org.demo.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -6,17 +6,18 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.common.util.ConfigManager;
 
 /**
  */
-public class ConnectionService {
+public class ConnectionServiceMore {
 
-  private static ConnectionService instance = new ConnectionService();
+  private static ConnectionServiceMore instance = new ConnectionServiceMore();
 
-  private ConnectionService() {
+  private ConnectionServiceMore() {
   }
 
-  public static ConnectionService getInstance() {
+  public static ConnectionServiceMore getInstance() {
     return instance;
   }
 
@@ -24,9 +25,8 @@ public class ConnectionService {
   // Logger.getLogger(ConnectionService.class);
   // private DataSource ds_islocal =setupDataSource(DbKey.DB_ISLOCAL, 5, 10, 5,
   // 2);
-  private DataSource ds_islocal = setupDataSource(DbKey.DB_ISLOCAL);
 
-  // private DataSource ds_islog = setupDataSource(DbKey.DB_ISLOG);
+  private DataSource ds_islog = setupDataSource("log");
 
   // public synchronized Connection getConnectionForAccount() {
   // try {
@@ -37,23 +37,23 @@ public class ConnectionService {
   // return null;
   // }
 
-  public synchronized Connection getConnectionForLocal() {
-    try {
-      return ds_islocal.getConnection();
-    } catch (SQLException ex) {
-      ex.printStackTrace();
-    }
-    return null;
-  }
-
-  // public synchronized Connection getConnectionForLog() {
+  // public synchronized Connection getConnectionForLocal() {
   // try {
-  // return ds_islog.getConnection();
+  // return ds_islocal.getConnection();
   // } catch (SQLException ex) {
   // ex.printStackTrace();
   // }
   // return null;
   // }
+
+  public synchronized Connection getConnectionForLog() {
+    try {
+      return ds_islog.getConnection();
+    } catch (SQLException ex) {
+      ex.printStackTrace();
+    }
+    return null;
+  }
 
   /**
    * @param initialSize
@@ -113,10 +113,6 @@ public class ConnectionService {
   public static void shutdownDataSource(DataSource ds) throws SQLException {
     BasicDataSource bds = (BasicDataSource) ds;
     bds.close();
-  }
-
-  public static void main(String[] args) {
-
   }
 
 }
