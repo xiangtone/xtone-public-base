@@ -9,7 +9,7 @@ public class Constant {
 //	public static final String URL="http://192.168.0.51:8080/account-test";
 	
 	//外网
-	public static final String URL="http://account.n8wan.com";
+	public static final String URL="https://account.n8wan.com";
 	
 	public static final String URLLOGIN=URL+"/jsp/login.jsp"; //登录页面
 	public static final String URLLOGINSERVLET=URL+"/LoginServlet";//登录Servlet
