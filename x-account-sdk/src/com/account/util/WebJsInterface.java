@@ -41,20 +41,20 @@ public class WebJsInterface {
 	public void setUser(String json) {
 		UserInfo user=new UserInfo();
 		user.setUserByJson(json);
-		if(user.getStatus().equals("success"));
 		Log.i(TAG, json.toString());
-//		try {
-//			JSONObject jsonObject=new JSONObject(json);
-//			editor.putString("name",jsonObject.getString("name"));
-//			editor.putString("pwd",jsonObject.getString("pwd"));
-//			editor.putString("uid",jsonObject.getString("uid"));
-//			editor.putString("token",MACUtil.getInstances().getMac());
-//			editor.putBoolean("iflogin", true);
-//	        editor.commit();
-//		} catch (Exception e) {
-//			// TODO: handle exception
-//			e.printStackTrace();
-//		}
+		if(user.getStatus().equals("success")){
+			try {
+				editor.putString("name",user.getUserName());
+//				editor.putString("pwd",jsonObject.getString("pwd"));
+				editor.putString("uid",user.getUserID());
+//				editor.putString("sessionId",user.getSessionId());
+				editor.putString("token",user.getUserID());
+				editor.putBoolean("iflogin", true);
+		        editor.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	@JavascriptInterface
@@ -65,9 +65,7 @@ public class WebJsInterface {
 	
 	@JavascriptInterface
 	public void clearUser(){
-		editor.putString("name",null);
-		editor.putString("pwd",null);
-		editor.putString("uid",null);
+		editor.clear();
         editor.commit();
 	}
 	

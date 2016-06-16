@@ -108,8 +108,8 @@ function regist(){
 				if (msg.status == "success") {
 // 					tip='登录成功!';
 // 					window.location.href = 'account.jsp';
-					webjs.closeWeb();
 					webjs.setUser(JSON.stringify(msg));
+					webjs.closeWeb();
 				}else if(msg.status == "frezze"){
 					tip='该用户没有被激活，请先激活。';
 					alert(tip);

@@ -260,11 +260,13 @@ public class AccountService {
 	
 	private Boolean loginSuccess(){
 		ifLogin=sp.getBoolean("iflogin",false);
+		Log.i(TAG, "是否登录成功:"+ifLogin);
 		if(ifLogin){
 			userInfo=new UserInfo();
-			userInfo.setUsername(sp.getString("name",null));
+			userInfo.setUserName(sp.getString("name",null));
 			userInfo.setToken(sp.getString("token",null));
 			userInfo.setUserID(sp.getString("uid",null));
+//			userInfo.setSessionId(sp.getString("sessionId",null));
 		}
 		return ifLogin;
 	}
@@ -294,6 +296,8 @@ public class AccountService {
 		        if(userInfo.getStatus().equals("success")){
 		        	editor.putBoolean("iflogin",true);
 		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+//		        	editor.putString("sessionId", userInfo.getSessionId());
+		        	editor.putString("token", userInfo.getToken());
 		        	editor.commit();
 		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
@@ -310,6 +314,8 @@ public class AccountService {
 					stoneObject = new JSONObject();  
 		            try {
 						stoneObject.put("uid", sp.getString("uid",null));
+//						stoneObject.put("sessionId", sp.getString("sessionId",null));
+						stoneObject.put("token", sp.getString("token",null));
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));

@@ -40,6 +40,8 @@ public class RegsitServlet extends HttpServlet {
 		MyUser myUser = JSON.parseObject(info,MyUser.class); //解析info
 		
 		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
+//		myUser.setSessionId(myUser.getUid());
+		myUser.setToken(myUser.getUid());
 		myUser.setLastLoginTime(new Date().getTime());
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		

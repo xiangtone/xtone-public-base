@@ -38,7 +38,6 @@ public class MainActivity extends Activity {
 	private Button logout;
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
-//	private String url = "http://192.168.1.222:8080/x-account-server/jsp/login.jsp"; //登陆界面
 	private WebView webpobView ; 
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值
@@ -82,13 +81,13 @@ public class MainActivity extends Activity {
 //				}
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
-//				AccountService.getInstances().autoLogin(context,new CallBack() {
-//					@Override
-//					public void loginSuccess(UserInfo userInfo) {
-//						// TODO Auto-generated method stub
-//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-//					}
-//				});
+				AccountService.getInstances().autoLogin(context,new CallBack() {
+					@Override
+					public void loginSuccess(UserInfo userInfo) {
+						// TODO Auto-generated method stub
+						Log.i("user", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+					}
+				});
 				
 //				RawService.getInstances().autoLogin(new CallBack() {
 //					@Override
@@ -114,7 +113,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void loginSuccess(UserInfo userInfo) {
 					// TODO Auto-generated method stub
-					Log.i("user", userInfo.getUsername()+userInfo.getUserID());
+					Log.i("user", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
 				}
 			}); //返回一個webview
 			}

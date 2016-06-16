@@ -74,9 +74,11 @@ public class LoginServlet extends HttpServlet {
 			loginUser.setChannel_id(myUser.getChannel_id());
 			loginUser.setAppkey(myUser.getAppkey());
 			loginUser.setLastLoginTime(new Date().getTime());
+//			loginUser.setSessionId(loginUser.getUid());
+			loginUser.setToken(loginUser.getUid());
 			daoImpl.updateTime(loginUser);
 			loginUser.setPwd(myUser.getPwd());
-			HttpSession session=request.getSession();		
+			HttpSession session=request.getSession();
 			session.setAttribute("user", loginUser);
 			Resp rsp=new Resp();
 			rsp.setStatus("success");
