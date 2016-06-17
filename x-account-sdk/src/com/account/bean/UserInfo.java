@@ -106,9 +106,5 @@ public class UserInfo {
 			this.setToken(data.getString("token"));
 		} catch (Exception e) {
 		}
-//		try {
-//			this.setToken(MACUtil.getInstances().getMac());
-//		} catch (Exception e) {
-//		}
 	}
 }

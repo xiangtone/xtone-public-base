@@ -335,6 +335,61 @@ public class AccountService {
 		new Thread(runnable).start();
         	
 	}
+	
+	@SuppressWarnings("deprecation")
+	public void authLogin(final Context context,final CallBack callBack){
+		//如果有账号信息自动登录
+		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
+		final Handler handler = new Handler(){
+		    @Override
+		    public void handleMessage(Message msg) {
+		        super.handleMessage(msg);
+		        Bundle data = msg.getData();
+		        String val = data.getString("value");
+		        userInfo=new UserInfo();
+		        userInfo.setUserByJson(val);
+		        ifLogin=false;
+		        if(userInfo.getStatus().equals("success")){
+		        	editor.putBoolean("iflogin",true);
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+//		        	editor.putString("sessionId", userInfo.getSessionId());
+		        	editor.putString("token", userInfo.getToken());
+		        	editor.commit();
+		        	ifLogin=true;
+		        	callBack.loginSuccess(userInfo);
+		        }
+		    }
+		};
+		
+		Runnable runnable= new Runnable() {
+			JSONObject stoneObject;
+			@Override
+			public void run() {
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				
+					stoneObject = new JSONObject();  
+//		            try {
+//						stoneObject.put("token", sp.getString("token",null));
+						params.add(new BasicNameValuePair("token", sp.getString("token",null)));
+						String value=HttpUtils.httpPost(Constant.URLLOGAUTHSERVLET,params);
+						Message msg = new Message();
+				        Bundle data = new Bundle();
+//				        Log.i(TAG, value);
+				        data.putString("value",value);
+				        msg.setData(data);
+				        handler.sendMessage(msg);
+//					} catch (JSONException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+				}
+			
+		};
+		new Thread(runnable).start();
+        	
+	}
 
 }
 

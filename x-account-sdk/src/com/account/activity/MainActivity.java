@@ -81,13 +81,19 @@ public class MainActivity extends Activity {
 //				}
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
-				AccountService.getInstances().autoLogin(context,new CallBack() {
-					@Override
-					public void loginSuccess(UserInfo userInfo) {
-						// TODO Auto-generated method stub
-						Log.i("user", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
-					}
-				});
+				try {
+					AccountService.getInstances().authLogin(context,new CallBack() {
+						@Override
+						public void loginSuccess(UserInfo userInfo) {
+							// TODO Auto-generated method stub
+							Log.i("autoLogin", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+						}
+					});
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				
 				
 //				RawService.getInstances().autoLogin(new CallBack() {
 //					@Override
@@ -113,7 +119,7 @@ public class MainActivity extends Activity {
 				@Override
 				public void loginSuccess(UserInfo userInfo) {
 					// TODO Auto-generated method stub
-					Log.i("user", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+					Log.i("login", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
 				}
 			}); //返回一個webview
 			}
