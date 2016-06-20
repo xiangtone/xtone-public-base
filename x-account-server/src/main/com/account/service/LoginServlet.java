@@ -1,6 +1,7 @@
 package com.account.service;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -10,7 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.common.util.Base;
+import org.common.util.ConfigManager;
+import org.common.util.GenerateIdService;
+
+import com.account.dao.impl.LogDaoImpl;
 import com.account.dao.impl.MyUserDaoImpl;
+import com.account.domain.LogInfo;
 import com.account.domain.MyUser;
 import com.account.json.Resp;
 import com.alibaba.fastjson.JSON;
@@ -46,13 +53,14 @@ public class LoginServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		// response.getWriter().append("Served at:
 		// ").append(request.getContextPath());
-
+		
 		String info = request.getParameter("info");
 		System.out.println(info);
 
 		MyUser myUser = JSON.parseObject(info,MyUser.class);
 		
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl();
+		
 		MyUser loginUser=null;
 		if(myUser.getUid()!=null){
 			loginUser = daoImpl.loginByUid(myUser);
@@ -69,6 +77,7 @@ public class LoginServlet extends HttpServlet {
 				response.getWriter().append("{\"status\":\"frezze\"}");//账号没有激活
 				return;
 			}
+			
 			//更新登录时间
 			loginUser.setFlagid(myUser.getFlagid());
 			loginUser.setChannel_id(myUser.getChannel_id());
@@ -76,6 +85,16 @@ public class LoginServlet extends HttpServlet {
 			loginUser.setLastLoginTime(new Date().getTime());
 //			loginUser.setSessionId(loginUser.getUid());
 			loginUser.setToken(loginUser.getUid());
+
+			LogDaoImpl logDaoImpl= new LogDaoImpl();
+			LogInfo log=new LogInfo();
+			Base.isNumeric("");
+			log.setId(GenerateIdService.getInstance().generateNew(Integer.parseInt(ConfigManager.getConfigData("server.id").trim()), "clicks", 1));
+			log.setToken(loginUser.getUid());
+			log.setUid(loginUser.getUid());
+			int a=logDaoImpl.insertToken(log);
+//			System.out.println(a+"");
+			
 			daoImpl.updateTime(loginUser);
 			loginUser.setPwd(myUser.getPwd());
 			HttpSession session=request.getSession();
@@ -101,4 +120,5 @@ public class LoginServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
 }

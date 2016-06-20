@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.account.mapping.logMapper">
+
+	<resultMap type="com.account.domain.LogInfo" id="logInfo">
+		<id property="id" column="id" />
+		<result property="token" column="token" />
+		<result property="uid" column="uid" />
+	</resultMap>
+
+	<select id="findUidByToken" parameterType="com.account.domain.LogInfo" resultType="com.account.domain.MyUser">
+		select para01,para02 from log_async_generals where logId=7 and para01=#{uid} and para02=#{token};
+	</select>
+	
+	<insert id="insertToken" parameterType="com.account.domain.LogInfo">
+		insert into log_async_generals (id,logId,para01,para02) values (#{id},'7',#{uid},#{token});
+	</insert>
+
+	<insert id="updateTime" parameterType="com.account.domain.LogInfo">
+		update log_async_generals set id = #{id} where logId='7' and para01=#{uid} and para02=#{token};
+	</insert>
+
+</mapper>
