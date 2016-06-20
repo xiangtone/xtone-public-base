@@ -49,7 +49,8 @@ public class WebJsInterface {
 				editor.putString("uid",user.getUserID());
 //				editor.putString("sessionId",user.getSessionId());
 				editor.putString("token",user.getUserID());
-				editor.putBoolean("iflogin", true);
+//				editor.putBoolean("iflogin", true);
+				AccountService.ifLogin=true;
 		        editor.commit();
 			} catch (Exception e) {
 				e.printStackTrace();

@@ -12,7 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.common.util.ConfigManager;
+import org.common.util.GenerateIdService;
+
+import com.account.dao.impl.LogDaoImpl;
 import com.account.dao.impl.MyUserDaoImpl;
+import com.account.domain.LogInfo;
 import com.account.domain.MyUser;
 import com.account.json.Resp;
 import com.alibaba.fastjson.JSON;
@@ -64,6 +69,10 @@ public class RegsitServlet extends HttpServlet {
 			if(value==1){
 				HttpSession session=request.getSession();		
 				session.setAttribute("user", myUser);
+				
+				//token插入日志库
+				LogService.getInstance().addToken(myUser);
+				
 				Resp rsp=new Resp();
 				rsp.setStatus("success");
 				rsp.setData(myUser);

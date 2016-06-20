@@ -75,7 +75,7 @@ public class AccountService {
 	
 	private CallBack callBack;
 	
-	private boolean ifLogin=false;
+	public static boolean ifLogin=false;
 	
 	private static final String TAG="AccountService";
 	private AccountService() {
@@ -259,8 +259,8 @@ public class AccountService {
 	}
 	
 	private Boolean loginSuccess(){
-		ifLogin=sp.getBoolean("iflogin",false);
-		Log.i(TAG, "是否登录成功:"+ifLogin);
+//		ifLogin=sp.getBoolean("iflogin",false);
+//		Log.i(TAG, "是否登录成功:"+ifLogin);
 		if(ifLogin){
 			userInfo=new UserInfo();
 			userInfo.setUserName(sp.getString("name",null));
@@ -275,6 +275,7 @@ public class AccountService {
 		login_dialog.dismiss();
 		if(loginSuccess()){
 			callBack.loginSuccess(userInfo);
+			ifLogin=false;
 		}
 	}
 	

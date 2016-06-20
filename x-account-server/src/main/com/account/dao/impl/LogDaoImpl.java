@@ -1,6 +1,7 @@
 package com.account.dao.impl;
 
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -28,15 +29,15 @@ public class LogDaoImpl {
 		InputStream is = LogDaoImpl.class.getClassLoader().getResourceAsStream("conf_log.xml");
 	}
 
-	public MyUser findUidByToken(LogInfo info) {
+	public List<MyUser> findUidByToken(LogInfo info) {
 		SqlSession sqlSession = LogDaoImpl.getSqlSessionFactory().openSession();
-		MyUser result;
+		List<MyUser> results;
 		try {
-			result = sqlSession.selectOne("com.account.mapping.logMapper.findUidByToken", info);
+			results = sqlSession.selectList("com.account.mapping.logMapper.findUidByToken", info);
 		} finally {
 			sqlSession.close();
 		}
-		return result;
+		return results;
 	}
 	
 	public int insertToken(LogInfo info) {

@@ -86,14 +86,12 @@ public class LoginServlet extends HttpServlet {
 //			loginUser.setSessionId(loginUser.getUid());
 			loginUser.setToken(loginUser.getUid());
 
-			LogDaoImpl logDaoImpl= new LogDaoImpl();
-			LogInfo log=new LogInfo();
-			Base.isNumeric("");
-			log.setId(GenerateIdService.getInstance().generateNew(Integer.parseInt(ConfigManager.getConfigData("server.id").trim()), "clicks", 1));
-			log.setToken(loginUser.getUid());
-			log.setUid(loginUser.getUid());
-			int a=logDaoImpl.insertToken(log);
-//			System.out.println(a+"");
+			//插入token,如果已有则更新
+			if(LogService.getInstance().seleteToken(loginUser)!=null){
+				LogService.getInstance().updateToken(loginUser);
+			}else {
+				LogService.getInstance().addToken(loginUser);
+			}
 			
 			daoImpl.updateTime(loginUser);
 			loginUser.setPwd(myUser.getPwd());
