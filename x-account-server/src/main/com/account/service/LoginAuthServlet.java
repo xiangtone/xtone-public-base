@@ -65,6 +65,10 @@ public class LoginAuthServlet extends HttpServlet {
 			daoImpl.updateTime(loginUser);
 			HttpSession session=request.getSession();
 			session.setAttribute("user", loginUser);
+			
+			//更新日志库
+			LogService.getInstance().checkLog(loginUser);
+			
 			Resp rsp=new Resp();
 			rsp.setStatus("success");
 			rsp.setData(loginUser);

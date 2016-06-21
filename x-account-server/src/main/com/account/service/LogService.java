@@ -48,4 +48,13 @@ public class LogService {
 		int result=logDaoImpl.insertToken(log);
 		return result;
 	}
+	
+	public void checkLog(MyUser myUser){
+		//token,没有则插入,已有则更新
+		if(logService.seleteToken(myUser)!=null){
+			logService.updateToken(myUser);
+		}else {
+			logService.addToken(myUser);
+		}
+	}
 }

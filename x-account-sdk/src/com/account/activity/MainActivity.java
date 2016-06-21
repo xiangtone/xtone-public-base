@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 	private Button btn_login; //网页登陆
 	private Button btn_uid;
 	private Button btn_html;
+	private Button btn_auth;
 	private Button logout;
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
@@ -56,6 +57,7 @@ public class MainActivity extends Activity {
 		logout=(Button) findViewById(R.id.logout);
 		btn_uid =(Button) findViewById(R.id.btn_uid);
 		btn_html =(Button) findViewById(R.id.btn_html);
+		btn_auth =(Button) findViewById(R.id.btn_auth);
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
@@ -82,7 +84,7 @@ public class MainActivity extends Activity {
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
 				try {
-					AccountService.getInstances().authLogin(context,new CallBack() {
+					AccountService.getInstances().autoLogin(context,new CallBack() {
 						@Override
 						public void loginSuccess(UserInfo userInfo) {
 							// TODO Auto-generated method stub
@@ -130,6 +132,19 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				RawService.getInstances().logOut();
+			}
+		});
+		
+		btn_auth.setOnClickListener(new OnClickListener() {
+			@Override 
+			public void onClick(View v) {
+				AccountService.getInstances().authLogin(context,new CallBack() {
+					@Override
+					public void loginSuccess(UserInfo userInfo) {
+						// TODO Auto-generated method stub
+						Log.i("authLogin", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+					}
+				});
 			}
 		});
 	}

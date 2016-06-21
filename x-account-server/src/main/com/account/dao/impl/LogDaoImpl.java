@@ -10,6 +10,10 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import com.account.domain.LogInfo;
 import com.account.domain.MyUser;
 
+/**
+ * 日志表相关操作
+ * 
+ */
 public class LogDaoImpl {
 
 	private static SqlSessionFactory sqlSessionFactory = null;

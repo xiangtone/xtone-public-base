@@ -2,7 +2,7 @@ package com.account.util;
 
 public class Constant {
 	
-	//本机测试
+//	本机测试
 	public static final String URL="http://192.168.1.222:8080/x-account-server";
 
 	//内网测试
