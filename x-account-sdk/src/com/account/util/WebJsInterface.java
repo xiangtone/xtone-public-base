@@ -41,7 +41,7 @@ public class WebJsInterface {
 	public void setUser(String json) {
 		UserInfo user=new UserInfo();
 		user.setUserByJson(json);
-		Log.i(TAG, json.toString());
+//		Log.i(TAG, json.toString());
 		if(user.getStatus().equals("success")){
 			try {
 				editor.putString("name",user.getUserName());
@@ -49,7 +49,7 @@ public class WebJsInterface {
 				editor.putString("uid",user.getUserID());
 //				editor.putString("sessionId",user.getSessionId());
 				editor.putString("token",user.getUserID());
-//				editor.putBoolean("iflogin", true);
+				editor.putBoolean("iflogin", true);
 				AccountService.ifLogin=true;
 		        editor.commit();
 			} catch (Exception e) {

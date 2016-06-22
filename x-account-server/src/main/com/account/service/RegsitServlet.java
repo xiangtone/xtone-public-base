@@ -69,6 +69,7 @@ public class RegsitServlet extends HttpServlet {
 			if(value==1){
 				HttpSession session=request.getSession();		
 				session.setAttribute("user", myUser);
+				myUser.setPwd("");
 				
 				//token插入日志库
 				LogService.getInstance().addToken(myUser);
