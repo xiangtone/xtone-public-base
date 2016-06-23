@@ -288,14 +288,14 @@ public class AccountService {
 		final Handler handler = new Handler(){
 		    @Override
 		    public void handleMessage(Message msg) {
-		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
+
 		        userInfo=new UserInfo();
 		        userInfo.setUserByJson(val);
 		        ifLogin=false;
 		        if(userInfo.getStatus().equals("success")){
-		        	editor.putBoolean("iflogin",true);
+//		        	editor.putBoolean("iflogin",true);
 		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
 //		        	editor.putString("sessionId", userInfo.getSessionId());
 		        	editor.putString("token", userInfo.getToken());
@@ -311,7 +311,7 @@ public class AccountService {
 			@Override
 			public void run() {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				if(sp!=null&&sp.getString("uid",null)!=null&&sp.getBoolean("iflogin", true)){
+				if(sp!=null&&sp.getString("uid",null)!=null){
 					stoneObject = new JSONObject();  
 		            try {
 						stoneObject.put("uid", sp.getString("uid",null));
@@ -320,16 +320,19 @@ public class AccountService {
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
 						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
-						Message msg = new Message();
-				        Bundle data = new Bundle();
-				        data.putString("value",value);
-				        msg.setData(data);
-				        handler.sendMessage(msg);
 					} catch (JSONException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
+		            String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
+			        if(value==null||value.isEmpty()){
+			        	return;
+			        }
+					Message msg = new Message();
+			        Bundle data = new Bundle();
+			        data.putString("value",value);
+			        msg.setData(data);
+			        handler.sendMessage(msg);
 				}
 			}
 		};
@@ -375,6 +378,9 @@ public class AccountService {
 //						stoneObject.put("token", sp.getString("token",null));
 						params.add(new BasicNameValuePair("token", sp.getString("token",null)));
 						String value=HttpUtils.httpPost(Constant.URLLOGAUTHSERVLET,params);
+						if(value==null||value.isEmpty()){
+				        	return;
+				        }
 						Message msg = new Message();
 				        Bundle data = new Bundle();
 //				        Log.i(TAG, value);
