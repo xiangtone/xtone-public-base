@@ -1,6 +1,5 @@
 package org.demo.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,21 +37,8 @@ public class WechatMenuService {
     try {
       HttpPost httppost = new HttpPost("https://api.weixin.qq.com/cgi-bin/menu/create?access_token=" + token.getToken());
 
-      File file = new File("");
-
-      // InputStreamEntity reqEntity = new InputStreamEntity(new
-      // FileInputStream(file), -1,
-      // ContentType.APPLICATION_OCTET_STREAM);
-      // reqEntity.setChunked(true);
-      LOG.debug(menu);
       HttpEntity entity = EntityBuilder.create().setContentEncoding("utf-8")
           .setContentType(ContentType.APPLICATION_JSON).setText(menu).build();
-      // It may be more appropriate to use FileEntity class in this particular
-      // instance but we are using a more generic InputStreamEntity to
-      // demonstrate
-      // the capability to stream out data from any arbitrary source
-      //
-      // FileEntity entity = new FileEntity(file, "binary/octet-stream");
       httppost.setEntity(entity);
 
       LOG.debug("Executing request: " + httppost.getRequestLine());
@@ -67,7 +53,6 @@ public class WechatMenuService {
     } finally {
       httpclient.close();
     }
-
   }
 
   private String getBaseMenu(String appId) throws SQLException, IllegalArgumentException {

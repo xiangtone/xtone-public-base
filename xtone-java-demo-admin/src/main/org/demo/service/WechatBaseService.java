@@ -1,10 +1,18 @@
 package org.demo.service;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 import org.common.util.ConnectionService;
 import org.demo.info.WechatToken;
@@ -19,6 +27,30 @@ public class WechatBaseService {
 
   public static WechatBaseService getInstance() {
     return instance;
+  }
+
+  public String sendWechatInterface(String url, HttpEntity entity) throws ClientProtocolException, IOException {
+    String result = "";
+    CloseableHttpClient httpclient = HttpClients.createDefault();
+    try {
+      HttpPost httppost = new HttpPost(url);
+
+      httppost.setEntity(entity);
+
+      LOG.debug("Executing request: " + httppost.getRequestLine());
+      CloseableHttpResponse response = httpclient.execute(httppost);
+      try {
+        LOG.debug("----------------------------------------");
+        LOG.debug(response.getStatusLine());
+        result = EntityUtils.toString(response.getEntity());
+        LOG.debug(result);
+      } finally {
+        response.close();
+      }
+    } finally {
+      httpclient.close();
+    }
+    return result;
   }
 
   public WechatToken getToken(String appId) throws SQLException, IllegalArgumentException, IllegalStateException {
