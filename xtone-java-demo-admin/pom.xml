@@ -37,6 +37,11 @@
 			<version>2.3.1</version>
 		</dependency>
 		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.xtone.common</groupId>
 			<artifactId>xtone-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>

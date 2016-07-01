@@ -22,7 +22,7 @@ if(request.getParameter("channel_id")!=null){
 		} catch (Exception e) {
 		}
 }else{
-	channel.setRegisterType("email");
+	channel.setRegisterType("name");
 }
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("uuu9");
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
@@ -154,12 +154,13 @@ $(document).ready(function(){
 			success : function(msg) {
 				var tip = '';
 				if (msg.status == "success") {
+					webjs.setUser(JSON.stringify(msg));
+					webjs.closeWeb();
 					if(msg.data.loginType==<%=MyUser.LOGINBYEMAIL%>){
 						window.location.href = 'send-email.jsp?email='+msg.data.email+'&uid='+msg.data.uid;
 						return;
 					}
-					webjs.setUser(JSON.stringify(msg.data));
-					webjs.closeWeb();
+					
 				} else if (msg.status == "errRepeat") {
 					tip = '该用户已被注册!';
 					alert(tip);
