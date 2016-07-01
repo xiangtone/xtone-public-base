@@ -189,5 +189,18 @@
 				<ftp.to.url>ftp://120.27.130.11/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
+		
+		
+		
+		
+			<profile>
+			<id>huasheng</id>
+			<properties>
+				<runtime.env>packageConfig\huasheng</runtime.env>
+				<final.name>wx-admin.huashenggame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://115.159.125.75/wx.huashenggame.com/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
 	</profiles>
 </project>
