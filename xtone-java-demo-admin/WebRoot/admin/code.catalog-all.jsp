@@ -1,4 +1,5 @@
-﻿<%@page import="org.demo.info.Content"%>
+<%@page import="org.demo.info.Catalog"%>
+<%@page import="org.demo.info.Content"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,7 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>兑换码列表</title>
+<title>游戏名称列表</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -40,12 +41,13 @@
 </head>
 
 <body>
-	<jsp:include page="menu.jsp"/>
+	<jsp:include page="code.menu.jsp"/>
+	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增游戏" onclick="window.location.href='code.catalog-add.jsp'" >
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
-				<th>兑换码</th>
-				<th>微信用户openId</th>
+				<th>id</th>
+				<th>游戏名称</th>
 				<td></td>
 			</tr>
 		</thead>
@@ -54,28 +56,30 @@
 			  PreparedStatement ps = null;
 							Connection con = null;
 							ResultSet rs = null;
+							Catalog catalog=new Catalog();
 							try {
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
-								String sql = "SELECT c.id,c.wechatopenid FROM `tbl_exchange_codes` c;";
+								String sql = "SELECT c.id,c.content FROM `tbl_cms_catalogs` c where c.content not like '%\\_%';";
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {
-									long id=rs.getLong("id");
+									catalog.setId(rs.getInt("id"));
+									catalog.setContent((rs.getString("content")));
 									
 			%>
 			<tr>
-				<td><%=id%></td>
-				<td><%=rs.getString("wechatopenid")%></td>
-				<td> 
-<%-- 				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp; --%>
+				<td><%=catalog.getId()%></td>
+				<td><%=catalog.getContent()%></td>
+				<td>
+				<a href="code.catalog-update.jsp?id=<%=catalog.getId()%>">编辑</a>&emsp;
 			</tr>
 			<%
 			  }
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-								out.print("没有兑换码！");
+
 							} finally {
 								if (con != null) {
 									try {

@@ -1,4 +1,8 @@
-﻿<%@page import="org.demo.info.Content"%>
+<%@page import="org.demo.info.Detail"%>
+<%@page import="org.demo.util.Logconnectionservice"%>
+<%@page import="org.demo.info.Mxklsel"%>
+<%@page import="org.demo.info.Catalog"%>
+<%@page import="org.demo.info.Content"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,7 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>兑换码列表</title>
+<title>流量明细查看</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -35,47 +39,78 @@
 <!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="http://cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8"
-	src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script> 
 </head>
 
 <body>
-	<jsp:include page="menu.jsp"/>
+<jsp:include page="menu.jsp"/>
+<a href="detail.jsp" class="menus">流量明细查看</a>
+
+
+<%-- 	<jsp:include page="menu.jsp"/> --%>
+<!-- 	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增文章类型" onclick="window.location.href='catalog-add.jsp'" > -->
 	<table id="table_id" class="display">
 		<thead>
-			<tr>
-				<th>兑换码</th>
-				<th>微信用户openId</th>
-				<td></td>
+			<tr><th></th>
+				<th>日期时间</th>
+				<th>ip</th>
+				<th>操作</th>
+				<th>from</th>
+				
+				
+				
 			</tr>
 		</thead>
 		<tbody>
 			<%
-			  PreparedStatement ps = null;
+		
+			  PreparedStatement ps1 = null;
+			
 							Connection con = null;
-							ResultSet rs = null;
+							ResultSet rs1 = null;
+					
+							Detail detail = new Detail();
 							try {
-								con = ConnectionService.getInstance()
+								con = Logconnectionservice.getInstance()
 										.getConnectionForLocal();
-								String sql = "SELECT c.id,c.wechatopenid FROM `tbl_exchange_codes` c;";
-								ps = con.prepareStatement(sql);
-								rs = ps.executeQuery();
-								while (rs.next()) {
-									long id=rs.getLong("id");
+								String sql1 = "SELECT FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d %H:%i:%s') AS dt,para03 AS ip,logid AS operate,para01 AS f FROM `log_async_last_hundred_days` WHERE logid=2001 OR logid=2002 AND para01 NOT LIKE '%SELECT%' order by id desc limit 0,200";
+							
+								ps1 = con.prepareStatement(sql1);
+								
+								
+							
+// 							
+								
+								rs1 = ps1.executeQuery();
+							
+								while (rs1.next()) {
+									String operate;
+									if(rs1.getInt("operate")==2001)
+										operate = "浏览首页";
+									else
+										 operate = "点击下载";
+									detail.setDate(rs1.getString("dt"));
+									detail.setIp(rs1.getString("ip"));
+									detail.setOperate(operate);
+									detail.setFrom(rs1.getString("f"));
 									
+						
 			%>
 			<tr>
-				<td><%=id%></td>
-				<td><%=rs.getString("wechatopenid")%></td>
-				<td> 
-<%-- 				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp; --%>
+			    <td></td>
+				<td><%=detail.getDate()%></td>
+				<td><%=detail.getIp()%></td>
+				<td><%=detail.getOperate()%></td>
+				<td><%=detail.getFrom()%></td>
+				
+			     
 			</tr>
 			<%
 			  }
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-								out.print("没有兑换码！");
+
 							} finally {
 								if (con != null) {
 									try {

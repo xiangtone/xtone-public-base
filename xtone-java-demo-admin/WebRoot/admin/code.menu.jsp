@@ -54,17 +54,18 @@
 
 </style>
 <div style="margin-top: 5px; margin-left: 10px; margin-bottom: 10px">
-	<a href="stat-all.jsp" class="menus" style="margin-left: 0px;">文章列表</a>
 	
 <!-- 	<a href="seldown-all.jsp" class="menus">下载链接点击量查询</a> -->
-	<a href="wechat-menu.jsp" class="menus">微信自定义菜单</a>
-	<%
-			if(user.getAdmin() == 1){
-				out.write("<a href='code-all.jsp' class='menus'>兑换码列表</a>");
-				out.write("<a href='user-all.jsp' class='menus'>用户管理</a>");
-				out.write("<a href='catalog-all.jsp' class='menus'>文章类型</a>");
-			}
-	%>
-	<a href="password-update.jsp" class="menus">更换密码</a>
-	<a href="seldown.jsp" class="menus">浏览下载量查看</a>
+<%-- 	<% --%>
+<!-- // 			if(user.getAdmin() == 1){ -->
+<!-- // 				out.write("<a href='code-all.jsp' class='menus'>兑换码列表</a>"); -->
+<!-- // 				out.write("<a href='user-all.jsp' class='menus'>用户管理</a>"); -->
+<!-- // 				out.write("<a href='catalog-all.jsp' class='menus'>文章类型</a>"); -->
+<!-- // 			} -->
+<%-- 	%> --%>
+    <a href="code.stat-all.jsp" class="menus">兑换码列表</a>
+	<a href="code.jsp" class="menus">导入兑换码</a>
+	<a href="code.num.jsp" class="menus">各游戏兑换码剩余量查看</a>
+	<a href="code.password-update.jsp" class="menus">更换密码</a>
+	<a href="code.catalog-all.jsp" class="menus">添加游戏</a>
 </div>

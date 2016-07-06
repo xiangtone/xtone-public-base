@@ -20,12 +20,20 @@ public class WechatTagService {
     String url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=" + token.getToken();
     HttpEntity entity = EntityBuilder.create().setContentEncoding("utf-8").setContentType(ContentType.APPLICATION_JSON)
         .setText("{\"tag\" : {\"name\" : \"" + tagName + "\"  }}").build();
-    WechatBaseService.getInstance().sendWechatInterface(url, entity);
+    WechatBaseService.getInstance().sendPostWechatInterface(url, entity);
+  }
+
+  public void getTagList(String appId) throws IllegalArgumentException, IllegalStateException, SQLException,
+      ClientProtocolException, IOException {
+    WechatToken token = WechatBaseService.getInstance().getToken(appId);
+    String url = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=" + token.getToken();
+    WechatBaseService.getInstance().sendGetWechatInterface(url);
   }
 
   public static void main(String[] args) throws IllegalArgumentException, SQLException, ClientProtocolException,
       IOException {
     WechatTagService wechatTagService = new WechatTagService();
-    wechatTagService.createTag("wx19ac78d42392068c", "registered");
+    // wechatTagService.createTag("wx19ac78d42392068c", "registered");
+    wechatTagService.getTagList("wx19ac78d42392068c");
   }
 }

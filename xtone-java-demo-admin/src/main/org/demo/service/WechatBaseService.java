@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -29,13 +30,35 @@ public class WechatBaseService {
     return instance;
   }
 
-  public String sendWechatInterface(String url, HttpEntity entity) throws ClientProtocolException, IOException {
+  public String sendPostWechatInterface(String url, HttpEntity entity) throws ClientProtocolException, IOException {
     String result = "";
     CloseableHttpClient httpclient = HttpClients.createDefault();
     try {
       HttpPost httppost = new HttpPost(url);
 
       httppost.setEntity(entity);
+
+      LOG.debug("Executing request: " + httppost.getRequestLine());
+      CloseableHttpResponse response = httpclient.execute(httppost);
+      try {
+        LOG.debug("----------------------------------------");
+        LOG.debug(response.getStatusLine());
+        result = EntityUtils.toString(response.getEntity());
+        LOG.debug(result);
+      } finally {
+        response.close();
+      }
+    } finally {
+      httpclient.close();
+    }
+    return result;
+  }
+
+  public String sendGetWechatInterface(String url) throws ClientProtocolException, IOException {
+    String result = "";
+    CloseableHttpClient httpclient = HttpClients.createDefault();
+    try {
+      HttpGet httppost = new HttpGet(url);
 
       LOG.debug("Executing request: " + httppost.getRequestLine());
       CloseableHttpResponse response = httpclient.execute(httppost);

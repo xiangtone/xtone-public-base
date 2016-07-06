@@ -1,4 +1,7 @@
-﻿<%@page import="org.demo.info.Content"%>
+<%@page import="org.demo.util.Logconnectionservice"%>
+<%@page import="org.demo.info.Mxklsel"%>
+<%@page import="org.demo.info.Catalog"%>
+<%@page import="org.demo.info.Content"%>
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -17,7 +20,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>兑换码列表</title>
+<title>各游戏兑换码剩余量查看</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -35,47 +38,78 @@
 <!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="http://cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
-<script type="text/javascript" charset="utf8"
-	src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script> 
 </head>
 
 <body>
-	<jsp:include page="menu.jsp"/>
+<jsp:include page="code.menu.jsp"/>
+
+<div style="margin-top:35px;" align="center">
+
+</div>
+
+<script>
+
+ </script> 
+<%-- 	<jsp:include page="menu.jsp"/> --%>
+<!-- 	<input type="button" style="width: 150px;height: 30px;margin-bottom: 10px;margin-left:10px" value="新增文章类型" onclick="window.location.href='catalog-add.jsp'" > -->
 	<table id="table_id" class="display">
 		<thead>
-			<tr>
-				<th>兑换码</th>
-				<th>微信用户openId</th>
-				<td></td>
+			<tr><th></th>
+				<th>游戏名称</th>
+				<th>剩余兑换码数量</th>
+				
+				
 			</tr>
 		</thead>
 		<tbody>
 			<%
-			  PreparedStatement ps = null;
+			
+			  PreparedStatement ps1 = null;
+			
+			
 							Connection con = null;
 							ResultSet rs = null;
+							ResultSet rs2 = null;
+							PreparedStatement ps2 = null;
+							
+						
 							try {
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
-								String sql = "SELECT c.id,c.wechatopenid FROM `tbl_exchange_codes` c;";
-								ps = con.prepareStatement(sql);
-								rs = ps.executeQuery();
+								String sql1 = "SELECT gamename,COUNT(*) AS num FROM `tbl_exchange_codes` WHERE gameName NOT LIKE '%meng%' AND matchOpenIdTime IS NULL GROUP BY gamename";
+							
+								ps1 = con.prepareStatement(sql1);
+						
+							
+							rs = ps1.executeQuery();
+								ps2 = con.prepareStatement("select content from tbl_cms_catalogs where id=?");
+							
 								while (rs.next()) {
-									long id=rs.getLong("id");
+									String gamename = rs.getString("gamename");
+									ps2.setString(1, gamename);
+									rs2 = ps2.executeQuery();
+									if(rs2.next())
+									gamename = rs2.getString("content");
+									
+									
+									
 									
 			%>
 			<tr>
-				<td><%=id%></td>
-				<td><%=rs.getString("wechatopenid")%></td>
-				<td> 
-<%-- 				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp; --%>
+			    <td></td>
+				<td><%=gamename%></td>
+				<td><%=rs.getString("num")%></td>
+			
+				
+			     
 			</tr>
 			<%
 			  }
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-								out.print("没有兑换码！");
+
 							} finally {
 								if (con != null) {
 									try {
