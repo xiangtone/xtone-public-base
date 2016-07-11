@@ -1,13 +1,9 @@
 package com.account.activity;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.account.R;
 import com.account.Server.RawService;
 import com.account.bean.UserInfo;
 import com.account.util.CallBack;
-import com.account.util.MetaUtil;
 
 import android.app.Activity;
 import android.content.Context;
@@ -121,19 +117,6 @@ public class LoginActivity extends Activity {
 		// TODO Auto-generated method stub
 		Intent intent=new Intent(context,RegistActivity.class);
 		startActivity(intent);
-//		JSONObject object = new JSONObject();  
-//        	try {
-//				object.put("name", "phone");
-//				object.put("phone", "phone");
-//				object.put("pwd", "phone");
-//				object.put("loginType", "phone");
-//				object.put("flagid", "phone");
-//				Log.i(TAG, object.toString());
-//			} catch (JSONException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-			
 	}
 
 }
