@@ -3,7 +3,11 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main"/>
+<<<<<<< HEAD
         <dependent-module archiveName="xtone-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/xtone-common/xtone-common">
+=======
+        <dependent-module archiveName="xtone-common-0.0.1-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/xtone-java-common/xtone-java-common">
+>>>>>>> b38d58f423a38eb1e43d158eefa7aaa14b0eadf7
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="smzg-admin.xtonegame.com"/>
