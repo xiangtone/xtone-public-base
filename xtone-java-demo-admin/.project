@@ -3,6 +3,7 @@
 	<name>xtone-java-demo-admin</name>
 	<comment></comment>
 	<projects>
+		<project>xtone-common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
