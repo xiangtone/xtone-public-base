@@ -24,7 +24,7 @@
 		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
 		Gson gson = gsonBuilder.create();
 		Catalog catalog = gson.fromJson(info, Catalog.class);
-	  System.out.println(catalog.getContent());
+	
 		con = ConnectionService.getInstance().getConnectionForLocal();
 		String sql = "insert into tbl_cms_catalogs (content) values (?)";
 		ps = con.prepareStatement(sql);	

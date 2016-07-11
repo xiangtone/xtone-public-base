@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="xtone-java-common">
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <wb-resource deploy-path="/" source-path="/src/main/java"/>
-=======
-<<<<<<< HEAD
-        <wb-resource deploy-path="/" source-path="/src/main/java"/>
-        <wb-resource deploy-path="/" source-path="/src/test/java"/>
-=======
->>>>>>> 16b90750f099776caaf5449a692deea6ec70be18
->>>>>>> b0ec899426a4f8059f8c89e5d69a96d7b4417601
-=======
-        <wb-resource deploy-path="/" source-path="/src/main/java"/>
->>>>>>> 910e2faf4f8e41dc51dd13f0bb60a8e595344be1
-    </wb-module>
-</project-modules>
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId"/>

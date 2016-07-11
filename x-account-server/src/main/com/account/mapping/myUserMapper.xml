@@ -94,7 +94,7 @@
 	
 	<select id="loginByUid" parameterType="com.account.domain.MyUser" resultType="com.account.domain.MyUser">
 		select
-		id,name,phone,email,uid,lastLoginTime,status from
+		id,name,phone,email,uid,pwd,lastLoginTime,status from
 		tbl_base_users where uid = #{uid};
 	</select>
 
@@ -110,5 +110,4 @@
 	<update id="updateStatus" parameterType="com.account.domain.MyUser">
 		update tbl_base_users set status = 1 where email = #{email}	and uid = #{uid};
 	</update>
-
 </mapper>

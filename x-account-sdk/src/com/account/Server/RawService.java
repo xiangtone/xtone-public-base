@@ -79,7 +79,6 @@ public class RawService {
 		        super.handleMessage(msg);
 		        Bundle data = msg.getData();
 		        String val = data.getString("value");
-		        Log.i(TAG, data.getString("object"));
 		        if(val==null){
 		        	callBack.loginFailure("网络异常");
 		        	return;
@@ -110,7 +109,6 @@ public class RawService {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 					object = new JSONObject();  
 		            try {
-		            	object.put("name", phone);
 						object.put("phone", phone);
 						object.put("pwd", password);
 						object.put("loginType", BYPHONE);
@@ -122,7 +120,6 @@ public class RawService {
 				        Message msg = new Message();
 				        Bundle data = new Bundle();
 				        data.putString("value",value);
-				        data.putString("object",object.toString());
 				        msg.setData(data);
 				        handler.sendMessage(msg);
 					} catch (JSONException e) {
@@ -175,14 +172,12 @@ public class RawService {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 					object = new JSONObject();  
 		            try {
-		            	object.put("name", phone);
 						object.put("phone", phone);
 						object.put("pwd", password);
 						object.put("loginType", BYPHONE);
 						object.put("flagid", spSDK.getString("flag_id", null));
 						object.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
 						object.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
-//						Log.i(TAG, object.toString());
 						params.add(new BasicNameValuePair("info", object.toString()));
 						String value=HttpUtils.httpPost(Constant.URLREGISTSERVLET,params);
 						Message msg = new Message();

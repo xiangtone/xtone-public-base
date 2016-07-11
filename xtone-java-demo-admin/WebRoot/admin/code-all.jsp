@@ -44,8 +44,8 @@
 	<table id="table_id" class="display">
 		<thead>
 			<tr>
+				<th>id</th>
 				<th>兑换码</th>
-				<th>微信用户openId</th>
 				<td></td>
 			</tr>
 		</thead>
@@ -57,7 +57,7 @@
 							try {
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
-								String sql = "SELECT c.id,c.wechatopenid FROM `tbl_exchange_codes` c;";
+								String sql = "SELECT c.id,c.content FROM `tbl_exchange_codes` c;";
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {
@@ -66,9 +66,9 @@
 			%>
 			<tr>
 				<td><%=id%></td>
-				<td><%=rs.getString("wechatopenid")%></td>
+				<td><%=rs.getString("content")%></td>
 				<td> 
-<%-- 				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp; --%>
+				<a href="code-update.jsp?id=<%=id%>">编辑</a>&emsp;
 			</tr>
 			<%
 			  }

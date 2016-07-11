@@ -7,14 +7,13 @@ import com.account.util.MACUtil;
 public class UserInfo {
 	private String channelCode;
 	private String userID;
-	private String userName;
+	private String username;
 	private String phone;
 	private String token;
 	private String productCode;
 	private String channelUserId;
 	private String channelLabel;
 	private String status;//服务端返回的账号状态
-	private String sessionId;
 	
 	public String getChannelCode() {
 		return channelCode;
@@ -28,11 +27,11 @@ public class UserInfo {
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPhone() {
 		return phone;
@@ -70,12 +69,6 @@ public class UserInfo {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getSessionId() {
-		return sessionId;
-	}
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
 	public void setUserByJson(String json){
 		JSONObject data=null;
 		try {
@@ -87,7 +80,7 @@ public class UserInfo {
 			e.printStackTrace();
 		}
 		try {
-			this.setUserName(data.getString("name"));
+			this.setUsername(data.getString("name"));
 		} catch (Exception e) {
 		}
 		try {
@@ -98,12 +91,8 @@ public class UserInfo {
 			this.setUserID(data.getString("uid"));
 		} catch (Exception e) {
 		}
-//		try {
-//			this.setSessionId(data.getString("sessionId"));
-//		} catch (Exception e) {
-//		}
 		try {
-			this.setToken(data.getString("token"));
+			this.setToken(MACUtil.getInstances().getMac());
 		} catch (Exception e) {
 		}
 	}
