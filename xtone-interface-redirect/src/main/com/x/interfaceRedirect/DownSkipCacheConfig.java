@@ -28,7 +28,7 @@ public class DownSkipCacheConfig {
             }).build(new CacheLoader<String, Urlsinfo>() { // 通过回调加载缓存
               @Override
               public Urlsinfo load(String strRedirectId) throws Exception {
-                DaoConfig daoConfig = new DaoConfig();
+                WebDaoConfig daoConfig = new WebDaoConfig();
               Long l = Long.valueOf(strRedirectId);
               long redirectId = l.longValue();
                

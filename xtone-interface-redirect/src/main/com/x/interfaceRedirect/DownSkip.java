@@ -79,7 +79,7 @@ public class DownSkip extends HttpServlet {
 //	byte[] jiema = gamename.getBytes();
 //	gamename = new String(jiema,"utf-8");
 	System.out.println("gamename为:"+gamename);
-	long redirectId = DaoConfig.getIdByGamename(gamename);
+	long redirectId = WebDaoConfig.getIdByGamename(gamename);
     String strRedirectId = Long.valueOf(redirectId).toString();
     urlsinfo = DownSkipCacheConfig.getInstance().getNameLoadingCache(strRedirectId);
     String targetUrl = "http://vanggame.com";

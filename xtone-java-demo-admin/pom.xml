@@ -202,5 +202,18 @@
 				<ftp.to.url>ftp://115.159.125.75/wx.huashenggame.com/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
+		
+		
+		
+		
+		<profile>
+			<id>lyxm</id>
+			<properties>
+				<runtime.env>packageConfig\lyxm</runtime.env>
+				<final.name>lyxm-admin.xtonegame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.137.243/docker_app/lyxm/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
 	</profiles>
 </project>
