@@ -113,10 +113,12 @@ function regist(){
 				}else if(msg.status == "frezze"){
 					tip='该用户没有被激活，请先激活。';
 					alert(tip);
+					webjs.loginFailure(msg.status);
 					webjs.toastShort(tip);
 				}else{
 					tip='登录失败!请检查用户名和密码是否正确。';
 					alert(tip);
+					webjs.loginFailure(msg.status);
 					webjs.toastShort(tip);
 				}
 				

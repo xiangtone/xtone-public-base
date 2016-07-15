@@ -42,7 +42,7 @@ public class WebJsInterface {
 	public void setUser(String json) {
 		UserInfo user=new UserInfo();
 		user.setUserByJson(json);
-//		Log.i(TAG, json.toString());
+		Log.i(TAG, json.toString());
 		if(user.getStatus().equals("success")){
 			try {
 				editor.putString("name",user.getUserName());
@@ -58,11 +58,17 @@ public class WebJsInterface {
 				e.printStackTrace();
 			}
 		}
+			
+	}
+	
+	@JavascriptInterface
+	public void loginFailure(String message){
+		callBack.loginFailure(message);
 	}
 	
 	@JavascriptInterface
 	public void closeWeb(){
-		Log.i(TAG, "closeWeb");
+//		Log.i(TAG, "closeWeb");
 		AccountService.getInstances().closeWeb();
 	}
 	
