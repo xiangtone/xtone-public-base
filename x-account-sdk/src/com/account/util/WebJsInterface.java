@@ -16,6 +16,7 @@ public class WebJsInterface {
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
 	private static final String TAG="WebJsInterface";
+	public static CallBack callBack=null;
 	
 	public WebJsInterface(Context context) {
 		this.context = context;
@@ -51,6 +52,7 @@ public class WebJsInterface {
 				editor.putString("token",user.getUserID());
 				editor.putBoolean("iflogin", true);
 				AccountService.ifLogin=true;
+				callBack.loginSuccess(user);
 		        editor.commit();
 			} catch (Exception e) {
 				e.printStackTrace();

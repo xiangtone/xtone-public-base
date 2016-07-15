@@ -125,6 +125,7 @@ public class AccountService {
 		webpobView = new WebView(context);
 		this.context=context;
 		this.callBack = callBack;
+		WebJsInterface.callBack=callBack;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
 		
@@ -274,10 +275,10 @@ public class AccountService {
 	public void closeWeb(){
 		login_dialog.dismiss();
 		callBack.clickClose();
-		if(loginSuccess()){
-			ifLogin=false;
-			callBack.loginSuccess(userInfo);
-		}
+//		if(loginSuccess()){
+//			ifLogin=false;
+//			callBack.loginSuccess(userInfo);
+//		}
 	}
 	
 	@SuppressWarnings("deprecation")
