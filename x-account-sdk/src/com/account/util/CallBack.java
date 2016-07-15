@@ -7,5 +7,6 @@ public abstract class CallBack {
 	public void loginFailure(String massage){};
 	public void registSuccess(UserInfo userInfo){};
 	public void registFailure(String massage){};
+	public void clickClose(){};
 }
 

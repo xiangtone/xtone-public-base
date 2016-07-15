@@ -123,6 +123,12 @@ public class MainActivity extends Activity {
 					// TODO Auto-generated method stub
 					Log.i("login", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
 				}
+				
+				@Override
+					public void clickClose() {
+						// TODO Auto-generated method stub
+						Toast.makeText(context, "close", Toast.LENGTH_SHORT).show();
+					}
 			}); //返回一個webview
 			}
 		});

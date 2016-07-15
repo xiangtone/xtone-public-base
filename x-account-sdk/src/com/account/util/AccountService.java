@@ -273,9 +273,10 @@ public class AccountService {
 	
 	public void closeWeb(){
 		login_dialog.dismiss();
+		callBack.clickClose();
 		if(loginSuccess()){
-			callBack.loginSuccess(userInfo);
 			ifLogin=false;
+			callBack.loginSuccess(userInfo);
 		}
 	}
 	
