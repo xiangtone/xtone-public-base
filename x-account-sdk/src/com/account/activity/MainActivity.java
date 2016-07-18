@@ -135,6 +135,16 @@ public class MainActivity extends Activity {
 					Log.i("login", massage);
 					
 					}
+				@Override
+					public void registFailure(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
+				@Override
+					public void registSuccess(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
 			}); //返回一個webview
 			}
 		});

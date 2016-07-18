@@ -156,6 +156,7 @@ $(document).ready(function(){
 				if (msg.status == "success") {
 					webjs.setUser(JSON.stringify(msg));
 					webjs.closeWeb();
+					webjs.registSuccess(JSON.stringify(msg));
 					if(msg.data.loginType==<%=MyUser.LOGINBYEMAIL%>){
 						window.location.href = 'send-email.jsp?email='+msg.data.email+'&uid='+msg.data.uid;
 						return;
@@ -164,10 +165,12 @@ $(document).ready(function(){
 				} else if (msg.status == "errRepeat") {
 					tip = '该用户已被注册!';
 					alert(tip);
+					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
 				} else {
 					tip = '注册失败!请稍后重试。';
 					alert(tip);
+					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
 				}
 

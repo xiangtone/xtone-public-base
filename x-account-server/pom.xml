@@ -20,6 +20,16 @@
 			<version>19.0</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
@@ -39,7 +49,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.38</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
@@ -179,6 +188,13 @@
 				<final.name>account.youkala.com</final.name>
 				<ftp.server.id>HYServer</ftp.server.id>
 				<ftp.to.url>ftp://112.74.83.34/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>local</id>
+			<properties>
+				<runtime.env>packageConfig\local</runtime.env>
+				<final.name>x-account-server</final.name>
 			</properties>
 		</profile>
 	</profiles>

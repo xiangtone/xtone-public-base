@@ -67,6 +67,16 @@ public class WebJsInterface {
 	}
 	
 	@JavascriptInterface
+	public void registSuccess(String message){
+		callBack.registSuccess(message);
+	}
+	
+	@JavascriptInterface
+	public void registFailure(String message){
+		callBack.registFailure(message);
+	}
+	
+	@JavascriptInterface
 	public void closeWeb(){
 //		Log.i(TAG, "closeWeb");
 		AccountService.getInstances().closeWeb();
