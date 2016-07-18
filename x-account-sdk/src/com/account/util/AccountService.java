@@ -272,6 +272,9 @@ public class AccountService {
 		return ifLogin;
 	}
 	
+	/*
+	 * 关闭dialog并回调关闭
+	 */
 	public void closeWeb(){
 		login_dialog.dismiss();
 		callBack.clickClose();
@@ -279,6 +282,13 @@ public class AccountService {
 //			ifLogin=false;
 //			callBack.loginSuccess(userInfo);
 //		}
+	}
+	
+	/*
+	 * 登陆/注册成功后关闭dialog，不回调关闭
+	 */
+	public void closeIfLogin(){
+		login_dialog.dismiss();
 	}
 	
 	@SuppressWarnings("deprecation")
