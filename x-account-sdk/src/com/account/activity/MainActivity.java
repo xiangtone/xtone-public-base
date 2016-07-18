@@ -129,6 +129,22 @@ public class MainActivity extends Activity {
 						// TODO Auto-generated method stub
 						Toast.makeText(context, "close", Toast.LENGTH_SHORT).show();
 					}
+				@Override
+					public void loginFailure(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("login", massage);
+					
+					}
+				@Override
+					public void registFailure(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
+				@Override
+					public void registSuccess(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
 			}); //返回一個webview
 			}
 		});
