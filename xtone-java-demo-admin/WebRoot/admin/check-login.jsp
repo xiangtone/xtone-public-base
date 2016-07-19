@@ -70,6 +70,7 @@
 			ps.setLong(1, date.getTime());
 			ps.setLong(2, user.getId());
 			ps.executeUpdate();
+			session.setAttribute("username", user.getUserName());
 		} else {
 			out.print("{\"status\":\"error\"}");
 		}
@@ -77,6 +78,7 @@
 	} catch (Exception e) {
 		e.printStackTrace();
 	} finally {
+		
 		if (con != null) {
 			try {
 				con.close();
