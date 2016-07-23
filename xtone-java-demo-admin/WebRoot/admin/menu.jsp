@@ -65,5 +65,5 @@
 			}
 	%>
 	<a href="password-update.jsp" class="menus">更换密码</a>
-	<a href="seldown.jsp" class="menus">浏览下载量查看</a>
+<!-- 	<a href="seldown.jsp" class="menus">浏览下载量查看</a> -->
 </div>

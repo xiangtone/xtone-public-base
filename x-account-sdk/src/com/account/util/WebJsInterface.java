@@ -16,6 +16,7 @@ public class WebJsInterface {
 	private SharedPreferences sp;
 	private SharedPreferences.Editor editor;
 	private static final String TAG="WebJsInterface";
+	public static CallBack callBack=null;
 	
 	public WebJsInterface(Context context) {
 		this.context = context;
@@ -39,32 +40,51 @@ public class WebJsInterface {
 	
 	@JavascriptInterface
 	public void setUser(String json) {
-		Log.i(TAG, "setUser");
-		try {
-			JSONObject jsonObject=new JSONObject(json);
-			editor.putString("name",jsonObject.getString("name"));
-			editor.putString("pwd",jsonObject.getString("pwd"));
-			editor.putString("uid",jsonObject.getString("uid"));
-			editor.putString("token",MACUtil.getInstances().getMac());
-			editor.putBoolean("iflogin", true);
-	        editor.commit();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
+		UserInfo user=new UserInfo();
+		user.setUserByJson(json);
+		Log.i(TAG, json.toString());
+		if(user.getStatus().equals("success")){
+			try {
+				editor.putString("name",user.getUserName());
+//				editor.putString("pwd",jsonObject.getString("pwd"));
+				editor.putString("uid",user.getUserID());
+//				editor.putString("sessionId",user.getSessionId());
+				editor.putString("token",user.getUserID());
+				editor.putBoolean("iflogin", true);
+				AccountService.ifLogin=true;
+				callBack.loginSuccess(user);
+		        editor.commit();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+			
+	}
+	
+	@JavascriptInterface
+	public void loginFailure(String message){
+		callBack.loginFailure(message);
+	}
+	
+	@JavascriptInterface
+	public void registSuccess(String message){
+		callBack.registSuccess(message);
+	}
+	
+	@JavascriptInterface
+	public void registFailure(String message){
+		callBack.registFailure(message);
 	}
 	
 	@JavascriptInterface
 	public void closeWeb(){
-		Log.i(TAG, "closeWeb");
+//		Log.i(TAG, "closeWeb");
 		AccountService.getInstances().closeWeb();
 	}
 	
 	@JavascriptInterface
 	public void clearUser(){
-		editor.putString("name",null);
-		editor.putString("pwd",null);
-		editor.putString("uid",null);
+		editor.clear();
         editor.commit();
 	}
 	

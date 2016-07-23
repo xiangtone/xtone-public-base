@@ -37,6 +37,10 @@
     <servlet-name>EmailServlet</servlet-name>
     <servlet-class>com.account.service.EmailServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>LoginAuth</servlet-name>
+    <servlet-class>com.account.service.EmailServlet</servlet-class>
+  </servlet>
   
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
