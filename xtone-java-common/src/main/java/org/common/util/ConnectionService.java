@@ -16,6 +16,10 @@ public class ConnectionService {
   private ConnectionService() {
   }
 
+  static {
+    getInstance();
+  }
+
   public static ConnectionService getInstance() {
     return instance;
   }
