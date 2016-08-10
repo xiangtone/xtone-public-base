@@ -103,7 +103,7 @@
 							try {
 								con = Logconnectionservice.getInstance()
 										.getConnectionForLocal();
-								String sql1 = "SELECT FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d') AS dt,para01,count(*) as n FROM `log_async_last_hundred_days` where logid=2001 and para01 like ? AND para01 NOT LIKE '%SELECT%' GROUP BY FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d'),para01 ORDER BY id DESC";
+								String sql1 = "SELECT FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d') AS dt,SUBSTRING(para01,1,33) as para01,para01 as fr,count(*) as n FROM `log_async_last_hundred_days` where logid=2001 and para01 like ? AND para01 NOT LIKE '%SELECT%' GROUP BY FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d'),para01 ORDER BY id DESC";
 							
 								ps1 = con.prepareStatement(sql1);
 						
@@ -117,7 +117,7 @@
 							
 								while (rs1.next()) {
 									String dt = rs1.getString("dt");
-									String from = rs1.getString("para01");
+									String from = rs1.getString("fr");
 									System.out.println(dt);
 									String sql3 = "SELECT COUNT(*) as n FROM `log_async_last_hundred_days` WHERE logid=2002  and FROM_UNIXTIME(id/1000/1000000, '%Y-%m-%d')=? and para01=? AND para01 NOT LIKE '%SELECT%'";
 									ps3 = con.prepareStatement(sql3);

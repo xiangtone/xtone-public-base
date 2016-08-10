@@ -76,10 +76,22 @@ public class WebJsInterface {
 		callBack.registFailure(message);
 	}
 	
+	/*
+	 * 关闭dialog并回调关闭
+	 */
 	@JavascriptInterface
 	public void closeWeb(){
-//		Log.i(TAG, "closeWeb");
+		Log.i(TAG, "closeWeb");
 		AccountService.getInstances().closeWeb();
+	}
+	
+	/*
+	 * 登陆/注册成功后关闭dialog，不回调关闭
+	 */
+	@JavascriptInterface
+	public void closeIfLogin(){
+		Log.i(TAG, "closeIfLogin");
+		AccountService.getInstances().closeIfLogin();
 	}
 	
 	@JavascriptInterface

@@ -127,7 +127,7 @@ public class MainActivity extends Activity {
 				@Override
 					public void clickClose() {
 						// TODO Auto-generated method stub
-						Toast.makeText(context, "close", Toast.LENGTH_SHORT).show();
+					Log.i("close", "close");
 					}
 				@Override
 					public void loginFailure(String massage) {
