@@ -61,7 +61,7 @@
 <link rel="stylesheet" type="text/css"
 	href="http://cdn.datatables.net/1.10.4/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8"
-	src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.js"></script>
+	src="http://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 
 </head>
 

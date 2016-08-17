@@ -54,9 +54,6 @@
 		<resources>
 			<resource>
 				<directory>src/main</directory>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
 			</resource>
 		</resources>
 		<plugins>

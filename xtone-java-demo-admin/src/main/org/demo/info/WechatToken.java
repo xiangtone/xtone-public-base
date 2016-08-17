@@ -2,58 +2,67 @@ package org.demo.info;
 
 public class WechatToken {
 
-  private String appId;
-  private String token;
-  private Long nextTime;
-  private Long lastModTime;
-  private Long validTime;
+	private String appId;
+	private String token;
+	private Long nextTime;
+	private Long lastModTime;
+	private Long validTime;
 
-  public boolean isInValidTime() {
-    boolean result = true;
-    if (this.validTime <= System.currentTimeMillis()) {
-      result = false;
-    }
-    return result;
-  }
+	public boolean isInValidTime() {
+		boolean result = true;
+		if (this.validTime <= System.currentTimeMillis()) {
+			result = false;
+		}
+		return result;
+	}
 
-  public String getAppId() {
-    return appId;
-  }
+	public String getAppId() {
+		return appId;
+	}
 
-  public void setAppId(String appId) {
-    this.appId = appId;
-  }
+	public void setAppId(String appId) {
+		this.appId = appId;
+	}
 
-  public String getToken() {
-    return token;
-  }
+	public WechatToken(String appId, String token, Long nextTime, Long lastModTime, Long validTime) {
+		super();
+		this.appId = appId;
+		this.token = token;
+		this.nextTime = nextTime;
+		this.lastModTime = lastModTime;
+		this.validTime = validTime;
+	}
 
-  public void setToken(String token) {
-    this.token = token;
-  }
+	public String getToken() {
+		return token;
+	}
 
-  public Long getNextTime() {
-    return nextTime;
-  }
+	public void setToken(String token) {
+		this.token = token;
+	}
 
-  public void setNextTime(Long nextTime) {
-    this.nextTime = nextTime;
-  }
+	public Long getNextTime() {
+		return nextTime;
+	}
 
-  public Long getLastModTime() {
-    return lastModTime;
-  }
+	public void setNextTime(Long nextTime) {
+		this.nextTime = nextTime;
+	}
 
-  public void setLastModTime(Long lastModTime) {
-    this.lastModTime = lastModTime;
-  }
+	public Long getLastModTime() {
+		return lastModTime;
+	}
 
-  public Long getValidTime() {
-    return validTime;
-  }
+	public void setLastModTime(Long lastModTime) {
+		this.lastModTime = lastModTime;
+	}
 
-  public void setValidTime(Long validTime) {
-    this.validTime = validTime;
-  }
+	public Long getValidTime() {
+		return validTime;
+	}
+
+	public void setValidTime(Long validTime) {
+		this.validTime = validTime;
+	}
 
 }

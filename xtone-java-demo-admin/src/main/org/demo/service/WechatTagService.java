@@ -12,20 +12,28 @@ import org.demo.info.WechatToken;
 
 public class WechatTagService {
 
-  private static final Logger LOG = Logger.getLogger(WechatTagService.class);
+	private static final Logger LOG = Logger.getLogger(WechatTagService.class);
 
-  public void createTag(String appId, String tagName) throws IllegalArgumentException, IllegalStateException,
-      SQLException, ClientProtocolException, IOException {
-    WechatToken token = WechatBaseService.getInstance().getToken(appId);
-    String url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=" + token.getToken();
-    HttpEntity entity = EntityBuilder.create().setContentEncoding("utf-8").setContentType(ContentType.APPLICATION_JSON)
-        .setText("{\"tag\" : {\"name\" : \"" + tagName + "\"  }}").build();
-    WechatBaseService.getInstance().sendWechatInterface(url, entity);
-  }
+	public void createTag(String appId, String tagName)
+			throws IllegalArgumentException, IllegalStateException, SQLException, ClientProtocolException, IOException {
+		WechatToken token = WechatBaseService.getInstance().getToken(appId);
+		String url = "https://api.weixin.qq.com/cgi-bin/tags/create?access_token=" + token.getToken();
+		HttpEntity entity = EntityBuilder.create().setContentEncoding("utf-8").setContentType(ContentType.APPLICATION_JSON)
+				.setText("{\"tag\" : {\"name\" : \"" + tagName + "\"  }}").build();
+		WechatBaseService.getInstance().sendWechatInterface(url, entity);
+	}
 
-  public static void main(String[] args) throws IllegalArgumentException, SQLException, ClientProtocolException,
-      IOException {
-    WechatTagService wechatTagService = new WechatTagService();
-    wechatTagService.createTag("wx19ac78d42392068c", "registered");
-  }
+	public void queryTagList(String appId)
+			throws IllegalArgumentException, IllegalStateException, SQLException, ClientProtocolException, IOException {
+		WechatToken token = WechatBaseService.getInstance().getToken(appId);
+		String url = "https://api.weixin.qq.com/cgi-bin/tags/get?access_token=" + token.getToken();
+		WechatBaseService.getInstance().sendWechatInterface(url, null);
+	}
+
+	public static void main(String[] args)
+			throws IllegalArgumentException, SQLException, ClientProtocolException, IOException {
+		WechatTagService wechatTagService = new WechatTagService();
+		// wechatTagService.createTag("wx19ac78d42392068c", "registered");
+		wechatTagService.queryTagList("wx19ac78d42392068c");
+	}
 }
