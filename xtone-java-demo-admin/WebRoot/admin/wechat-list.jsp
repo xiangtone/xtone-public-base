@@ -1,9 +1,15 @@
-﻿<%@page import="org.demo.info.Content"%>
-<%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@page import="org.demo.info.Content"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.List"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="org.demo.service.WechatBaseService"%>
+<%@page import="org.demo.info.WechatToken"%>
+<!DOCTYPE html>
+<%
+	List<WechatToken> wechatAppList = WechatBaseService.getInstance().getAllAppId();
+%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +17,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>更新wechat菜单</title>
+<title>wechatList</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -26,22 +32,39 @@
 	media="screen">
 <script type="text/javascript"
 	src="../js-css/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-	
+
 <!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="../js-css/jquery.dataTables-1.10.4.css">
 <script type="text/javascript" charset="utf8"
 	src="../js-css/jquery.dataTables-1.10.4.min.js"></script>
-
 </head>
-
 <body>
 	<jsp:include page="menu.jsp" />
-
-
-
-
+	<table id="table_id" class="display">
+		<thead>
+			<tr>
+				<th>appId</th>
+			</tr>
+		</thead>
+		<tbody>
+			<%
+				for (WechatToken wechatToken : wechatAppList) {
+			%>
+			<tr>
+				<td><%=wechatToken.getAppId()%></td>
+			</tr>
+			<%
+				}
+			%>
+		</tbody>
+	</table>
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js-css/ie10-viewport-bug-workaround.js"></script>
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#table_id').DataTable();
+	});
+</script>
 </html>
