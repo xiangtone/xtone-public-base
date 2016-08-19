@@ -23,8 +23,9 @@
 // 	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
+	PreparedStatement ps2 = null;
 	Connection con = null;
-	int updates = 0;
+	int updates = 0,updates2 = 0;
 	
 	try {
 		GsonBuilder gsonBuilder = new GsonBuilder();
@@ -33,16 +34,21 @@
 		Ccode code = gson.fromJson(info, Ccode.class);
 		
 		con = ConnectionService.getInstance().getConnectionForLocal();	
-		String sql = "UPDATE tbl_cms_catalogs SET id=?,content=? WHERE id=?";
+		
+		String sql = "UPDATE tbl_cms_catalogs SET id=?,content=? WHERE id=?;";
+		String sql2 = "update tbl_games set id=?,gamename=md5(?) where id=?";
 		ps = con.prepareStatement(sql);
-
+        ps2 = con.prepareStatement(sql2);
 		int m = 1;
 		ps.setLong(m++, code.getId2());
 		ps.setString(m++, code.getContent());
 		ps.setLong(m++, code.getId());
+		ps2.setLong(1, code.getId2());
+		ps2.setLong(2, code.getId2());
+		ps2.setLong(3, code.getId());
 		updates = ps.executeUpdate();
-
-		if (updates != 0) {
+		updates2 = ps2.executeUpdate();
+		if (updates != 0&&updates2 !=0) {
 			CcodeRsp codeRsp = new CcodeRsp();
 			codeRsp.setStatus("success");
 			codeRsp.setData(code);
