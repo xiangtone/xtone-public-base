@@ -155,8 +155,8 @@ $(document).ready(function(){
 				var tip = '';
 				if (msg.status == "success") {
 					webjs.setUser(JSON.stringify(msg));
-					webjs.closeWeb();
 					webjs.registSuccess(JSON.stringify(msg));
+					webjs.closeIfLogin();
 					if(msg.data.loginType==<%=MyUser.LOGINBYEMAIL%>){
 						window.location.href = 'send-email.jsp?email='+msg.data.email+'&uid='+msg.data.uid;
 						return;
