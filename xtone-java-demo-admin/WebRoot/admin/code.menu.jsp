@@ -65,6 +65,7 @@
 <%-- 	%> --%>
     <a href="code.stat-all.jsp" class="menus">兑换码列表</a>
 	<a href="code.jsp" class="menus">导入兑换码</a>
+	<a href="gift.jsp" class="menus">填写礼包内容</a>
 	<a href="code.num.jsp" class="menus">各游戏兑换码剩余量查看</a>
 	<a href="code.password-update.jsp" class="menus">更换密码</a>
 	<a href="code.catalog-all.jsp" class="menus">添加游戏</a>

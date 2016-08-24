@@ -20,15 +20,46 @@
 // 	String info = new String(EscapeUnescape.unescape(request.getParameter("info")));
 
 	PreparedStatement ps = null;
-	
+	PreparedStatement ps2 = null;
 	Connection con = null;
 	ResultSet rs = null;
 	int adds = 0;
 	try {
-	con = ConnectionService.getInstance().getConnectionForLocal();
-	ps = con.prepareStatement("delete from tbl_games where id=?");
-	ps.setString(1, request.getParameter("f"));
-	ps.executeUpdate();
+		
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
+		Gson gson = gsonBuilder.create();
+		Content content = gson.fromJson(info, Content.class);
+		long time = new Date().getTime();
+		content.setAuthorId(user.getId());
+		content.setAddTime(time);
+		content.setLastModifyId(user.getId());
+		content.setLastModifyTime(time);
+	    String text = content.getContent();
+		con = ConnectionService.getInstance().getConnectionForLocal();
+		String sql = "update tbl_games set packageContents = ? where id=?";
+		ps = con.prepareStatement(sql);	
+		ps2 = con.prepareStatement("select id from tbl_cms_catalogs where content = ? ");
+		ps2.setString(1, content.getCatalog());
+		rs = ps2.executeQuery();
+		String id =null;
+		
+		if(rs.next())
+			id = rs.getString("id");
+		 ps.setString(1, text);
+		 ps.setString(2,id);
+		 System.out.println(id);
+         adds = ps.executeUpdate();
+		if (adds != 0) {
+			ContentRsp contentRsp = new ContentRsp();
+			contentRsp.setStatus("success");
+			contentRsp.setData(content);
+			String rsp = gson.toJson(contentRsp);
+			out.print(rsp);
+		} else {	
+			out.print("{\"status\":\"error\"}");
+		}
+
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

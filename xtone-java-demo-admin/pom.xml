@@ -220,7 +220,20 @@
 				<runtime.env>packageConfig\lyxm</runtime.env>
 				<final.name>lyxm-admin.xtonegame.com</final.name>
 				<ftp.server.id>HYServer</ftp.server.id>
-				<ftp.to.url>ftp://121.40.137.243/docker_app/lyxm/swap_dir/</ftp.to.url>
+				<ftp.to.url>ftp://121.40.125.15/docker_apps/lyxm.xtonegame.com/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+		
+		
+		
+		
+		<profile>
+			<id>piggy</id>
+			<properties>
+				<runtime.env>packageConfig\pig</runtime.env>
+				<final.name>piggy-admin.vanggame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.137.243/tomcat-8_5000/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
 	</profiles>
