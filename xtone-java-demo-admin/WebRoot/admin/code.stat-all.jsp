@@ -112,37 +112,14 @@
 								con = ConnectionService.getInstance()
 										.getConnectionForLocal();
 								//String sql = "SELECT FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d') AS dt,service_id,msg,msg_type,status_report,send_status,COUNT(DISTINCT link_id) AS ct FROM receives WHERE id>=UNIX_TIMESTAMP('"+dateFrom+" 0:0:0')*1000*100000 AND id<=UNIX_TIMESTAMP('"+dateTo+" 23:59:59')*1000*100000  GROUP BY FROM_UNIXTIME(id/1000/100000, '%Y-%m-%d'),     service_id,msg,msg_type,status_report,send_status ORDER BY dt DESC";
-								String sql = "SELECT id,gamename,wechatOpenId,FROM_UNIXTIME(matchOpenIdTime/1000,'%Y-%m-%d %H:%i:%s') AS dt FROM `tbl_exchange_codes` WHERE gamename NOT LIKE '%meng%'";
+								String sql = "SELECT e.id,c.content AS gamename,e.wechatOpenId,FROM_UNIXTIME(e.matchOpenIdTime/1000,'%Y-%m-%d %H:%i:%s') AS dt FROM `tbl_exchange_codes` e,tbl_cms_catalogs c WHERE e.`gameName`=c.`id` AND gamename NOT LIKE '%meng%'";
 								ps = con.prepareStatement(sql);
 								rs = ps.executeQuery();
 								while (rs.next()) {
 								
 								String gamename = rs.getString("gamename");
 								
-								if(gamename.equalsIgnoreCase("146293")){
-									gamename = "国战来了";
-								}
-								if(gamename.equalsIgnoreCase("146255")){
-									gamename = "冰火奇缘";
-								}
-								if(gamename.equalsIgnoreCase("146285")){
-									gamename = "白发魔女传";
-								}
-								if(gamename.equalsIgnoreCase("146256")){
-									gamename = "甜甜萌物语";
-								}
-								if(gamename.equalsIgnoreCase("10011")){
-									gamename = "超能继承者";
-								}
-								if(gamename.equalsIgnoreCase("146268")){
-									gamename = "心动劲舞团";
-								}
-								if(gamename.equalsIgnoreCase("146199")){
-									gamename = "完美世界";
-								}
-								if(gamename.equalsIgnoreCase("146186")){
-									gamename = "小小三国";
-								}
+								
 // 									String catalogStr="null";
 // 									if("news".equals(catalog)){
 // 										catalogStr="新闻";

@@ -35,7 +35,7 @@
        rs = ps2.executeQuery();
        System.out.println("a"+ps2);
        if(!rs.next()){
-    	   ps2 = con.prepareStatement("INSERT INTO `tbl_games` VALUES (?,md5(?))");
+    	   ps2 = con.prepareStatement("INSERT INTO `tbl_games` VALUES (?,md5(?),null)");
     	   System.out.println("b"+ps2);
     	   ps2.setLong(1, catalog.getId());
     	   ps2.setLong(2,catalog.getId());
