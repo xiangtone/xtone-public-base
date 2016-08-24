@@ -30,14 +30,14 @@
 
 <link href="../js-css/bootstrap-datetimepicker.min.css" rel="stylesheet"
 	media="screen">
-<script type="text/javascript"
-	src="../js-css/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+<script src="../js-css/bootstrap-datetimepicker.js" charset="UTF-8"></script>
 
 <!-- DataTables -->
 <link rel="stylesheet" type="text/css"
 	href="../js-css/jquery.dataTables-1.10.4.css">
-<script type="text/javascript" charset="utf8"
-	src="../js-css/jquery.dataTables-1.10.4.min.js"></script>
+<script charset="utf8" src="../js-css/jquery.dataTables-1.10.4.min.js"></script>
+
+<script charset="utf8" src="../js-css/private-wechat.js"></script>
 </head>
 <body>
 	<jsp:include page="menu.jsp" />
@@ -45,6 +45,7 @@
 		<thead>
 			<tr>
 				<th>appId</th>
+				<th>operate</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -53,6 +54,8 @@
 			%>
 			<tr>
 				<td><%=wechatToken.getAppId()%></td>
+				<td><button
+						onclick="javascript:goWechatMenu('<%=wechatToken.getAppId()%>');">menu</button></td>
 			</tr>
 			<%
 				}
@@ -62,7 +65,10 @@
 	<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 	<script src="../js-css/ie10-viewport-bug-workaround.js"></script>
 </body>
-<script type="text/javascript">
+<script>
+	function goWechatMenu(appId) {
+		location = 'wechat-menu.jsp?appId=' + appId;
+	}
 	$(document).ready(function() {
 		$('#table_id').DataTable();
 	});

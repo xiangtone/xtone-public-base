@@ -3,6 +3,7 @@
 	<name>x-interface-redirect</name>
 	<comment></comment>
 	<projects>
+		<project>xtone-java-common</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

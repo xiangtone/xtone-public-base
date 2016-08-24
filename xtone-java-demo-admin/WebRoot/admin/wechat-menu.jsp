@@ -1,9 +1,17 @@
-﻿<%@page import="org.demo.info.Content"%>
-<%@page import="java.util.Date"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@page import="org.demo.info.Content"%>
+<%@page import="org.demo.service.WechatMenuService"%>
+<%@page import="java.util.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%
+if (request.getParameter("appId")==null){
+	response.getWriter().write("appId is null");
+	return;
+}
+WechatMenuService wechatMenuService = new WechatMenuService();
+String currentMenu = wechatMenuService.queryMenuFromWechat(request.getParameter("appId"));
+%>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -11,7 +19,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 
-<title>更新wechat菜单</title>
+<title>wechat菜单</title>
 
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
@@ -32,7 +40,7 @@
 <body>
 	<jsp:include page="menu.jsp" />
 
-
+<%=currentMenu %>
 	<button id="btnSetMenu">向微信设置默认菜单</button>
 	<script type="text/javascript">
 		$(function() {
