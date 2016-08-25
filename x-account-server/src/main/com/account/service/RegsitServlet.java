@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.common.util.ConfigManager;
 import org.common.util.GenerateIdService;
 
-import com.account.dao.impl.LogDaoImpl;
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.LogInfo;
 import com.account.domain.MyUser;
