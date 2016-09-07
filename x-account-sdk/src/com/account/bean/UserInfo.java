@@ -2,8 +2,6 @@ package com.account.bean;
 
 import org.json.JSONObject;
 
-import com.account.util.MACUtil;
-
 public class UserInfo {
 	private String channelCode;
 	private String userID;

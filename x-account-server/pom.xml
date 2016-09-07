@@ -191,6 +191,13 @@
 			</properties>
 		</profile>
 		<profile>
+			<id>wifi8</id>
+			<properties>
+				<runtime.env>packageConfig\wifi8</runtime.env>
+				<final.name>account.wifi8.com</final.name>
+			</properties>
+		</profile>
+		<profile>
 			<id>local</id>
 			<properties>
 				<runtime.env>packageConfig\local</runtime.env>
