@@ -57,7 +57,7 @@ DROP TABLE IF EXISTS `tbl_base_users`;
 CREATE TABLE `tbl_base_users` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(100) DEFAULT NULL,
-  `pwd` VARCHAR(100) DEFAULT NULL COMMENT 'md5加密',,
+  `pwd` VARCHAR(100) DEFAULT NULL COMMENT 'md5加密',
   `email` VARCHAR(100) DEFAULT NULL,
   `isAdmin` INT(11) DEFAULT '0' COMMENT '1表示为管理员',
   `isAvail` INT(11) DEFAULT '1' COMMENT '1表示有效，0表示无效，管理界面',
