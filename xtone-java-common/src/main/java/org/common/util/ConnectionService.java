@@ -91,7 +91,6 @@ public class ConnectionService {
 		ds.setTestOnReturn(false);
 		ds.setValidationQuery("select 1 from dual");
 		ds.setValidationQueryTimeout(1);
-		ds.setTimeBetweenEvictionRunsMillis(30000);
 		ds.setNumTestsPerEvictionRun(20);
 		return ds;
 	}
@@ -127,7 +126,6 @@ public class ConnectionService {
 		ds.setTestOnReturn(false);
 		ds.setValidationQuery("select 1 from dual");
 		ds.setValidationQueryTimeout(1);
-		ds.setTimeBetweenEvictionRunsMillis(30000);
 		ds.setNumTestsPerEvictionRun(20);
 		return ds;
 	}
