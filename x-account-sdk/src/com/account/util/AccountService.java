@@ -75,7 +75,7 @@ public class AccountService {
 	
 	private CallBack callBack;
 	
-	private boolean ifLogin=false;
+	public static boolean ifLogin=false;
 	
 	private static final String TAG="AccountService";
 	private AccountService() {
@@ -125,6 +125,7 @@ public class AccountService {
 		webpobView = new WebView(context);
 		this.context=context;
 		this.callBack = callBack;
+		WebJsInterface.callBack=callBack;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
 		editor=sp.edit();
 		
@@ -232,7 +233,7 @@ public class AccountService {
 //					if(webpobView.canGoBack()){
 //						webpobView.goBack();
 //					}else{
-						login_dialog.cancel();
+						login_dialog.dismiss();
 //					}
                 }
 				return false;
@@ -259,25 +260,100 @@ public class AccountService {
 	}
 	
 	private Boolean loginSuccess(){
-		ifLogin=sp.getBoolean("iflogin",false);
+//		ifLogin=sp.getBoolean("iflogin",false);
+//		Log.i(TAG, "是否登录成功:"+ifLogin);
 		if(ifLogin){
 			userInfo=new UserInfo();
-			userInfo.setUsername(sp.getString("name",null));
+			userInfo.setUserName(sp.getString("name",null));
 			userInfo.setToken(sp.getString("token",null));
 			userInfo.setUserID(sp.getString("uid",null));
+//			userInfo.setSessionId(sp.getString("sessionId",null));
 		}
 		return ifLogin;
 	}
 	
+	/*
+	 * 关闭dialog并回调关闭
+	 */
 	public void closeWeb(){
-		login_dialog.cancel();
-		if(loginSuccess()){
-			callBack.loginSuccess(userInfo);
-		}
+		login_dialog.dismiss();
+		callBack.clickClose();
+//		if(loginSuccess()){
+//			ifLogin=false;
+//			callBack.loginSuccess(userInfo);
+//		}
+	}
+	
+	/*
+	 * 登陆/注册成功后关闭dialog，不回调关闭
+	 */
+	public void closeIfLogin(){
+		login_dialog.dismiss();
 	}
 	
 	@SuppressWarnings("deprecation")
 	public void autoLogin(final Context context,final CallBack callBack){
+		//如果有账号信息自动登录
+		this.context=context;
+		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
+		editor=sp.edit();
+		final Handler handler = new Handler(){
+		    @Override
+		    public void handleMessage(Message msg) {
+		        Bundle data = msg.getData();
+		        String val = data.getString("value");
+
+		        userInfo=new UserInfo();
+		        userInfo.setUserByJson(val);
+		        ifLogin=false;
+		        if(userInfo.getStatus().equals("success")){
+//		        	editor.putBoolean("iflogin",true);
+		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+//		        	editor.putString("sessionId", userInfo.getSessionId());
+		        	editor.putString("token", userInfo.getToken());
+		        	editor.commit();
+		        	ifLogin=true;
+		        	callBack.loginSuccess(userInfo);
+		        }
+		    }
+		};
+		
+		Runnable runnable= new Runnable() {
+			JSONObject stoneObject;
+			@Override
+			public void run() {
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				if(sp!=null&&sp.getString("uid",null)!=null){
+					stoneObject = new JSONObject();  
+		            try {
+						stoneObject.put("uid", sp.getString("uid",null));
+//						stoneObject.put("sessionId", sp.getString("sessionId",null));
+						stoneObject.put("token", sp.getString("token",null));
+						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
+						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
+						params.add(new BasicNameValuePair("info", stoneObject.toString()));
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		            String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
+			        if(value==null||value.isEmpty()){
+			        	return;
+			        }
+					Message msg = new Message();
+			        Bundle data = new Bundle();
+			        data.putString("value",value);
+			        msg.setData(data);
+			        handler.sendMessage(msg);
+				}
+			}
+		};
+		new Thread(runnable).start();
+        	
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void authLogin(final Context context,final CallBack callBack){
 		//如果有账号信息自动登录
 		this.context=context;
 		sp=context.getSharedPreferences("account",Activity.MODE_PRIVATE);
@@ -294,6 +370,8 @@ public class AccountService {
 		        if(userInfo.getStatus().equals("success")){
 		        	editor.putBoolean("iflogin",true);
 		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
+//		        	editor.putString("sessionId", userInfo.getSessionId());
+		        	editor.putString("token", userInfo.getToken());
 		        	editor.commit();
 		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
@@ -306,25 +384,27 @@ public class AccountService {
 			@Override
 			public void run() {
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				if(sp!=null&&sp.getString("uid",null)!=null&&sp.getBoolean("iflogin", true)){
+				
 					stoneObject = new JSONObject();  
-		            try {
-						stoneObject.put("uid", sp.getString("uid",null));
-						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
-						stoneObject.put("appkey", MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null));
-						params.add(new BasicNameValuePair("info", stoneObject.toString()));
-						String value=HttpUtils.httpPost(Constant.URLLOGINSERVLET,params);
+//		            try {
+//						stoneObject.put("token", sp.getString("token",null));
+						params.add(new BasicNameValuePair("token", sp.getString("token",null)));
+						String value=HttpUtils.httpPost(Constant.URLLOGAUTHSERVLET,params);
+						if(value==null||value.isEmpty()){
+				        	return;
+				        }
 						Message msg = new Message();
 				        Bundle data = new Bundle();
+//				        Log.i(TAG, value);
 				        data.putString("value",value);
 				        msg.setData(data);
 				        handler.sendMessage(msg);
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+//					} catch (JSONException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
 				}
-			}
+			
 		};
 		new Thread(runnable).start();
         	

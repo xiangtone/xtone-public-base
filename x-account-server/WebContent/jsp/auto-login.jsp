@@ -35,7 +35,7 @@ window.onload=function(){
 			if (msg.status == "success") {
 				
 				webjs.setUser(JSON.stringify(msg.data));
-				webjs.closeWeb();
+				webjs.closeIfLogin();
 			}else {
 				webjs.clearUser();
 			}

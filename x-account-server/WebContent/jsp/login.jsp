@@ -108,17 +108,17 @@ function regist(){
 				if (msg.status == "success") {
 // 					tip='登录成功!';
 // 					window.location.href = 'account.jsp';
-					webjs.setUser(JSON.stringify(msg.data));
-					webjs.closeWeb();
-// 					webjs.setuser(JSON.stringify(msg.data));
-// 					webjs.closeweb();
+					webjs.setUser(JSON.stringify(msg));
+					webjs.closeIfLogin();
 				}else if(msg.status == "frezze"){
 					tip='该用户没有被激活，请先激活。';
 					alert(tip);
+					webjs.loginFailure(msg.status);
 					webjs.toastShort(tip);
 				}else{
 					tip='登录失败!请检查用户名和密码是否正确。';
 					alert(tip);
+					webjs.loginFailure(msg.status);
 					webjs.toastShort(tip);
 				}
 				
