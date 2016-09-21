@@ -46,8 +46,11 @@ function regist(){
 	
 	window.location.href=url;
 }
+var ifclick=true;
 	function submitBtn() {
-		
+		if(!ifclick){
+			return;
+		}
 		var name=$("#username");
 		var pwd=$("#pwd");
 		var oriData = {
@@ -96,7 +99,7 @@ function regist(){
 			pwd.focus();
 			return;
 		}
-		
+		ifclick=false;
 		$.ajax({
 			type : "post",
 			url : "../LoginServlet",
@@ -111,11 +114,13 @@ function regist(){
 					webjs.setUser(JSON.stringify(msg));
 					webjs.closeIfLogin();
 				}else if(msg.status == "frezze"){
+					ifclick=true;
 					tip='该用户没有被激活，请先激活。';
 					alert(tip);
 					webjs.loginFailure(msg.status);
 					webjs.toastShort(tip);
 				}else{
+					ifclick=true;
 					tip='登录失败!请检查用户名和密码是否正确。';
 					alert(tip);
 					webjs.loginFailure(msg.status);
@@ -124,7 +129,7 @@ function regist(){
 				
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-				
+				ifclick=true;
 				var tip="登录失败!";
 				switch (XMLHttpRequest.status)
 				{
@@ -161,7 +166,7 @@ function regist(){
 			<font class="top_tip ">登录</font><br>
 			<input type="text" class="m_input input_border" name="username" id="username" maxlength="20" placeholder="请输入用户名"/>
 			<input type="password" class="m_input input_border" name="pwd" id="pwd" maxlength="20" placeholder="请输入密码"/>
-			<input type="button" class="btn_mp single_button input_border button_color" id="submit" value="登录" onclick="submitBtn()" /><br /> 
+			<input type="button" class="btn_mp single_button input_border button_color" id="submit" name="submit" value="登录" onclick="submitBtn()" /><br /> 
 <!-- 			<a href="change-pwd.jsp" class="change_pwd_a text_a">修改密码</a> -->
 			<a href="#" class="regist_a text_a" onclick="regist()">注册新用户</a>			
 <!-- 			<a href="forget-pwd.jsp" class="foget_pwd_a text_a">忘记密码?</a><br /> -->

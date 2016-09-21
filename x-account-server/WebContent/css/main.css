@@ -6,10 +6,10 @@ body {
 }
 
 a {text-decoration:none;}
-a:link {color:#ffffff;text-decoration:none;}     /* 未被访问的链接     */
-a:visited {color:#ffffff}  /* 已被访问过的链接    */
-a:hover {text-decoration:none}    /* 鼠标悬浮在上的链接  */
-a:active {color:#ffffff}   /* 鼠标点中激活链接    */
+a:link {color:#ffffff;text-decoration:none;}     /* 鏈璁块棶鐨勯摼鎺�     */
+a:visited {color:#ffffff}  /* 宸茶璁块棶杩囩殑閾炬帴    */
+a:hover {text-decoration:none}    /* 榧犳爣鎮诞鍦ㄤ笂鐨勯摼鎺�  */
+a:active {color:#ffffff}   /* 榧犳爣鐐逛腑婵�娲婚摼鎺�    */
 
 .divCenter {
 	width:100%;

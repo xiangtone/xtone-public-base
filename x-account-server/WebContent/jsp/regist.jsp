@@ -63,8 +63,11 @@ $(document).ready(function(){
 		}
 
 	}
-
+	var ifclick=true;
 	function regist() {
+		if(!ifclick){
+			return;
+		}
 		var pwd = $("#pwd");
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
@@ -143,7 +146,7 @@ $(document).ready(function(){
 			re_pwd.focus();
 			return;
 		}
-
+		ifclick=false;
 		$.ajax({
 			type : "post",
 			url : "../RegsitServlet",
@@ -152,6 +155,7 @@ $(document).ready(function(){
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
+				
 				var tip = '';
 				if (msg.status == "success") {
 					webjs.setUser(JSON.stringify(msg));
@@ -163,11 +167,13 @@ $(document).ready(function(){
 					}
 					
 				} else if (msg.status == "errRepeat") {
+					ifclick=true;
 					tip = '该用户已被注册!';
 					alert(tip);
 					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
 				} else {
+					ifclick=true;
 					tip = '注册失败!请稍后重试。';
 					alert(tip);
 					webjs.registFailure(msg.status);
@@ -176,7 +182,7 @@ $(document).ready(function(){
 
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-
+				ifclick=true;
 				var tip = "注册失败!";
 				switch (XMLHttpRequest.status) {
 				case 404:
