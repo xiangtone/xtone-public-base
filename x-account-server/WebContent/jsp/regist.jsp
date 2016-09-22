@@ -147,6 +147,7 @@ $(document).ready(function(){
 			return;
 		}
 		ifclick=false;
+		webjs.showProgressBar();
 		$.ajax({
 			type : "post",
 			url : "../RegsitServlet",
@@ -155,7 +156,7 @@ $(document).ready(function(){
 			data : "info=" + JSON.stringify(oriData),
 			dataType : "json",
 			success : function(msg) {
-				
+				webjs.hiddProgressBar();
 				var tip = '';
 				if (msg.status == "success") {
 					webjs.setUser(JSON.stringify(msg));
@@ -182,6 +183,7 @@ $(document).ready(function(){
 
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
+				webjs.hiddProgressBar();
 				ifclick=true;
 				var tip = "注册失败!";
 				switch (XMLHttpRequest.status) {

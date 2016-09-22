@@ -30,7 +30,7 @@ a:active {color:#ffffff}   /* 榧犳爣鐐逛腑婵�娲婚摼鎺�    */
 .m_input{
 	width: 100%;
 	height:30px;
-	margin-top: 20px;
+	margin-top: 5px;
 	text-indent:12px;
 }
 
@@ -57,7 +57,7 @@ a:active {color:#ffffff}   /* 榧犳爣鐐逛腑婵�娲婚摼鎺�    */
 	width: 70%;
 	height:24px;
 	font-size: 14px;
-	margin: 10px auto 10px auto;
+	margin: 5px auto 10px auto;
 	padding: 1px 0 1px 0;
 	background-color: white;
 	line-height:22px;
@@ -70,7 +70,7 @@ a:active {color:#ffffff}   /* 榧犳爣鐐逛腑婵�娲婚摼鎺�    */
 }
 .top_tip{
 	float: left;
-	margin-top: 15%;
+	margin-top: 3%;
 	padding-right: 70%;
 	font-size: 19px;
 	color: white;
@@ -108,11 +108,11 @@ a:active {color:#ffffff}   /* 榧犳爣鐐逛腑婵�娲婚摼鎺�    */
 }
 
 .btn_mp{
-	margin: 40px 0 10px 0;
+	margin: 5px 0 10px 0;
 	padding: 1px 0 1px 0;
 }
 
 .double_btn_mp{
-	margin: 30px 0 10px 0;
+	margin: 5px 0 10px 0;
 	padding: 1px 0 1px 0;
 }

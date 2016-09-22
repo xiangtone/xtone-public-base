@@ -25,6 +25,7 @@ import com.account.bean.UserInfo;
 import android.R;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.CookieManager;
@@ -62,7 +64,7 @@ public class AccountService {
 	
 	public Dialog login_dialog=null; //动态加载的dialog
 	
-	private Dialog progressDialog=null;
+	private ProgressDialog progressDialog=null;
 	
 	private WebView webpobView=null;
 	
@@ -146,12 +148,7 @@ public class AccountService {
 		plaqueParams.gravity=Gravity.CENTER;//设置居中显示
 //		linearLayout.setGravity(Gravity.CENTER);//设置居中显示
 		linearLayout.setLayoutParams(plaqueParams);
-		//进度条布局
-		FrameLayout progressLayout = new FrameLayout(context);
-		LayoutParams params = new LayoutParams(
-				new LinearLayout.LayoutParams(width,height));//布局和webview大小
-		params.gravity=Gravity.CENTER;//设置居中显示
-		progressLayout.setLayoutParams(params);
+		
 		//进度条
 		progressBar=new ProgressBar(context);
 		LayoutParams barParams = new LayoutParams(
@@ -196,15 +193,15 @@ public class AccountService {
 //				editor.putString("cookies",cookieStr);
 //		        editor.commit();
 				
-//				progressBar.setVisibility(View.GONE);
-				if(progressDialog!=null){
-					Log.i(TAG, "finish,progressDialog!=null");
-					try {
-						progressDialog.dismiss();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
+				progressBar.setVisibility(View.GONE);
+//				if(progressDialog!=null){
+//					Log.i(TAG, "finish,progressDialog!=null");
+//					try {
+//						progressDialog.hide();
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
 	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
@@ -263,16 +260,10 @@ public class AccountService {
 
 		// 线性布局装webview
 		linearLayout.addView(webpobView);
-//		linearLayout.addView(progressBar);
+		linearLayout.addView(progressBar);
 		// dialog加载线性布局
 		login_dialog.setContentView(linearLayout);
 		
-		progressDialog = new Dialog(context,
-				android.R.style.Theme_Translucent_NoTitleBar);
-		progressDialog.show();
-		progressLayout.addView(progressBar);
-		progressDialog.setContentView(progressLayout);
-
 	  return webpobView;
 	}
 	
@@ -453,31 +444,21 @@ public class AccountService {
 
 	//展示进度条
 	public void showProgress() {
-//		WindowManager wm = (WindowManager) context
-//				.getSystemService(Context.WINDOW_SERVICE);
-//		FrameLayout linearLayout = new FrameLayout(context);
-//		LayoutParams plaqueParams = new LayoutParams(
-//				new LinearLayout.LayoutParams(
-//						wm.getDefaultDisplay().getWidth() * 80 / 100, wm
-//								.getDefaultDisplay().getHeight() * 55 / 100));// 布局和webview大小
-//		plaqueParams.gravity = Gravity.CENTER;// 设置居中显示
-//		linearLayout.setLayoutParams(plaqueParams);
-//		// 进度条
-//		ProgressBar progressBar = new ProgressBar(context);
-//		LayoutParams barParams = new LayoutParams(
-//				new LinearLayout.LayoutParams(200, 200));// 进度条大小
-//		barParams.gravity = Gravity.CENTER;// 设置居中显示
-//		progressBar.setLayoutParams(barParams);
-//		Dialog progressDialog = new Dialog(context,
-//				android.R.style.Theme_Translucent_NoTitleBar);
-//		progressDialog.setCancelable(false);
+		progressDialog = new ProgressDialog(context,android.R.style.Theme_Translucent_NoTitleBar);
+		progressDialog.setCancelable(false);
+		Window wd= progressDialog.getWindow();
+		WindowManager.LayoutParams lp = wd.getAttributes();
+		lp.alpha = 0.7f;
+		lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.gravity = Gravity.CENTER;
+		wd.setAttributes(lp);
+		progressDialog.setMessage("正在注册...");
 		progressDialog.show();
-//		linearLayout.addView(progressBar);
-//		progressDialog.setContentView(linearLayout);
 	}
 	
 	public void hideProgress(){
-		progressDialog.dismiss();
+		progressDialog.cancel();
 	}
 }
 

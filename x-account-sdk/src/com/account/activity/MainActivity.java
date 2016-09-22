@@ -12,11 +12,15 @@ import com.account.util.MACUtil;
 import com.account.util.MetaUtil;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.webkit.WebView;
 import android.widget.Button;
@@ -27,9 +31,6 @@ import android.widget.Toast;
 
 
 public class MainActivity extends Activity {
-
-
-	
 	private Context context;
 	private Button btn_pay; //支付
 	private Button btn_login; //网页登陆
@@ -62,6 +63,7 @@ public class MainActivity extends Activity {
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
 		RawService.getInstances().init(context);
+		
 		//登陆按钮点击事件
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
