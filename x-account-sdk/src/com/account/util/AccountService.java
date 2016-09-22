@@ -106,10 +106,16 @@ public class AccountService {
 	public WebView showWebDialog(Context context,CallBack callBack){
 		WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-		 
-	     int width = wm.getDefaultDisplay().getWidth()*80/100;
-	     int height = wm.getDefaultDisplay().getHeight()*30/100;
-	     return showWebDialog(context,width,height,"webjs",callBack);
+		int width;
+	    int height;
+		if(Utils.isScreenChange(context)){
+			width = wm.getDefaultDisplay().getWidth()*48/100;
+		    height = wm.getDefaultDisplay().getHeight()*53/100;
+		}else{
+			width = wm.getDefaultDisplay().getWidth()*80/100;
+		    height = wm.getDefaultDisplay().getHeight()*30/100;
+		}
+	    return showWebDialog(context,width,height,"webjs",callBack);
 	}
 	/**
 	 * 动态创建一个dialog窗口,调用showWebDialog(Context context,String url,int width,int height,String interfaceName),interfaceName默认为webjs。
