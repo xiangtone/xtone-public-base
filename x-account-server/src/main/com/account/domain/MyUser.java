@@ -24,6 +24,7 @@ public class MyUser{
 	private String channel_id;//渠道号
 	private String appkey;//应用密钥
 	private int status;
+	private String sessionId;
 		 
 	public int getId() {
 		return id;
@@ -108,6 +109,12 @@ public class MyUser{
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	public String getSessionId() {
+		return sessionId;
+	}
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 	
 	

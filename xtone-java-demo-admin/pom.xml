@@ -41,6 +41,12 @@
 			<artifactId>xtone-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>${final.name}</finalName>
@@ -177,7 +183,55 @@
 				<runtime.env>packageConfig\mxkl</runtime.env>
 				<final.name>mxkl-admin.xtonegame.com</final.name>
 				<ftp.server.id>HYServer</ftp.server.id>
-				<ftp.to.url>ftp://121.40.137.243/tomcat-8_10000/swap_dir</ftp.to.url>
+				<ftp.to.url>ftp://121.40.137.243/docker_app/mxkl.xtonegame.com/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>killer</id>
+			<properties>
+				<runtime.env>packageConfig\kill</runtime.env>
+				<final.name>killer-admin.xtonegame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://120.27.130.11/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+
+
+
+
+		<profile>
+			<id>huasheng</id>
+			<properties>
+				<runtime.env>packageConfig\huasheng</runtime.env>
+				<final.name>wx-admin.huashenggame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://115.159.125.75/wx.huashenggame.com/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+
+
+
+
+		<profile>
+			<id>lyxm</id>
+			<properties>
+				<runtime.env>packageConfig\lyxm</runtime.env>
+				<final.name>lyxm-admin.xtonegame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.125.15/docker_apps/lyxm.xtonegame.com/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+		
+		
+		
+		
+		<profile>
+			<id>piggy</id>
+			<properties>
+				<runtime.env>packageConfig\pig</runtime.env>
+				<final.name>piggy-admin.vanggame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.137.243/tomcat-8_5000/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
 	</profiles>

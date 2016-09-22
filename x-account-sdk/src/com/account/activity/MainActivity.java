@@ -33,10 +33,11 @@ public class MainActivity extends Activity {
 	private Button btn_pay; //支付
 	private Button btn_login; //网页登陆
 	private Button btn_uid;
+	private Button btn_html;
+	private Button btn_auth;
 	private Button logout;
 	private TextView tx_islogin; 
 	private final String NAME_SPASE = "webjs"; //webView交互
-//	private String url = "http://192.168.1.222:8080/x-account-server/jsp/login.jsp"; //登陆界面
 	private WebView webpobView ; 
 	private TextView tx_uuid; 
 	private String getuid ; //登陆成功后得到的uid值
@@ -54,6 +55,8 @@ public class MainActivity extends Activity {
 		btn_login =(Button) findViewById(R.id.btn_login);
 		logout=(Button) findViewById(R.id.logout);
 		btn_uid =(Button) findViewById(R.id.btn_uid);
+		btn_html =(Button) findViewById(R.id.btn_html);
+		btn_auth =(Button) findViewById(R.id.btn_auth);
 		tx_uuid = (TextView) findViewById(R.id.txuuid);
 		tx_islogin = (TextView) findViewById(R.id.islogin);
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
@@ -62,14 +65,6 @@ public class MainActivity extends Activity {
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
-//					
-//					@Override
-//					public void loginSuccess(UserInfo userInfo) {
-//						// TODO Auto-generated method stub
-//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-//					}
-//				}); //返回一個webview
 				Intent intent=new Intent(context, LoginActivity.class);
 				startActivity(intent);
 			}
@@ -87,13 +82,19 @@ public class MainActivity extends Activity {
 //				}
 //				String url="http://192.168.1.222:8080/x-account-server/LoginServlet";
 				
-//				AccountService.getInstances().autoLogin(context,new CallBack() {
-//					@Override
-//					public void loginSuccess(UserInfo userInfo) {
-//						// TODO Auto-generated method stub
-//						Log.i("user", userInfo.getUsername()+userInfo.getUserID());
-//					}
-//				});
+				try {
+					AccountService.getInstances().autoLogin(context,new CallBack() {
+						@Override
+						public void loginSuccess(UserInfo userInfo) {
+							// TODO Auto-generated method stub
+							Log.i("autoLogin", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+						}
+					});
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				
 				
 //				RawService.getInstances().autoLogin(new CallBack() {
 //					@Override
@@ -109,11 +110,62 @@ public class MainActivity extends Activity {
 //				});
 			}
 		});
+		
+		btn_html.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				webpobView = AccountService.getInstances().showWebDialog(context,new CallBack() {
+				
+				@Override
+				public void loginSuccess(UserInfo userInfo) {
+					// TODO Auto-generated method stub
+					Log.i("login", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+				}
+				
+				@Override
+					public void clickClose() {
+						// TODO Auto-generated method stub
+					Log.i("close", "close");
+					}
+				@Override
+					public void loginFailure(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("login", massage);
+					
+					}
+				@Override
+					public void registFailure(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
+				@Override
+					public void registSuccess(String massage) {
+						// TODO Auto-generated method stub
+					Log.i("regist", massage);
+					}
+			}); //返回一個webview
+			}
+		});
+		
 		logout.setOnClickListener(new OnClickListener() {
 			@Override 
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				RawService.getInstances().logOut();
+			}
+		});
+		
+		btn_auth.setOnClickListener(new OnClickListener() {
+			@Override 
+			public void onClick(View v) {
+				AccountService.getInstances().authLogin(context,new CallBack() {
+					@Override
+					public void loginSuccess(UserInfo userInfo) {
+						// TODO Auto-generated method stub
+						Log.i("authLogin", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
+					}
+				});
 			}
 		});
 	}
