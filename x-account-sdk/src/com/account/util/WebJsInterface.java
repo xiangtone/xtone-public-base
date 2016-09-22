@@ -5,11 +5,20 @@ import org.json.JSONObject;
 import com.account.bean.UserInfo;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
+import android.widget.FrameLayout.LayoutParams;
 
 public class WebJsInterface {
 	private Context context = null;
@@ -121,4 +130,13 @@ public class WebJsInterface {
 		return MetaUtil.getInstances(context).getMetaDataValue("EP_APPKEY", null);
     }
 	
+	@JavascriptInterface
+	public void showProgressBar(){
+		AccountService.getInstances().showProgress();
+	}
+	
+	@JavascriptInterface
+	public void hiddProgressBar(){
+		AccountService.getInstances().hideProgress();
+	}
 }

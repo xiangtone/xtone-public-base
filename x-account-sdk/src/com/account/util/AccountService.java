@@ -42,6 +42,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 //import android.view.View.OnKeyListener;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -61,6 +62,8 @@ public class AccountService {
 	
 	public Dialog login_dialog=null; //动态加载的dialog
 	
+	private Dialog progressDialog=null;
+	
 	private WebView webpobView=null;
 	
 	private static AccountService loginUtils =null;
@@ -76,6 +79,8 @@ public class AccountService {
 	private CallBack callBack;
 	
 	public static boolean ifLogin=false;
+	
+	private ProgressBar progressBar=null;
 	
 	private static final String TAG="AccountService";
 	private AccountService() {
@@ -101,7 +106,7 @@ public class AccountService {
                 .getSystemService(Context.WINDOW_SERVICE);
 		 
 	     int width = wm.getDefaultDisplay().getWidth()*80/100;
-	     int height = wm.getDefaultDisplay().getHeight()*55/100;
+	     int height = wm.getDefaultDisplay().getHeight()*30/100;
 	     return showWebDialog(context,width,height,"webjs",callBack);
 	}
 	/**
@@ -141,8 +146,14 @@ public class AccountService {
 		plaqueParams.gravity=Gravity.CENTER;//设置居中显示
 //		linearLayout.setGravity(Gravity.CENTER);//设置居中显示
 		linearLayout.setLayoutParams(plaqueParams);
+		//进度条布局
+		FrameLayout progressLayout = new FrameLayout(context);
+		LayoutParams params = new LayoutParams(
+				new LinearLayout.LayoutParams(width,height));//布局和webview大小
+		params.gravity=Gravity.CENTER;//设置居中显示
+		progressLayout.setLayoutParams(params);
 		//进度条
-		final ProgressBar progressBar=new ProgressBar(context);
+		progressBar=new ProgressBar(context);
 		LayoutParams barParams = new LayoutParams(
 				new LinearLayout.LayoutParams(200,200));//进度条大小
 		barParams.gravity=Gravity.CENTER;//设置居中显示
@@ -157,6 +168,7 @@ public class AccountService {
 		webpobView.getSettings().setJavaScriptEnabled(true);
 		// js能调用android项目方法
 		webpobView.addJavascriptInterface(new WebJsInterface(context), interfaceName);
+		
 		// 启动缓存
 		webpobView.getSettings().setAppCacheEnabled(true);
 		//禁止缩放
@@ -183,7 +195,16 @@ public class AccountService {
 //				cookieStr = cookieManager.getCookie(url);
 //				editor.putString("cookies",cookieStr);
 //		        editor.commit();
-				progressBar.setVisibility(View.GONE);
+				
+//				progressBar.setVisibility(View.GONE);
+				if(progressDialog!=null){
+					Log.i(TAG, "finish,progressDialog!=null");
+					try {
+						progressDialog.dismiss();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 		        view.loadUrl("javascript:window.webjs.showSource('<head>'+" +
 	                    "document.getElementsByTagName('html')[0].innerHTML+'</head>');");
 				super.onPageFinished(view, url);
@@ -196,7 +217,7 @@ public class AccountService {
 				super.onReceivedError(view,errorCode,description,failingUrl);
 			}
 		});
-		
+
 //		webpobView.setWebChromeClient(new WebChromeClient() {
 //			public void onProgressChanged(WebView view, int progress) {
 //				progressBar.setProgress(progress * 100);
@@ -242,10 +263,15 @@ public class AccountService {
 
 		// 线性布局装webview
 		linearLayout.addView(webpobView);
-		linearLayout.addView(progressBar);
-		
+//		linearLayout.addView(progressBar);
 		// dialog加载线性布局
 		login_dialog.setContentView(linearLayout);
+		
+		progressDialog = new Dialog(context,
+				android.R.style.Theme_Translucent_NoTitleBar);
+		progressDialog.show();
+		progressLayout.addView(progressBar);
+		progressDialog.setContentView(progressLayout);
 
 	  return webpobView;
 	}
@@ -276,6 +302,13 @@ public class AccountService {
 	 * 关闭dialog并回调关闭
 	 */
 	public void closeWeb(){
+		if(progressDialog!=null){
+			try {
+				progressDialog.dismiss();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		login_dialog.dismiss();
 		callBack.clickClose();
 //		if(loginSuccess()){
@@ -288,6 +321,14 @@ public class AccountService {
 	 * 登陆/注册成功后关闭dialog，不回调关闭
 	 */
 	public void closeIfLogin(){
+		if(progressDialog!=null){
+			Log.i(TAG, "progressDialog!=null");
+			try {
+				progressDialog.dismiss();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		login_dialog.dismiss();
 	}
 	
@@ -410,5 +451,33 @@ public class AccountService {
         	
 	}
 
+	//展示进度条
+	public void showProgress() {
+//		WindowManager wm = (WindowManager) context
+//				.getSystemService(Context.WINDOW_SERVICE);
+//		FrameLayout linearLayout = new FrameLayout(context);
+//		LayoutParams plaqueParams = new LayoutParams(
+//				new LinearLayout.LayoutParams(
+//						wm.getDefaultDisplay().getWidth() * 80 / 100, wm
+//								.getDefaultDisplay().getHeight() * 55 / 100));// 布局和webview大小
+//		plaqueParams.gravity = Gravity.CENTER;// 设置居中显示
+//		linearLayout.setLayoutParams(plaqueParams);
+//		// 进度条
+//		ProgressBar progressBar = new ProgressBar(context);
+//		LayoutParams barParams = new LayoutParams(
+//				new LinearLayout.LayoutParams(200, 200));// 进度条大小
+//		barParams.gravity = Gravity.CENTER;// 设置居中显示
+//		progressBar.setLayoutParams(barParams);
+//		Dialog progressDialog = new Dialog(context,
+//				android.R.style.Theme_Translucent_NoTitleBar);
+//		progressDialog.setCancelable(false);
+		progressDialog.show();
+//		linearLayout.addView(progressBar);
+//		progressDialog.setContentView(linearLayout);
+	}
+	
+	public void hideProgress(){
+		progressDialog.dismiss();
+	}
 }
 
