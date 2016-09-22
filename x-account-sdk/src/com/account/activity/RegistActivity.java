@@ -4,7 +4,6 @@ import com.account.R;
 import com.account.Server.RawService;
 import com.account.bean.UserInfo;
 import com.account.util.CallBack;
-import com.account.util.RegistUtils;
 
 import android.app.Activity;
 import android.content.Context;

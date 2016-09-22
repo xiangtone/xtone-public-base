@@ -24,16 +24,6 @@ public final class R {
     }
     public static final class id {
         public static final int btn_login=0x7f060002;
-<<<<<<< HEAD
-        public static final int btn_pay=0x7f060004;
-        public static final int btn_uid=0x7f060005;
-        public static final int islogin=0x7f060000;
-        public static final int logout=0x7f060003;
-        public static final int txuuid=0x7f060001;
-    }
-    public static final class layout {
-        public static final int activity_main=0x7f030000;
-=======
         public static final int btn_pay=0x7f060007;
         public static final int btn_reg_cancle=0x7f06000c;
         public static final int btn_reg_ok=0x7f06000b;
@@ -54,7 +44,6 @@ public final class R {
         public static final int activity_main=0x7f030001;
         public static final int activity_regist=0x7f030002;
         public static final int x=0x7f030003;
->>>>>>> 5aeb4568d1e977bbf34cbff7edeada96e51149d1
     }
     public static final class string {
         public static final int apk=0x7f040004;
