@@ -85,6 +85,9 @@ public class AccountService {
 	private ProgressBar progressBar=null;
 	
 	private static final String TAG="AccountService";
+	
+	private int width;
+	private int height;
 	private AccountService() {
 		super();
 	}
@@ -106,8 +109,6 @@ public class AccountService {
 	public WebView showWebDialog(Context context,CallBack callBack){
 		WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-		int width;
-	    int height;
 		if(Utils.isScreenChange(context)){
 			width = wm.getDefaultDisplay().getWidth()*48/100;
 		    height = wm.getDefaultDisplay().getHeight()*53/100;
@@ -455,7 +456,9 @@ public class AccountService {
 		Window wd= progressDialog.getWindow();
 		WindowManager.LayoutParams lp = wd.getAttributes();
 		lp.alpha = 0.7f;
-		lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+		lp.width=width;
+//		lp.height=height;
+//		lp.width = WindowManager.LayoutParams.MATCH_PARENT;
 		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 		lp.gravity = Gravity.CENTER;
 		wd.setAttributes(lp);
