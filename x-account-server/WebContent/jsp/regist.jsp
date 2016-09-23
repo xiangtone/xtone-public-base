@@ -173,6 +173,7 @@ $(document).ready(function(){
 					alert(tip);
 					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
+					name.focus();
 				} else {
 					ifclick=true;
 					tip = '注册失败!请稍后重试。';
@@ -193,7 +194,6 @@ $(document).ready(function(){
 				default:
 					tip = "网络异常，请稍后再试。";
 					break;
-
 				}
 				alert(tip);
 				webjs.toastShort(tip);
