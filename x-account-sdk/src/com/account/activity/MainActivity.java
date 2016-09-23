@@ -4,7 +4,6 @@ import java.net.NetworkInterface;
 
 import com.account.R;
 import com.account.Server.RawService;
-import com.account.UI.LoginDialog;
 import com.account.bean.UserInfo;
 import com.account.util.AccountService;
 import com.account.util.CallBack;
