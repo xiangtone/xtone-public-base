@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import com.account.domain.MyUser;
 
 public class MyUserDaoImpl extends BasicDaoImpl {
-	Logger LOG=Logger.getLogger(MyUserDaoImpl.class);
+	private final static Logger LOG=Logger.getLogger(MyUserDaoImpl.class);
 	// 添加用户
 	public int add(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
@@ -19,7 +19,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			value=sqlSession.insert("insertMyUser", user);
 			sqlSession.commit();
 		} catch (Exception e) {  
-			LOG.error("",e);
+			LOG.error("insert error",e);
 			sqlSession.rollback();  
 		}finally {
 			sqlSession.close();
