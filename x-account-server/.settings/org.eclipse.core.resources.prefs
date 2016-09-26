@@ -1,9 +1,11 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=master
 eclipse.preferences.version=1
-<<<<<<< HEAD
 encoding//WebContent/css/main.css=UTF-8
-=======
+encoding//packageConfig/n8wan/config.properties=UTF-8
 encoding//packageConfig/wifi8/config.properties=UTF-8
->>>>>>> master
+encoding//packageConfig/youkala/config.properties=UTF-8
 encoding//src/main=UTF-8
 encoding//src/main/config.properties=UTF-8
 encoding/<project>=UTF-8

@@ -91,6 +91,7 @@ public class RegsitServlet extends HttpServlet {
 				ps.setString(m++, myUser.getChannel_id());
 				ps.setString(m++, myUser.getAppkey());
 				ps.setInt(m++, myUser.getStatus());
+				LOG.debug(myUser.getName()+ myUser.getPhone()+ myUser.getEmail()+myUser.getUid()+myUser.getPwd()+myUser.getLastLoginTime()+myUser.getFlagid()+myUser.getChannel_id()+myUser.getAppkey()+myUser.getStatus());
 				value= ps.executeUpdate();
 			} catch (SQLException e) {
 				LOG.error(sql,e);
