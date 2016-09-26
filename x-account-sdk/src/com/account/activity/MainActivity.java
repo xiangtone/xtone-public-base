@@ -63,6 +63,20 @@ public class MainActivity extends Activity {
 		btn_pay.setVisibility(View.INVISIBLE); //隐藏按钮(正式启动 )
 		RawService.getInstances().init(context);
 		
+//		ProgressDialog progressDialog = new ProgressDialog(context,android.R.style.Theme_Translucent_NoTitleBar);
+//		progressDialog.setCancelable(false);
+//		Window wd= progressDialog.getWindow();
+//		WindowManager.LayoutParams lp = wd.getAttributes();
+//		lp.alpha = 0.7f;
+//		lp.width=500;
+////		lp.height=height;
+////		lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+//		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//		lp.gravity = Gravity.CENTER;
+//		wd.setAttributes(lp);
+//		progressDialog.setMessage("正在注册...");
+//		progressDialog.show();
+		
 		//登陆按钮点击事件
 		btn_login.setOnClickListener(new OnClickListener() {
 			@Override
@@ -171,5 +185,6 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+
 
 }
