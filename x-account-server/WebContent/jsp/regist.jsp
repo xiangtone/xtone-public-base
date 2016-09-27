@@ -28,7 +28,6 @@ if(request.getParameter("channel_id")!=null){
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
 %>
 <script type="text/javascript">
-
 $(document).ready(function(){
 	var registerType='<%=channel.getRegisterType()%>';
 	var input_mobile=document.getElementById("mobile");
@@ -45,7 +44,6 @@ $(document).ready(function(){
 		input_mobile.style.display='none';
 	}
 });
-
 	var waitTime = 60;
 	var t = waitTime;
 	function getCode(o) {
@@ -61,16 +59,17 @@ $(document).ready(function(){
 				getCode(o)
 			}, 1000)
 		}
-
 	}
-
+	var ifclick=true;
 	function regist() {
+		if(!ifclick){
+			return;
+		}
 		var pwd = $("#pwd");
 		var name = $("#name");
 		var re_pwd = $("#re_pwd");
 		var phone = $("#phone");
 		var email = $("#email");
-
 		var oriData = {
 			name : name.val().trim(),
 			pwd : pwd.val().trim(),
@@ -93,7 +92,6 @@ $(document).ready(function(){
 			oriData.appkey = webjs.getAppkey();
 		} catch (e) {
 		}
-
 		if(document.getElementById("email").style.display!='none'){
 			oriData.loginType=<%=MyUser.LOGINBYEMAIL%>;
 		}else if(document.getElementById("name").style.display!='none'){
@@ -101,13 +99,11 @@ $(document).ready(function(){
 		}else if(document.getElementById("mobile").style.display!='none'){
 			oriData.loginType=<%=MyUser.LOGINBYPHONE%>;
 		}
-
 		if (!emailRight(email.val())&&document.getElementById("email").style.display!='none') {
 			webjs.toastShort("请输入正确的邮箱!");
 			email.focus();
 			return;
 		}
-
 		if (!phoneRight(phone.val())&&document.getElementById("mobile").style.display!='none') {
 			var tip = "请输入正确11位手机号码!";
 			phone.focus();
@@ -126,7 +122,6 @@ $(document).ready(function(){
 				return;
 			}
 		}
-
 		if (pwd.val().length < 6 || pwd.val().length > 20) {
 			var tip = "请输入6-20位数密码!";
 			alert(tip);
@@ -134,7 +129,6 @@ $(document).ready(function(){
 			pwd.focus();
 			return;
 		}
-
 		if (pwd.val() != re_pwd.val()) {
 			var tip = "两次输入的密码不一致!请重新输入!";
 			alert(tip);
@@ -143,7 +137,7 @@ $(document).ready(function(){
 			re_pwd.focus();
 			return;
 		}
-
+		ifclick=false;
 		$.ajax({
 			type : "post",
 			url : "../RegsitServlet",
@@ -163,20 +157,22 @@ $(document).ready(function(){
 					}
 					
 				} else if (msg.status == "errRepeat") {
+					ifclick=true;
 					tip = '该用户已被注册!';
 					alert(tip);
 					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
+					name.focus();
 				} else {
+					ifclick=true;
 					tip = '注册失败!请稍后重试。';
 					alert(tip);
 					webjs.registFailure(msg.status);
 					webjs.toastShort(tip);
 				}
-
 			},
 			error : function(XMLHttpRequest, textStatus, errorThrown) {
-
+				ifclick=true;
 				var tip = "注册失败!";
 				switch (XMLHttpRequest.status) {
 				case 404:
@@ -185,17 +181,13 @@ $(document).ready(function(){
 				default:
 					tip = "网络异常，请稍后再试。";
 					break;
-
 				}
 				alert(tip);
 				webjs.toastShort(tip);
 			}
 		});
-
 	}
 </script>
-
-
 
 </head>
 <body>
