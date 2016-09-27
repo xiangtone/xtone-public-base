@@ -16,14 +16,17 @@
 <%
 Channel channel=new Channel();
 channel.setChannelId(request.getParameter("channel_id"));
-if(request.getParameter("channel_id")!=null){
-	 try {
-		 channel=CacheConfig.getInstance().getNameLoadingCache(channel.getChannelId());
-		} catch (Exception e) {
-		}
-}else{
-	channel.setRegisterType("name");
-}
+channel.setRegisterType("name");
+
+// if(request.getParameter("channel_id")!=null){
+// 	 try {
+// 		 channel=CacheConfig.getInstance().getNameLoadingCache(channel.getChannelId());
+// 		} catch (Exception e) {
+// 		}
+// }else{
+// 	channel.setRegisterType("name");
+// }
+
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("uuu9");
 // Channel channel=CacheConfig.getInstance().getNameLoadingCache("17173");
 %>
@@ -201,9 +204,9 @@ $(document).ready(function(){
 <input type="text" class="m_input input_border" id="email" placeholder="请输入邮箱地址"/>
 <input type="text" class="m_input input_border" id="name" maxlength="20" placeholder="请输入用户名"/><br/>
 <div id="mobile">
-			<input type="text" class="m_input input_border" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号"/>
-<input type="text" class="input_border" style="width: 57%;height:30px;margin-top: 20px;text-indent:12px;IME-MODE: disabled;" maxlength="6" placeholder="请输入验证码"/>
-<input type="button" class="input_border" id="getCode" style="width: 41%;height:30px;margin-top: 20px;" value="获取验证" onclick="getCode(this)"/><br/>
+<input type="text" class="m_input input_border" id="phone" style="IME-MODE: disabled;" onkeyup="this.value=this.value.replace(/\D/g,'')"  onafterpaste="this.value=this.value.replace(/\D/g,'')" maxlength="11" placeholder="请输入手机号"/>
+<!-- <input type="text" class="input_border" style="width: 57%;height:30px;margin-top: 5px;text-indent:12px;IME-MODE: disabled;" maxlength="6" placeholder="请输入验证码"/> -->
+<!-- <input type="button" class="input_border" id="getCode" style="width: 41%;height:30px;margin-top: 5px;" value="获取验证" onclick="getCode(this)"/><br/> -->
 </div>
 <input type="password" class="m_input input_border" id="pwd" maxlength="20" placeholder="请输入密码"/><br/>
 <input type="password" class="m_input input_border" id="re_pwd" maxlength="20" placeholder="请再次输入密码"/><br/>

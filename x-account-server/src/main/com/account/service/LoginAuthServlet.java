@@ -67,7 +67,7 @@ public class LoginAuthServlet extends HttpServlet {
 			session.setAttribute("user", loginUser);
 			
 			//更新日志库
-//			LogService.getInstance().checkLog(loginUser);
+			LogService.getInstance().checkLog(loginUser);
 			
 			Resp rsp=new Resp();
 			rsp.setStatus("success");

@@ -62,12 +62,12 @@ public class LoginServlet extends HttpServlet {
 		
 		MyUser loginUser=null;
 		if(myUser.getUid()!=null){
-//			if(LogService.getInstance().seleteToken(myUser)!=null){
-//				LogService.getInstance().updateToken(myUser);
-//			}else {
-//				response.getWriter().append("{\"status\":\"tokenErr\"}");
-//				return;
-//			}
+			if(LogService.getInstance().seleteToken(myUser)!=null){
+				LogService.getInstance().updateToken(myUser);
+			}else {
+				response.getWriter().append("{\"status\":\"tokenErr\"}");
+				return;
+			}
 			loginUser = daoImpl.loginByUid(myUser);
 		}else if(myUser.getLoginType()==MyUser.LOGINBYPHONE&&myUser.getPhone()!=null){
 			loginUser = daoImpl.loginByPhone(myUser);

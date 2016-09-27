@@ -72,36 +72,7 @@ public class RegsitServlet extends HttpServlet {
 		if (user != null) {
 			response.getWriter().append("{\"status\":\"errRepeat\"}");//用户名已存在
 		} else {
-//			int value=daoImpl.add(myUser); // 写入数据库
-			
-			Connection con=ConnectionService.getInstance().getConnectionForLocal();
-			String sql="insert into tbl_base_users (name,phone,email,uid,pwd,lastLoginTime,flagid,channel_id,appkey,status) values (?,?,?,?,Md5(?),?,?,?,?,?)";
-			LOG.debug(sql);
-			int value=0;
-		    try {
-		    	PreparedStatement ps = con.prepareStatement(sql);
-				int m = 1;
-			    ps.setString(m++, myUser.getName());
-				ps.setString(m++, myUser.getPhone());
-				ps.setString(m++, myUser.getEmail());
-				ps.setString(m++, myUser.getUid());
-				ps.setString(m++, myUser.getPwd());
-				ps.setLong(m++, myUser.getLastLoginTime());
-				ps.setString(m++, myUser.getFlagid());
-				ps.setString(m++, myUser.getChannel_id());
-				ps.setString(m++, myUser.getAppkey());
-				ps.setInt(m++, myUser.getStatus());
-				LOG.debug(myUser.getName()+ myUser.getPhone()+ myUser.getEmail()+myUser.getUid()+myUser.getPwd()+myUser.getLastLoginTime()+myUser.getFlagid()+myUser.getChannel_id()+myUser.getAppkey()+myUser.getStatus());
-				value= ps.executeUpdate();
-			} catch (SQLException e) {
-				LOG.error(sql,e);
-			}finally{
-				try {
-					con.close();
-				} catch (SQLException e) {
-					LOG.error("",e);
-				}
-			}
+			int value=daoImpl.add(myUser); // 写入数据库
 		    
 			if(value==1){
 				HttpSession session=request.getSession();		
@@ -109,7 +80,7 @@ public class RegsitServlet extends HttpServlet {
 				myUser.setPwd("");
 				
 				//token插入日志库
-//				LogService.getInstance().addToken(myUser);
+				LogService.getInstance().addToken(myUser);
 				
 				Resp rsp=new Resp();
 				rsp.setStatus("success");
