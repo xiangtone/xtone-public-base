@@ -1,10 +1,14 @@
 package com.account.domain;
 
+import com.account.utils.TimeUtil;
+
 public class LogInfo {
 
 	private long id;
+	private String name;
 	private String uid;
 	private String token;
+	private String time;
 	public long getId() {
 		return id;
 	}
@@ -23,5 +27,18 @@ public class LogInfo {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getTime() {
+		return time;
+	}
+	public void setTime(long time) {
+		this.time = TimeUtil.longToStr(time);
+	}
+	
 	
 }

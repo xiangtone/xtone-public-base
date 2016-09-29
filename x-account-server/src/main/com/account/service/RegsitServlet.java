@@ -53,8 +53,8 @@ public class RegsitServlet extends HttpServlet {
 		
 		myUser.setUid(UUID.randomUUID().toString()); //增加UUID
 //		myUser.setSessionId(myUser.getUid());
-		myUser.setToken(myUser.getUid());
 		myUser.setLastLoginTime(new Date().getTime());
+		myUser.updateToken();
 		MyUserDaoImpl daoImpl = new MyUserDaoImpl(); //连接数据库写入数据库
 		
 		MyUser user; //查看数据是否存在
@@ -72,7 +72,7 @@ public class RegsitServlet extends HttpServlet {
 		if (user != null) {
 			response.getWriter().append("{\"status\":\"errRepeat\"}");//用户名已存在
 		} else {
-			int value=daoImpl.add(myUser); // 写入数据库
+			int value=daoImpl.addUser(myUser); // 写入数据库
 		    
 			if(value==1){
 				HttpSession session=request.getSession();		
@@ -80,7 +80,7 @@ public class RegsitServlet extends HttpServlet {
 				myUser.setPwd("");
 				
 				//token插入日志库
-				LogService.getInstance().addToken(myUser);
+				LogService.getInstance().addLog(myUser);
 				
 				Resp rsp=new Resp();
 				rsp.setStatus("success");

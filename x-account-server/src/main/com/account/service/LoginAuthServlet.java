@@ -60,14 +60,15 @@ public class LoginAuthServlet extends HttpServlet {
 				return;
 			}
 			//更新登录时间
-			loginUser.setLastLoginTime(new Date().getTime());
-			loginUser.setToken(loginUser.getUid());
-			daoImpl.updateTime(loginUser);
+//			loginUser.setLastLoginTime(new Date().getTime());
+//			loginUser.updateToken();
+//			daoImpl.updateTime(loginUser);
+			
 			HttpSession session=request.getSession();
 			session.setAttribute("user", loginUser);
 			
 			//更新日志库
-			LogService.getInstance().checkLog(loginUser);
+//			LogService.getInstance().updateLog(loginUser);
 			
 			Resp rsp=new Resp();
 			rsp.setStatus("success");

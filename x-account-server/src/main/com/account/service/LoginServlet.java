@@ -3,6 +3,7 @@ package com.account.service;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +16,7 @@ import org.common.util.Base;
 import org.common.util.ConfigManager;
 import org.common.util.GenerateIdService;
 
+import com.account.dao.impl.LogDaoImpl;
 import com.account.dao.impl.MyUserDaoImpl;
 import com.account.domain.LogInfo;
 import com.account.domain.MyUser;
@@ -62,9 +64,8 @@ public class LoginServlet extends HttpServlet {
 		
 		MyUser loginUser=null;
 		if(myUser.getUid()!=null){
-			if(LogService.getInstance().seleteToken(myUser)!=null){
-				LogService.getInstance().updateToken(myUser);
-			}else {
+			List<MyUser> list=LogService.getInstance().seleteLog(myUser);
+			if(list.isEmpty()){
 				response.getWriter().append("{\"status\":\"tokenErr\"}");
 				return;
 			}
@@ -82,16 +83,18 @@ public class LoginServlet extends HttpServlet {
 				response.getWriter().append("{\"status\":\"frezze\"}");//账号没有激活
 				return;
 			}
-			
+			myUser.setUid(loginUser.getUid());
+			myUser.setToken(loginUser.getToken());
 			//更新登录时间
 			loginUser.setFlagid(myUser.getFlagid());
 			loginUser.setChannel_id(myUser.getChannel_id());
 			loginUser.setAppkey(myUser.getAppkey());
 			loginUser.setLastLoginTime(new Date().getTime());
 //			loginUser.setSessionId(loginUser.getUid());
-			loginUser.setToken(loginUser.getUid());
+			loginUser.updateToken();
 			
 			daoImpl.updateTime(loginUser);
+			LogService.getInstance().checkLog(myUser, loginUser);
 //			loginUser.setPwd(myUser.getPwd());
 			HttpSession session=request.getSession();
 			session.setAttribute("user", loginUser);

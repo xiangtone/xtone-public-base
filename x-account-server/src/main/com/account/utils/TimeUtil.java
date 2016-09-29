@@ -14,4 +14,11 @@ public class TimeUtil {
 		return simpleDateFormat.format(new Date());
 	}
 
+	public static String longToStr(long time){
+		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date dt = new Date(time);  
+		String sDateTime = sdf.format(dt);
+		return sDateTime;
+	}
+	
 }

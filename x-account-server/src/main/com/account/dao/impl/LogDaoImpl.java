@@ -84,23 +84,23 @@ public class LogDaoImpl {
 			List<MyUser> results=new ArrayList<MyUser>();
 			MyUser user;
 			Connection con = ConForLog.getInstance().getConnectionForLocal();
-			String sql = "select para01,para02 from log_async_generals where logId=7 and para01=? and para02=?";
-			LOG.debug("findUidByToken:"+sql);
+			String sql = "select para02,para03 from log_async_generals where logId=7 and para01=? and para02=? and para03=?";
 			try {
 				PreparedStatement ps = con.prepareStatement(sql);
 				int m = 1;
+				ps.setString(m++, info.getName());
 				ps.setString(m++, info.getUid());
 				ps.setString(m++, info.getToken());
 				ResultSet rs = ps.executeQuery();
-				LOG.debug(info.getUid()+","+info.getToken());
+				LOG.debug("findUidByLog:"+sql+"\npara01="+info.getName()+",para02="+info.getUid()+",para03="+info.getToken());
 				if (rs.next()) {
 					user = new MyUser();
-					user.setUid(rs.getString("para01"));
-					user.setToken(rs.getString("para02"));
+					user.setUid(rs.getString("para02"));
+					user.setToken(rs.getString("para03"));
 					results.add(user);
 				}
 			} catch (SQLException e) {
-				LOG.error(sql, e);
+				LOG.error("findUidByLog:"+sql, e);
 			} finally {
 				try {
 					con.close();
@@ -111,20 +111,20 @@ public class LogDaoImpl {
 			return results;
 		}
 		
-		public int insertToken(LogInfo info) {
+		public int insertLog(LogInfo info) {
 			int value = 0;
-
 			Connection con = ConForLog.getInstance().getConnectionForLocal();
-			String sql = "insert into log_async_generals (id,logId,para01,para02) values (?,'7',?,?)";
-			LOG.debug("insertToken:"+sql);
+			String sql = "insert into log_async_generals (id,logId,para01,para02,para03,para04) values (?,'7',?,?,?,?)";
 			try {
 				PreparedStatement ps = con.prepareStatement(sql);
 				int m = 1;
 				ps.setLong(m++, info.getId());
+				ps.setString(m++, info.getName());
 				ps.setString(m++, info.getUid());
 				ps.setString(m++, info.getToken());
+				ps.setString(m++, info.getTime());
 				value = ps.executeUpdate();
-				LOG.debug(info.getId()+","+info.getUid()+","+info.getToken());
+				LOG.debug("insertLog:"+sql+"\nid="+info.getId()+",para01="+info.getName()+",para02="+info.getUid()+",para03="+info.getToken()+",para04="+info.getTime());
 			} catch (SQLException e) {
 				LOG.error(sql, e);
 			} finally {
@@ -137,19 +137,19 @@ public class LogDaoImpl {
 			return value;
 		}
 	
-		public int updateTime(LogInfo info) {
+		public int updateLog(LogInfo info) {
 			int value = 0;
 			Connection con = ConForLog.getInstance().getConnectionForLocal();
-			String sql = "update log_async_generals set id=? where logId='7' and para01=? and para02=?";
-			LOG.debug("updateTime:"+sql);
+			String sql = "update log_async_generals set para03=?,para04=? where logId='7' and para01=? and para02=?";
 			try {
 				PreparedStatement ps = con.prepareStatement(sql);
 				int m = 1;
-				ps.setLong(m++, info.getId());
-				ps.setString(m++, info.getUid());
 				ps.setString(m++, info.getToken());
+				ps.setString(m++, info.getTime());
+				ps.setString(m++, info.getName());
+				ps.setString(m++, info.getUid());
 				value = ps.executeUpdate();
-				LOG.debug(info.getId()+","+info.getUid()+","+info.getToken());
+				LOG.debug("updateLog:"+sql+"\npara03="+info.getToken()+",para04="+info.getTime()+",para01="+info.getName()+",para02="+info.getUid());
 			} catch (SQLException e) {
 				LOG.error(sql, e);
 			} finally {

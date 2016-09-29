@@ -1,6 +1,9 @@
 package com.account.domain;
 
+import java.security.MessageDigest;
 import java.util.Date;
+
+import com.account.utils.MD5Util;
 
 public class MyUser{
 	
@@ -116,7 +119,12 @@ public class MyUser{
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-	
+	public void updateToken() {
+		if(lastLoginTime==0){
+			lastLoginTime=new Date().getTime();
+		}
+		this.setToken(MD5Util.MD5(uid+lastLoginTime));
+	}
 	
 //	public String getJson(){
 //		return "{\"name\":\"" + getName() + "\",\"pwd\":\"" + getPwd() + "\",\"phone\":\"" + getPhone() + "\",\"uid\":\"" + getUid() + "\"}";		

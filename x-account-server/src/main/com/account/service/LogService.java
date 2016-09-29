@@ -23,38 +23,43 @@ public class LogService {
 		return logService;
 	}
 	
-	public List<MyUser> seleteToken(MyUser myUser){
+	public List<MyUser> seleteLog(MyUser myUser){
 		LogInfo log=new LogInfo();
 		log.setToken(myUser.getToken());
 		log.setUid(myUser.getUid());
+		log.setName(myUser.getName());
 		List<MyUser> result=logDaoImpl.findUidByToken(log);
 		return result;
 	}
 	
-	public int updateToken(MyUser myUser){
+	public int updateLog(MyUser myUser){
 		LogInfo log=new LogInfo();
 		log.setId(GenerateIdService.getInstance().generateNew(Integer.parseInt(ConfigManager.getConfigData("server.id").trim()), "clicks", 1));
-		log.setToken(myUser.getToken());
+		log.setName(myUser.getName());
 		log.setUid(myUser.getUid());
-		int result=logDaoImpl.updateTime(log);
+		log.setToken(myUser.getToken());
+		log.setTime(myUser.getLastLoginTime());
+		int result=logDaoImpl.updateLog(log);
 		return result;
 	}
 	
-	public int addToken(MyUser myUser){
+	public int addLog(MyUser myUser){
 		LogInfo log=new LogInfo();
 		log.setId(GenerateIdService.getInstance().generateNew(Integer.parseInt(ConfigManager.getConfigData("server.id").trim()), "clicks", 1));
+		log.setName(myUser.getName());
 		log.setToken(myUser.getToken());
 		log.setUid(myUser.getUid());
-		int result=logDaoImpl.insertToken(log);
+		log.setTime(myUser.getLastLoginTime());
+		int result=logDaoImpl.insertLog(log);
 		return result;
 	}
 	
-	public void checkLog(MyUser myUser){
+	public void checkLog(MyUser oldUser,MyUser newUser){
 		//token,没有则插入,已有则更新
-		if(logService.seleteToken(myUser)!=null){
-			logService.updateToken(myUser);
+		if(logService.seleteLog(oldUser).isEmpty()){
+			logService.addLog(newUser);
 		}else {
-			logService.addToken(myUser);
+			logService.updateLog(newUser);
 		}
 	}
 }
