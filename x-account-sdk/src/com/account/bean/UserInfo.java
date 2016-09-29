@@ -79,7 +79,9 @@ public class UserInfo {
 		try {
 			JSONObject jsonObject=new JSONObject(json);
 			this.setStatus(jsonObject.getString("status"));
-			data=new JSONObject(jsonObject.getString("data"));
+			if(status.equals("success")){
+				data=new JSONObject(jsonObject.getString("data"));
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

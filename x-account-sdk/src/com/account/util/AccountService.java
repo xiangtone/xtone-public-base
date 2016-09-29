@@ -347,12 +347,15 @@ public class AccountService {
 		        ifLogin=false;
 		        if(userInfo.getStatus().equals("success")){
 //		        	editor.putBoolean("iflogin",true);
+		        	editor.putString("name", userInfo.getUserName());
 		        	editor.putString("uid", userInfo.getUserID());//保存uuid，用于下次自动登录
 //		        	editor.putString("sessionId", userInfo.getSessionId());
 		        	editor.putString("token", userInfo.getToken());
 		        	editor.commit();
 		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
+		        }else{
+		        	callBack.loginFailure(userInfo.getStatus());
 		        }
 		    }
 		};
@@ -365,7 +368,8 @@ public class AccountService {
 				if(sp!=null&&sp.getString("uid",null)!=null){
 					stoneObject = new JSONObject();  
 		            try {
-						stoneObject.put("uid", sp.getString("uid",null));
+		            	stoneObject.put("name", sp.getString("name",null));
+		            	stoneObject.put("uid", sp.getString("uid",null));
 //						stoneObject.put("sessionId", sp.getString("sessionId",null));
 						stoneObject.put("token", sp.getString("token",null));
 						stoneObject.put("channel_id", MetaUtil.getInstances(context).getMetaDataValue("EP_CHANNEL", null));
@@ -414,6 +418,8 @@ public class AccountService {
 		        	editor.commit();
 		        	ifLogin=true;
 		        	callBack.loginSuccess(userInfo);
+		        }else{
+		        	callBack.loginFailure(userInfo.getStatus());
 		        }
 		    }
 		};

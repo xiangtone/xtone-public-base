@@ -58,7 +58,7 @@ public class WebJsInterface {
 //				editor.putString("pwd",jsonObject.getString("pwd"));
 				editor.putString("uid",user.getUserID());
 //				editor.putString("sessionId",user.getSessionId());
-				editor.putString("token",user.getUserID());
+				editor.putString("token",user.getToken());
 				editor.putBoolean("iflogin", true);
 				AccountService.ifLogin=true;
 				callBack.loginSuccess(user);

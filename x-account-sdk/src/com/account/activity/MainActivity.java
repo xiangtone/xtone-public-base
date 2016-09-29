@@ -105,6 +105,10 @@ public class MainActivity extends Activity {
 							// TODO Auto-generated method stub
 							Log.i("autoLogin", userInfo.getUserName()+"/"+userInfo.getUserID()+"/"+userInfo.getToken());
 						}
+						@Override
+						public void loginFailure(String massage) {
+							Log.i("autoLogin", massage);
+						}
 					});
 				} catch (Exception e) {
 					// TODO: handle exception
