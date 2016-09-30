@@ -45,6 +45,7 @@ public class RoomManager {
 			Entry<String, ChannelGroup> entry = rooms.lastEntry();
 			if (entry.getValue().size() < roomSize) {
 				entry.getValue().add(channel);
+				channelRoomRalation.put(channel.id().toString(), entry.getKey());
 			} else {
 				createNewRoom(channel);
 			}
