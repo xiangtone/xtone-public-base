@@ -7,7 +7,7 @@
 			<!-- 配置数据库连接信息 -->
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://10.168.31.189:3306/account_n8wan?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
+				<property name="url" value="jdbc:mysql://account.scorpio.db:3306/account_n8wan?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
 				<property name="username" value="account_n8wan" />
 				<property name="password" value="7vba6df32qrafda" />
 			</dataSource>

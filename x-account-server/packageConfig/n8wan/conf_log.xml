@@ -7,7 +7,7 @@
 			<!-- 配置数据库连接信息 -->
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://120.26.78.220:50006/cs_log_general?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
+				<property name="url" value="jdbc:mysql://account.sagittarius.db:50006/cs_log_general?autoReconnect=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull&amp;transformedBitIsBoolean=true" />
 				<property name="username" value="logaccountn8w" />
 				<property name="password" value="logaccountn8wan" />
 			</dataSource>
