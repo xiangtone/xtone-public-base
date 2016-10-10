@@ -1,2 +1,5 @@
 /com/
+/org/
 /shiro-jdbc-realm.ini
+/shiro-realm.ini
+/shiro.ini
