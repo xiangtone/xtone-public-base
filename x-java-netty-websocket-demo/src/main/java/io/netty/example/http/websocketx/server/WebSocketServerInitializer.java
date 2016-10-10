@@ -15,6 +15,8 @@
  */
 package io.netty.example.http.websocketx.server;
 
+import org.apache.log4j.Logger;
+
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -28,6 +30,8 @@ import io.netty.handler.ssl.SslContext;
  */
 public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel> {
 
+	private static final Logger LOG = Logger.getLogger(WebSocketServerInitializer.class);
+
 	private static final String WEBSOCKET_PATH = "/websocket";
 
 	private final SslContext sslCtx;
@@ -40,12 +44,13 @@ public class WebSocketServerInitializer extends ChannelInitializer<SocketChannel
 	public void initChannel(SocketChannel ch) throws Exception {
 		ChannelPipeline pipeline = ch.pipeline();
 		if (sslCtx != null) {
+			LOG.debug("sslCtx != null");
 			pipeline.addLast(sslCtx.newHandler(ch.alloc()));
 		}
 		pipeline.addLast(new HttpServerCodec());
 		pipeline.addLast(new HttpObjectAggregator(65536));
 		pipeline.addLast(new WebSocketServerCompressionHandler());
-		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, null, true));
+		pipeline.addLast(new WebSocketServerProtocolHandler(WEBSOCKET_PATH, "default-protocol"));
 		pipeline.addLast(new WebSocketIndexPageHandler(WEBSOCKET_PATH));
 		pipeline.addLast(new WebSocketFrameHandler());
 	}
