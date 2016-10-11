@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "PopupLayer.h"
 #include "AudioManager.h"
+#include "WebSocketManager.h"
 
 MainLayer::MainLayer()
 {
@@ -60,6 +61,8 @@ bool MainLayer::init()
 	int highScore = Config::instance()->highScore();
 
 	updateMainText(cherryNum, gameTimes, highScore);
+
+	WebSocketManager::instance();
 	
 	return true;
 }
