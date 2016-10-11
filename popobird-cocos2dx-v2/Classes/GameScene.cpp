@@ -11,6 +11,7 @@
 #include "Config.h"
 #include "Language.h"
 #include "AudioManager.h"
+#include "WebSocketManager.h"
 #include "AppuSDKInterfaceHelper.h"
 
 using namespace std;
@@ -175,7 +176,7 @@ void GameScene::createPopoBird()
 	m_popoBirdNet = PopoBirdSprite::create();
 	m_popoBirdNet->setDelegate(this);
 	m_popoBirdNet->setAnchorPoint(ccp(0.5, 0.5));
-	m_popoBirdNet->setPosition(ccp(m_visibleSize.width / 2, m_visibleSize.height / 2));
+	m_popoBirdNet->setPosition(ccp(m_visibleSize.width / 3, m_visibleSize.height / 2));
 	m_backgroundNode->addChild(m_popoBirdNet, 100);
 	m_popoBirdNet->setRole((PetType)petType);
 }
@@ -193,6 +194,7 @@ void GameScene::update( float delta )
 	}
 
 	m_popoBird->updateWithDeltaTime(delta, m_collisionNodes);
+	m_popoBirdNet->updateWithDeltaTime(delta, m_collisionNodes);
 }
 
 void GameScene::generateCollisionObject()
