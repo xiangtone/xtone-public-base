@@ -37,7 +37,7 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame frame) throws Exception {
 		// ping and pong frames already handled
-
+		LOG.debug("receive some thing.");
 		if (frame instanceof TextWebSocketFrame) {
 			// Send the uppercase string back.
 			String request = ((TextWebSocketFrame) frame).text();
@@ -91,6 +91,11 @@ public class WebSocketFrameHandler extends SimpleChannelInboundHandler<WebSocket
 		System.out.println("Client:" + incoming.remoteAddress() + " offline " + ctx.channel() + " total:"
 				+ ChannelManager.CHANNELS.size());
 		LOG.debug("rooms.size:" + RoomManager.rooms.size());
+	}
+
+	@Override
+	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		LOG.debug(evt.toString());
 	}
 
 	@Override
