@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "PopoBirdSprite.h"
+#include "WebSocketManager.h"
 #include <vector>
 
 USING_NS_CC;
