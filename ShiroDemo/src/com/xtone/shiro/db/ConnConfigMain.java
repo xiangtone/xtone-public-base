@@ -4,7 +4,8 @@ import java.sql.*;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.BasicDataSource;
 
-import com.system.util.ConfigManager;
+import com.xtone.shiro.util.ConfigManager;
+
 
 public abstract class ConnConfigMain {
 
