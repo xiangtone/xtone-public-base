@@ -1,2 +1,8 @@
 /com/
+/org/
+/shiro-authenticator-all-success.ini
+/shiro-authorizer.ini
 /shiro-jdbc-realm.ini
+/shiro-realm.ini
+/shiro-role.ini
+/shiro.ini
