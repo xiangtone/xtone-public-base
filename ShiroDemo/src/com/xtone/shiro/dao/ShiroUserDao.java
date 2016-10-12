@@ -1,4 +1,4 @@
-package com.system.dao;
+package com.xtone.shiro.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,26 +47,39 @@ public class ShiroUserDao {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	public Set<String> getRoles(String userName) {
 		String sql = "SELECT * FROM `user_roles` WHERE `username` = '"+userName+"'";
-		new JdbcControl().query(sql, new QueryCallBack() {
+		return (Set<String>) new JdbcControl().query(sql, new QueryCallBack() {
 			
 			@Override
 			public Object onCallBack(ResultSet rs) throws SQLException {
 				Set<String> roles = new HashSet<>();
-				while (rs.next()) {
+				while(rs.next()) {
 					roles.add(rs.getString("role_name"));
 				}
 				return roles;
 			}
 		});
-		return null;
+		
 	}
 
 
+	@SuppressWarnings("unchecked")
 	public Set<String> getPermissions(String userName) {
 		String sql = "SELECT * FROM `roles_permissions` AS p,`user_roles` AS r WHERE r.`role_name`=p.`role_name` AND r.`username`='"+userName+"'";
-		
-		return null;
+		return (Set<String>) new JdbcControl().query(sql, new QueryCallBack() {
+			
+			@Override
+			public Object onCallBack(ResultSet rs) throws SQLException {
+				Set<String>permission = new HashSet<>();
+				while (rs.next()) {
+					permission.add(rs.getString("permission"));
+				}
+				return permission;
+			}
+		});
 	}
+	
+	
 }
