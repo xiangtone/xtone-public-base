@@ -1,0 +1,263 @@
+服务端：LDAP服务器、CA服务器
+客户端：OS、FTP
+
+为安全起见需要使用CA服务器提供证书认证、SSL加密，LDAP服务端和CA服务端可在同一台服务器上
+
+搭建步骤：
+服务端：
+    CA服务：
+        为CA创建签证环境：
+            touch /etc/pki/CA/index.txt
+            echo "00" > /etc/pki/CA/serial
+            
+        为CA创建私钥：
+            openssl genrsa -out /etc/pki/CA/private/cakey.pem
+            chmod 400 /etc/pki/CA/private/cakey.pem
+            
+        为CA自签证书：
+            openssl req -new -x509 -days 365  -key /etc/pki/CA/private/cakey.pem -out /etc/pki/CA/cacert.pem
+            
+        为LDAP服务器创建证书及私钥（这里假设两者在同一台服务器上）：
+            为LDAP创建私钥：
+                openssl genrsa -out /etc/openldap/certs/ldapserver.key
+                chown ldap.ldap /etc/openldap/certs/ldapserver.key
+                chmod 400 /etc/openldap/certs/ldapserver.key
+                
+            为LDAP创建签名请求：
+                openssl req -new -key /etc/openldap/certs/ldapserver.key -out /tmp/ldapserver.csr
+                    注意：Common Name必须填上要使用的域名或LDAP服务器的IP，这取决于你以后在客户端怎么填写LDAP服务器的地址，此处填域名以后就必须使用域名，填IP以后就必须使用IP
+                    
+            为LDAP创建签名
+                openssl ca -in /tmp/ldapserver.csr -out /etc/openldap/certs/ldapserver.crt                
+            
+    LDAP服务：
+        安装相关软件及支持：
+            yum install openldap-servers openldap-clients nss-pam-ldapd sudo openssh pam_ldap -y
+            
+        拷贝相关配置文件及证书、key设置：
+            cp /usr/share/openldap-servers/slapd.conf.obsolete /etc/openldap/slapd.conf
+            cp /usr/share/openldap-servers/DB_CONFIG.example  /var/lib/ldap/DB_CONFIG
+            cp /etc/pki/CA/cacert.pem /etc/openldap/certs/
+            
+            
+        拷贝相关样式文件：
+            cp /usr/share/doc/openssh-ldap-5.3p1/openssh-lpk-openldap.schema /etc/openldap/schema/openssh-lpk-openldap.schema  (支持sshpubkey)
+            cp /usr/share/doc/sudo-1.8.6p3/schema.OpenLDAP /etc/openldap/schema/sudo.schema     (支持sudo)
+                若有其他需要支持的schema文件可拷贝到/etc/openldap/schema/目录下，后面需要在配置文件中指定
+            
+        生成管理员密码：
+            执行：
+                ldappasswd
+            后按照提示输入你想设定的管理员密码，输入两次后会显示一个密文，将其拷贝下来保留着，方便后面可写到配置文件中。管理员密码也支持明文，但为安全起见不推荐明文
+            
+        编辑配置文件slapd.conf(LDAP并不读取这个文件，而是读取/etc/openldap/slapd.d/中的配置文件，这里的配置文件是为了生成/etc/openldap/slapd.d/中的配置文件)：
+            vi /etc/openldap/slapd.conf
+            修改或添加如下内容：
+                TLSCACertificatePath /etc/openldap/certs
+                TLSCertificateFile /etc/openldap/certs/ldapserver.crt
+                TLSCertificateKeyFile /etc/openldap/certs/ldapserver.key
+                
+            在"database    bdb"前一行加入
+                access to attrs=shadowLastChange,userPassword
+                      by self write
+                      by * auth
+
+                access to *
+                      by * read
+            
+            在"database    bdb"中修改：
+                suffix      "dc=abc,dc=com"
+                rootdn      "cn=admin,dc=abc,dc=com"
+                这里的cn为管理员账号，其余的dc按自己的情况填写
+                
+            去掉# rootpw        secret这一行的注释修改secret为自己刚才使用ldappasswd生成的密码例如：
+                rootpw {SSHA}7O3EKMMN3poBSreS+v6AlwQQMEVZPSg8
+                
+        删除原先/etc/openldap/slapd.d里的所有东西：
+            rm /etc/openldap/slapd.d/* -rf
+            
+        重新生成LDAP能识别的配置文件：
+            slaptest -u -f /etc/openldap/slapd.conf -F /etc/openldap/slapd.d
+            有提示success则表示完成
+                
+        设置配置文件的权限：
+            chown -R ldap:ldap /etc/openldap/slapd.d
+            
+        启动服务：
+            LDAP非加密通信使用的是389端口，启动命令为：
+                service slapd start
+                    或
+                slapd -h "ldap:///"
+            加密通信使用的是636端口，启动命令为：
+                slapd -h "ldaps:///"
+                
+            两种方式同时启动：
+                slapd -h "ldap:/// ldaps:///"
+                
+        若有报错，可尝试执行：
+            rm /var/lib/ldap/alock /var/lib/ldap/__db.00* -rf
+        再尝试启动
+        
+    
+    配置数据：
+        ldap只能识别ldif文件的数据，可直接安装migrationtools这个工具生成ldif文件，此处直接生成编辑文件：
+            vi /tmp/base.ldif
+                dn: ou=Hosts,dc=chen,dc=ldap
+                ou: Hosts
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Rpc,dc=chen,dc=ldap
+                ou: Rpc
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Services,dc=chen,dc=ldap
+                ou: Services
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: nisMapName=netgroup.byuser,dc=chen,dc=ldap
+                nismapname: netgroup.byuser
+                objectClass: top
+                objectClass: nisMap
+
+                dn: ou=Mounts,dc=chen,dc=ldap
+                ou: Mounts
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Networks,dc=chen,dc=ldap
+                ou: Networks
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Netgroup,dc=chen,dc=ldap
+                ou: Netgroup
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Protocols,dc=chen,dc=ldap
+                ou: Protocols
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: ou=Aliases,dc=chen,dc=ldap
+                ou: Aliases
+                objectClass: top
+                objectClass: organizationalUnit
+
+                dn: nisMapName=netgroup.byhost,dc=chen,dc=ldap
+                nismapname: netgroup.byhost
+                objectClass: top
+                objectClass: nisMap
+            
+            vi group.ldif
+                dn: cn=cdf,ou=Group,dc=chen,dc=ldap
+                objectClass: posixGroup
+                objectClass: top
+                cn: cdf
+                userPassword: {crypt}x
+                gidNumber: 500
+
+            vi user.ldif
+                dn: uid=chendf,ou=People,dc=chen,dc=ldap
+                uid: chendf
+                cn: chendf
+                objectClass: account
+                objectClass: ldapPublicKey
+                objectClass: posixAccount
+                objectClass: top
+                objectClass: shadowAccount
+                userPassword:
+                shadowLastChange: 17056
+                shadowMin: 0
+                shadowMax: 99999
+                shadowWarning: 7
+                loginShell: /bin/bash
+                uidNumber: 50000
+                gidNumber: 60000
+                homeDirectory: /home/chendf
+                sshPublicKey: ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAqUEmUIvS80gT046Mc2QxuVLpZV1Q09o2tBSKvGSb2vFoO3xbu0ZuLSoyN9s2Tp+yhQPvyb9SdP0BPe/OJT416+tkGeLPKxefqwzPgegDVnpvgcdkyzOJVZVNIA4KdHgipBolqpasiM911P+iXoUxu24d+vFZqnn9B7zJTapTuO2mBQkUyo1MOIZgAeTcjx7bvzFJ1ZYR/djCDuAj3ym9mLO91RK89U5z8ucRdJSTWadO1toyTjKFk+clQTOl9ax0abDWMkICoHTxSt7Qpv73Z1zvJJLrWASRXcR/n8kn50EGlKEFk9rBIbgd9egFGcjDrGHVEfA1GnSr+m18k9vwxQ==
+            
+        将这三个文件导入到LDAP中：
+            ldapadd -x -D "cn=admin,dc=chen,dc=ldap" -W -f base.ldif 
+            ldapadd -x -D "cn=admin,dc=chen,dc=ldap" -W -f group.ldif 
+            ldapadd -x -D "cn=admin,dc=chen,dc=ldap" -W -f user.ldif 
+            这三条命令每条执行后会提示输入密码，密码就是我们写在配置文件中的那个管理员密码
+            
+客户端：
+    安装相关软件及支持：
+        yum install nss-pam-ldapd  openldap-clients openssh-ldap -y
+        
+    运行authconfig-tui命令，随后出现一个图形的配置界面，选中以下几项：
+        Use LDAP
+        Use LDAP Authentication
+        点击next,选中tls，填上LDAP服务器的地址，如果选中TLS，则地址应以ldaps://开头，否则以ldap://开头！
+        
+    拷贝CA证书到：/etc/openldap/cacerts/目录下
+    
+    编辑/etc/openldap/ldap.conf，添加：
+        TLS_REQCERT allow
+        
+    编辑/etc/nslcd.conf 和/etc/pam_ldap.conf，修改ssl start_tls 为 ssl on
+    
+    再次执行authconfig-tui，为tls打上勾
+    
+    再次编辑/etc/nslcd.conf和/etc/pam_ldap.conf ，修改ssl start_tls 为 ssl on
+            
+    测试，执行getent passwd
+    
+    在/etc/pam.d/password-auth中添加：
+        session     optional      pam_mkhomedir.so skel=/etc/skel umask=0077
+        
+    配置支持私钥登录：
+        拷贝配置文件：
+            cp /usr/share/doc/openssh-ldap-5.3p1/ldap.conf /etc/ssh/
+            注意，有些版本的路径不一样，主要是openssh-ldap-5.3p1这个版本不一样，修改即可！
+            
+        编辑/etc/ssh/ldap.conf 添加
+            uri ldaps://XXXXX
+            base dc=chen,dc=ldap
+            
+        编辑/etc/ssh/sshd_config，修改
+            RSAAuthentication yes
+            PubkeyAuthentication yes
+            AuthorizedKeysCommand /usr/libexec/openssh/ssh-ldap-wrapper
+            AuthorizedKeysCommandRunAs nobody
+        
+        重启sshd
+            
+    配置支持FTP登录：
+        只需在ftp的pam文件中添加一下内容即可：
+            auth       sufficient   pam_ldap.so        #把这行放在第一个auth项
+            account    sufficient  pam_ldap.so         #把这行放在第一个account项
+        重启ftp即可
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                
+            
+        
+        
