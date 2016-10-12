@@ -7,7 +7,7 @@ import java.util.Set;
 
 import org.junit.Test;
 
-import com.system.dao.ShiroUserDao;
+import com.xtone.shiro.dao.ShiroUserDao;
 import com.xtone.shiro.model.User;
 
 public class UserDaoTest {
@@ -28,7 +28,17 @@ public class UserDaoTest {
 	public void loadRoles(){
 		ShiroUserDao dao = new ShiroUserDao();
 		Set<String>role = dao.getRoles("zhang");
-		String str = role.toString();
-		System.out.println(str);
+		for (String string : role) {
+			System.out.println(string);
+		}
+	}
+	
+	@Test
+	public void loadPermission(){
+		ShiroUserDao dao = new ShiroUserDao();
+		Set<String>permission = dao.getPermissions("zhang");
+		for (String string : permission) {
+			System.out.println(string);
+		}
 	}
 }
