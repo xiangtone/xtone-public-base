@@ -31,7 +31,8 @@
 				userName : $("#inputEmail").val(),
 				password : $("#inputPassword").val()
 			};
-			var date = '{"userName":"'+$("#inputEmail").val()+'","password":"'+$("#inputPassword").val()+'"}';
+			//var date = {userName:+'""'+$("#inputEmail").val()+'",'+password:+'"'+$("#inputPassword").val()+'"'};
+			var date = {userName:$("#inputEmail").val(),password:$("#inputPassword").val()}; 
  			console.log(date);
            
 			$.ajax({
@@ -39,8 +40,7 @@
 				url : "login",
 				async : false,
 				data : date,
-				dataType : "json",
-				contentType:"application/json;charset=utf-8",
+				dataType:"json",
 				success : function(msg) {
 								
 					if (msg.status == "success") {

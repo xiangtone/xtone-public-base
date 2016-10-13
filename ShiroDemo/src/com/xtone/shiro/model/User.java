@@ -5,6 +5,8 @@ public class User {
 	private String username;
 	private String passerword;
 	private int stute;
+	private String roleName;//角色名
+	private String zhName;//中文角色名
 	
 	public int getId() {
 		return id;
@@ -29,6 +31,18 @@ public class User {
 	}
 	public void setStute(int stute) {
 		this.stute = stute;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	public String getZhName() {
+		return zhName;
+	}
+	public void setZhName(String zhName) {
+		this.zhName = zhName;
 	}
 	
 	

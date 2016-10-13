@@ -81,5 +81,26 @@ public class ShiroUserDao {
 		});
 	}
 	
-	
+	@SuppressWarnings("unchecked")
+	public List<User> loadUser(){
+		String sql = "SELECT a.*,b.`zh_name` FROM `users` AS a,`user_roles` AS b WHERE a.`username` = b.`username`";
+		
+		return (List<User>) new JdbcControl().query(sql, new QueryCallBack() {
+			
+			@Override
+			public Object onCallBack(ResultSet rs) throws SQLException {
+				List<User>list = new ArrayList<>();
+				while (rs.next()) {
+					User user = new User();
+					user.setId(rs.getInt("id"));
+					user.setUsername(rs.getString("username"));
+					user.setPasserword(rs.getString("password"));
+					user.setStute(rs.getInt("stute"));
+					user.setZhName(rs.getString("zh_name"));
+					list.add(user);
+				}
+				return list;
+			}
+		});
+	}
 }

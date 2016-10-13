@@ -1,6 +1,9 @@
 package com.xtone.shiro.servlet;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +17,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import com.google.gson.Gson;
-import com.xtone.shiro.db.JdbcControl;
+import com.google.gson.GsonBuilder;
+import com.google.gson.LongSerializationPolicy;
 import com.xtone.shiro.model.LoginInfo;
+
 
 public class LoginServlet extends HttpServlet{
 
@@ -36,18 +41,29 @@ public class LoginServlet extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		logger.debug("login post");
-		String date = req.getParameter("date");
+		//String date = req.getParameter("data");
 		String userName = req.getParameter("userName");
 		String password = req.getParameter("password");
 		logger.info("userName:"+userName);
 		logger.info("password:"+password);
-		logger.info("date:"+date);
+		//logger.info("date:"+date);
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
 		try {
 			// 4、登录，即身份验证
 			subject.login(token);
-			resp.sendRedirect("test.jsp");
+			OutputStream os = resp.getOutputStream();
+		    OutputStreamWriter osw = new OutputStreamWriter(os);
+		    BufferedWriter bw = new BufferedWriter(osw);
+		    GsonBuilder gsonBuilder = new GsonBuilder();
+			gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
+			Gson gson = gsonBuilder.create();
+			LoginInfo info = new LoginInfo();
+			info.setStatus("success");
+			String rsp = gson.toJson(info);
+			bw.write(rsp);
+			bw.flush();
+			bw.close();
 		} catch (AuthenticationException e) {
 			// 5、身份验证失败
 			logger.debug("身份验证失败 : ["+e+"]");
