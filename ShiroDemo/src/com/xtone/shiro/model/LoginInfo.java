@@ -1,20 +1,20 @@
 package com.xtone.shiro.model;
 
+
 public class LoginInfo {
-	private String userName;
-	private String password;
-	public String getUserName() {
-		return userName;
+	private String status;
+	private User data;
+	public String getStatus() {
+		return status;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	public String getPassword() {
-		return password;
+	public User getData() {
+		return data;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
+	public void setData(User data) {
+		this.data = data;
+	}	
 	
 }
