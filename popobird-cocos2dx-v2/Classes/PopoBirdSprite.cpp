@@ -19,6 +19,9 @@ PopoBirdSprite::PopoBirdSprite()
 
 	m_hasBubble = false;
 	m_jumpSoundId = 0;
+
+	/*life=0;
+	CCLog("%s%d","left=",life);*/
 }
 
 PopoBirdSprite::~PopoBirdSprite()
@@ -344,8 +347,10 @@ void PopoBirdSprite::deadActionCallback()
 	}
 }
 
+
 void PopoBirdSprite::dead()
 {
+	//life--;
 	m_state = kPopoBirdStateDead;
 	push();
 
@@ -355,6 +360,7 @@ void PopoBirdSprite::dead()
 	CCSprite *deadFrame = CCSprite::create("pet_dead.png");
 	this->setDisplayFrame(deadFrame->displayFrame());
 
+	//if(life==0){
 	CCRotateBy *rotateBy = CCRotateBy::create(0.5f, 360);
 	CCRepeat *repeat = CCRepeat::create(rotateBy, 4);
 	CCFadeOut *fadeOut = CCFadeOut::create(2.f);
@@ -363,6 +369,14 @@ void PopoBirdSprite::dead()
 		this, callfunc_selector(PopoBirdSprite::deadActionCallback)), NULL);
 
 	this->runAction(seq);
+	/*}else{
+	CCRotateBy *rotateBy = CCRotateBy::create(0.5f, 360);
+	CCRepeat *repeat = CCRepeat::create(rotateBy, 4);
+	CCFadeOut *fadeOut = CCFadeOut::create(2.f);
+	CCSpawn *spawn = CCSpawn::create(repeat, fadeOut, NULL);
+	CCSequence *seq = CCSequence::create(spawn, NULL, NULL);
+	this->runAction(seq);
+	}*/
 
 	AudioManager::instance()->playEffect(soundeffect_dead);
 }
@@ -395,6 +409,9 @@ void PopoBirdSprite::showTips()
 	}
 }
 
+//void PopoBirdSprite::addLife(){
+//	life++;
+//}
 cocos2d::CCRect PopoBirdSprite::adjustedBoundingBox()
 {
 	CCRect r;

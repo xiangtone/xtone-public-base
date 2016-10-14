@@ -1,4 +1,5 @@
 #include "WebSocketManager.h"
+#include "Contants.h"
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -15,6 +16,7 @@ WebSocketManager::WebSocketManager()
 	{
 		CC_SAFE_DELETE(m_wsiSendText);
 	}
+
 }
 
 
@@ -38,7 +40,7 @@ void WebSocketManager::onOpen(cocos2d::extension::WebSocket* ws){
 		CCLog(" m_wsiSendText Websocket (%p) opened", ws);
 		if (m_wsiSendText->getReadyState() == WebSocket::kStateOpen)
 		{
-			m_wsiSendText->send("Hello WebSocket, I'm a text message.");
+			m_wsiSendText->send("popobird.");
 			CCLog("send text");
 		}
 		else
@@ -52,7 +54,24 @@ void WebSocketManager::onOpen(cocos2d::extension::WebSocket* ws){
 void WebSocketManager::onMessage(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::Data& data){
 	CCLog("Websocket (%p) onMessage", ws);
 	std::string textStr = std::string("response text msg: ") + data.bytes + ", " ;
-	CCLog("%s", textStr.c_str());
+	std::string str=data.bytes;
+	if(str.compare("login")==0){
+		CCLog("%s", "post login");
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(
+				MSG_BUTTON_ONLINE, (CCObject *)(CCInteger::create(MSG_ID_POPUPLAYER_JION)));
+	}else if(str.compare("jump")==0){
+		//net->jump();
+		CCLog("%s", "post jump");
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(
+				MSG_BUTTON_PRESS_ID, (CCObject *)(CCInteger::create(MSG_ID_POPUPLAYER_JUMP)));
+	}else if(str.compare("start")==0){
+		CCLog("%s", "post start");
+		CCNotificationCenter::sharedNotificationCenter()->postNotification(
+				MSG_BUTTON_ONLINE, (CCObject *)(CCInteger::create(MSG_ID_GAME_START)));
+	}else{
+		CCLog("%s", textStr.c_str());
+	}
+
 }
 
 void WebSocketManager::onClose(cocos2d::extension::WebSocket* ws){
@@ -61,4 +80,8 @@ void WebSocketManager::onClose(cocos2d::extension::WebSocket* ws){
 void WebSocketManager::onError(cocos2d::extension::WebSocket* ws, const cocos2d::extension::WebSocket::ErrorCode& error){
 	CCLog("Websocket (%p) onError", ws);
 	CCLog("Error was fired, error code: %d", error);
+}
+
+void WebSocketManager::sendMsg(std::string msg){
+	m_wsiSendText->send(msg);
 }

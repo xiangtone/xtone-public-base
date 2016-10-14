@@ -35,6 +35,7 @@ public:
 	void pressPetImageCallback(CCObject* sender, TouchEventType type);
 	void pressStartButtonCallback(CCObject* sender, TouchEventType type);
 	void pressChangeRoleCallback(CCObject* sender, TouchEventType type);
+	void pressOnlineButtonCallback(CCObject* sender, TouchEventType type);
 
 	void enableKeypad()
 	{
@@ -48,11 +49,14 @@ public:
 
 	virtual void keyBackClicked();
 
+	void notifyHandle(CCObject *obj);
+
 private:
 	UILayer *m_uiLayer;
 	UILayout *m_layoutWidget;
 	UIImageView *m_petUIImage;
 	UIImageView *m_startUIImage;
+	UIImageView *m_onlineUIImage;
 	UILabelBMFont *m_changeLabel;
 
 	UILabelBMFont *m_cherryLabel;
@@ -62,6 +66,7 @@ private:
 	UILabel *m_priceTipsLabel;
 	PetType m_petType;
 	CCPoint m_centerPos;
+	bool connect;
 };
 
 

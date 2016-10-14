@@ -3,9 +3,8 @@
 
 #include "cocos2d.h"
 #include "PopoBirdSprite.h"
-#include "WebSocketManager.h"
 #include <vector>
-
+#include "WebSocketManager.h"
 USING_NS_CC;
 
 class WallNode;
@@ -98,6 +97,8 @@ private:
 
 	//bubble tips
 	CCLabelTTF *m_bubbleTips;
+
+	bool online;
 };
 
 #endif // __GameScene_H__

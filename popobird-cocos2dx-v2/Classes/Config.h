@@ -40,6 +40,7 @@ private:
 	int  m_savedGameTimes;
 	int  m_savedPetType;
 	int  m_savedHighScore;
+	int life;
 	std::string m_savedPetString;
 };
 

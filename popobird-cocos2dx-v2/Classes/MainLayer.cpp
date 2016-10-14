@@ -5,15 +5,14 @@
 #include "PopupLayer.h"
 #include "AudioManager.h"
 #include "WebSocketManager.h"
-
 MainLayer::MainLayer()
 {
-
+	connect=false;
 }
 
 MainLayer::~MainLayer()
 {
-
+	CCNotificationCenter::sharedNotificationCenter()->removeObserver(this, MSG_BUTTON_ONLINE);
 }
 
 bool MainLayer::init()
@@ -43,6 +42,10 @@ bool MainLayer::init()
 	m_startUIImage->addTouchEventListener(this, toucheventselector(MainLayer::pressStartButtonCallback));
 	m_startUIImage->setTouchEnabled(true);
 
+	m_onlineUIImage = dynamic_cast<UIImageView *>(m_uiLayer->getWidgetByName("onlinebutton"));
+	m_onlineUIImage->addTouchEventListener(this, toucheventselector(MainLayer::pressOnlineButtonCallback));
+	m_onlineUIImage->setTouchEnabled(true);
+
 	m_changeLabel = dynamic_cast<UILabelBMFont *>(m_uiLayer->getWidgetByName("changeLabel"));
 	m_changeLabel->addTouchEventListener(this, toucheventselector(MainLayer::pressChangeRoleCallback));
 	m_changeLabel->setTouchEnabled(true);
@@ -61,7 +64,9 @@ bool MainLayer::init()
 	int highScore = Config::instance()->highScore();
 
 	updateMainText(cherryNum, gameTimes, highScore);
-
+	
+	CCNotificationCenter::sharedNotificationCenter()->addObserver(this, 
+		callfuncO_selector(MainLayer::notifyHandle), MSG_BUTTON_ONLINE, NULL);
 	WebSocketManager::instance();
 	
 	return true;
@@ -140,6 +145,28 @@ void MainLayer::pressChangeRoleCallback( CCObject* sender, TouchEventType type )
 		{
 			CCLog("change role touched!");
 			switchPets();
+		}
+		break;
+
+	default:
+		break;
+	}
+}
+
+void MainLayer::pressOnlineButtonCallback( CCObject* sender, TouchEventType type )
+{
+	switch (type)
+	{
+	case TOUCH_EVENT_ENDED:
+		{
+			CCLog("online button touched!");
+			
+			if(connect){
+				WebSocketManager::instance()->sendMsg("start");
+				startGame();
+			}else{
+				WebSocketManager::instance()->sendMsg("login");
+			}
 		}
 		break;
 
@@ -307,4 +334,30 @@ bool MainLayer::isPetOpen(PetType pet)
 void MainLayer::keyBackClicked()
 {
 	CCDirector::sharedDirector()->end();
+}
+
+void MainLayer::notifyHandle(CCObject *obj)
+{
+	int id = ((CCInteger *)obj)->getValue();
+	switch (id)
+	{
+	case MSG_ID_POPUPLAYER_JION:
+		{
+			CCLog("%s","get notify login");
+			connect=true;
+			CCNotificationCenter::sharedNotificationCenter()->postNotification(
+				MSG_BUTTON_PRESS_ID, (CCObject *)(CCInteger::create(MSG_ID_POPUPLAYER_JION)));
+			break;
+		}
+	case MSG_ID_GAME_START:
+		{
+			CCLog("%s","get notify start");
+			CCNotificationCenter::sharedNotificationCenter()->postNotification(
+				MSG_BUTTON_PRESS_ID, (CCObject *)(CCInteger::create(MSG_ID_POPUPLAYER_JION)));
+			startGame();
+		}
+		
+	default:
+		break;
+	}
 }

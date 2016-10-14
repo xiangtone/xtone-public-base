@@ -63,6 +63,7 @@ public:
 
 	void showTips();
 
+	void addLife();
 #ifdef __DEBUG_DRAW__
 	virtual void draw();
 #endif
@@ -93,6 +94,7 @@ private:
 	unsigned int m_jumpSoundId;
 
 	int m_bubbleTimeCnt;
+	//int life;
 };
 
 #endif // __PopoBirdSprite_H__

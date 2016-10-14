@@ -11,9 +11,9 @@
 #include "Config.h"
 #include "Language.h"
 #include "AudioManager.h"
-#include "WebSocketManager.h"
 #include "AppuSDKInterfaceHelper.h"
-
+#include "PopoBirdSprite.h"
+#include "WebSocketManager.h"
 using namespace std;
 
 #define   RANDOM_IN_MIN_MAX(min, max) (rand() % (max-min) + min);
@@ -35,6 +35,8 @@ GameScene::GameScene()
 	m_gameState = kGameStateNone;
 	m_delayCount = DELAY_TIMES;
 	m_bubbleTimes = 0;
+
+	online=false;
 }
 
 GameScene::~GameScene()
@@ -173,12 +175,16 @@ void GameScene::createPopoBird()
 	int petType = Config::instance()->petType();
 	m_popoBird->setRole((PetType)petType);
 
-	m_popoBirdNet = PopoBirdSprite::create();
-	m_popoBirdNet->setDelegate(this);
-	m_popoBirdNet->setAnchorPoint(ccp(0.5, 0.5));
-	m_popoBirdNet->setPosition(ccp(m_visibleSize.width / 3, m_visibleSize.height / 2));
-	m_backgroundNode->addChild(m_popoBirdNet, 100);
-	m_popoBirdNet->setRole((PetType)petType);
+	if(online){
+		m_popoBirdNet = PopoBirdSprite::create();
+		m_popoBirdNet->setDelegate(this);
+		m_popoBirdNet->setAnchorPoint(ccp(0.5, 0.5));
+		m_popoBirdNet->setPosition(ccp(m_visibleSize.width / 2, m_visibleSize.height / 2));
+		m_backgroundNode->addChild(m_popoBirdNet, 100);
+		m_popoBirdNet->setRole((PetType)1);
+		//WebSocketManager::instance()->setNet(m_popoBirdNet);
+	}
+	
 }
 
 void GameScene::update( float delta )
@@ -194,7 +200,11 @@ void GameScene::update( float delta )
 	}
 
 	m_popoBird->updateWithDeltaTime(delta, m_collisionNodes);
-	m_popoBirdNet->updateWithDeltaTime(delta, m_collisionNodes);
+
+	if(online){
+		m_popoBirdNet->updateWithDeltaTime(delta, m_collisionNodes);
+	}
+
 }
 
 void GameScene::generateCollisionObject()
@@ -202,6 +212,7 @@ void GameScene::generateCollisionObject()
 	float probability = 0;
 
 	probability = CCRANDOM_0_1();
+	CCLog("%s%f","probability=",probability);
 	if (probability < 0.6f && !m_popoBird->hasBubble() && m_delayCount <= 0)
 	{
 		generateBubble();
@@ -253,7 +264,7 @@ void GameScene::randomSetHazard( int dirType )
 	removeAllHazard();
 	int hazardNum = 1;
 
-	if (m_scores > 60)
+	/*if (m_scores > 60)
 	{
 		hazardNum = 5;
 	}
@@ -268,6 +279,10 @@ void GameScene::randomSetHazard( int dirType )
 	else if (m_scores > 5)
 	{
 		hazardNum = 2;
+	}*/
+	if (m_scores > 0)
+	{
+		hazardNum = 8;
 	}
 
 	std::vector<int> yPosVec = randomYPos(hazardNum);
@@ -324,7 +339,9 @@ void GameScene::getRandomPosition(CCSize s, int &randomX, int &randomY)
 		randomX = RANDOM_IN_MIN_MAX(min_x, max_x);
 		randomY = RANDOM_IN_MIN_MAX(min_y, max_y);
 		distance = ccpDistance(m_popoBird->getPosition(), ccp(randomX, randomY));
-
+		if(online){
+			distance = ccpDistance(m_popoBirdNet->getPosition(), ccp(randomX, randomY));
+		}
 		//log test
 		CCLog("generateCherry =====distance=%2.2f======\n", distance);
 
@@ -430,8 +447,11 @@ bool GameScene::ccTouchBegan( CCTouch *pTouch, CCEvent *pEvent )
 	}
 
 	m_popoBird->jump();
-	m_popoBirdNet->jump();
 
+	if(online){
+		//m_popoBirdNet->jump();
+		WebSocketManager::instance()->sendMsg("jump");
+	}
 	return true;
 }
 
@@ -620,6 +640,21 @@ void GameScene::notifyHandle(CCObject* obj)
 
 			break;
 		}
+	case MSG_ID_POPUPLAYER_JION:
+		{
+			CCLog("%s","game notify login");
+			online=true;
+			break;
+		}
+	case MSG_ID_POPUPLAYER_JUMP:
+		{
+			CCLog("%s","game notify jump");
+			if(online){
+				m_popoBirdNet->jump();
+			}
+			break;
+		}
+
 	default:
 		break;
 	}

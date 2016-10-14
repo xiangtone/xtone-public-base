@@ -12,7 +12,7 @@
 
 //msg string
 #define     MSG_BUTTON_PRESS_ID			  "buttonPress"
-
+#define     MSG_BUTTON_ONLINE			  "online"
 //msg id
 enum
 {
@@ -21,6 +21,9 @@ enum
 	MSG_ID_POPUPLAYER_BUTTON_PRESS = 3,
 	MSG_ID_POPUPLAYER_BACKTOGAME = 4,
 	MSG_ID_POPUPLAYER_GAMEPLAYING_BUTTON_PRESS = 5,
+	MSG_ID_POPUPLAYER_JION = 6,
+	MSG_ID_POPUPLAYER_JUMP = 7,
+	MSG_ID_GAME_START= 8,
 	MSG_ID_MAX
 };
 
