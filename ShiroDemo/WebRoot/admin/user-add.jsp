@@ -1,3 +1,6 @@
+<%@page import="com.xtone.shiro.model.User"%>
+<%@page import="java.util.List"%>
+<%@page import="com.xtone.shiro.dao.ShiroUserDao"%>
 <%@page import="org.apache.log4j.Logger"%>
 <%@page import="org.apache.log4j.xml.Log4jEntityResolver"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
@@ -6,13 +9,13 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="org.demo.json.CodeRsp"%>
-<%@page import="org.demo.info.Code"%>
 <%@page import="com.google.gson.LongSerializationPolicy"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>
 <%
 	 Logger log = Logger.getLogger("userupdate.class");
+	 ShiroUserDao dao = new ShiroUserDao();
+	 List<User>list = dao.loadRoleList();
 %>
 <html>
 <head>
@@ -82,10 +85,19 @@
 				name="pwd" id="pwd" value="" class="input1"><br></br>
 			<span>邮箱： </span><input type="text"
 				name="email" id="email" value="" class="input1"><br></br>
-			<span>权限： </span><input type="radio" name="admin" style="width: 35px;-float:left" value="1" >
+			<span>角色： </span>
+			<select>
+				<%
+				for(User user : list){
+				%>
+				<option value="<%=user.getRoleName() %>" selected=""><%=user.getZhName() %></option>
+				<% } %>
+			</select>
+			<br></br>
+			<!-- <span>权限： </span><input type="radio" name="admin" style="width: 35px;-float:left" value="1" >
 					<label style="font-size: 14px;-float:left">管理员</label>
 					<input type="radio" name="admin" style="width: 35px;-float:left" value="0" >
-					<label style="font-size: 14px;-float:left">用户</label><br></br>
+					<label style="font-size: 14px;-float:left">用户</label><br></br> -->
 			<span>状态： </span><input type="radio" name="status" style="width: 35px;-float:left" value="1" >
 					<label style="font-size: 14px;-float:left">启用</label>
 					<input type="radio" name="status" style="width: 35px;-float:left" value="0" >
