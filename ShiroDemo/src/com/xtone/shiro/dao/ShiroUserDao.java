@@ -83,7 +83,7 @@ public class ShiroUserDao {
 	
 	@SuppressWarnings("unchecked")
 	public List<User> loadUser(){
-		String sql = "SELECT a.*,b.`zh_name` FROM `users` AS a,`user_roles` AS b WHERE a.`username` = b.`username`";
+		String sql = "SELECT a.*,b.`role_name`,b.`zh_name` FROM `users` AS a LEFT JOIN `user_roles` AS b ON a.`username`= b.`username` GROUP BY a.`username`  ORDER BY a.id";
 		
 		return (List<User>) new JdbcControl().query(sql, new QueryCallBack() {
 			
@@ -103,4 +103,24 @@ public class ShiroUserDao {
 			}
 		});
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<User> loadRoleList() {
+		String sql = "SELECT role_name,zh_name FROM `user_roles` GROUP BY role_name";
+		return (List<User>) new JdbcControl().query(sql, new QueryCallBack() {
+			
+			@Override
+			public Object onCallBack(ResultSet rs) throws SQLException {
+				List<User> list = new ArrayList<>();
+				while (rs.next()) {
+					User user = new User();
+					user.setRoleName(rs.getString("role_name"));
+					user.setZhName(rs.getString("zh_name"));
+					list.add(user);
+				}
+				return list;
+			}
+		});
+	}
+	
 }

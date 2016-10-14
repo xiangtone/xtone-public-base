@@ -5,8 +5,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.ResultSet"%>
-<%@page import="org.demo.json.CodeRsp"%>
-<%@page import="org.demo.info.Code"%>
 <%@page import="com.google.gson.LongSerializationPolicy"%>
 <%@page import="com.google.gson.GsonBuilder"%>
 <%@page import="com.google.gson.Gson"%>

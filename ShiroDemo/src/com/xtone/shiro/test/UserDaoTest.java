@@ -41,4 +41,14 @@ public class UserDaoTest {
 			System.out.println(string);
 		}
 	}
+	
+	@Test
+	public void loadRoleList(){
+		ShiroUserDao dao = new ShiroUserDao();
+		List<User>list = dao.loadRoleList();
+		for (User user : list) {
+			System.out.println("RoleName:"+user.getRoleName());
+			System.out.println("ZhName"+user.getZhName());
+		}
+	}
 }

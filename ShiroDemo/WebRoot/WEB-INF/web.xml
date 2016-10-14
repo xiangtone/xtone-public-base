@@ -16,6 +16,10 @@
 		<error-code>404</error-code>
 		<location>/404.jsp</location>
 	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/erro.jsp</location>
+	</error-page>
 	<!--- shiro 1.2 -->
 	<listener>
 		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
