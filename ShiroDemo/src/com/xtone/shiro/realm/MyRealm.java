@@ -12,8 +12,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.system.dao.ShiroUserDao;
-import com.system.dao.UserDao;
+import com.xtone.shiro.dao.ShiroUserDao;
 import com.xtone.shiro.model.User;
 
 public class MyRealm extends AuthorizingRealm{
@@ -29,7 +28,7 @@ public class MyRealm extends AuthorizingRealm{
 		SimpleAuthorizationInfo authorization = new SimpleAuthorizationInfo();
 		authorization.setRoles(dao.getRoles(userName));
 		authorization.setStringPermissions(dao.getPermissions(userName));
-		return null;
+		return authorization;
 	}
 
 	/**
