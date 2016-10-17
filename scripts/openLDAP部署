@@ -234,8 +234,24 @@
             account    sufficient  pam_ldap.so         #把这行放在第一个account项
         重启ftp即可
             
-            
-            
+    限制用户登录：
+    需先建立一个host的ou，然后创建一条新记录，将用户添加到该记录下成为其成员，后在客户端做限制，限制只有该记录的成员才能登录；
+    创建一条host记录：(需要导入objectClass: extensibleObject才能有member属性)
+        dn: cn=hostA,ou=Hosts,dc=chen,dc=ldap
+        objectClass: ipHost
+        objectClass: device
+        objectClass: extensibleObject
+        ipHostNumber: 192.168.0.20
+        cn: hostA.chen.ldap
+        cn: hostA
+        member: uid=cdf,ou=people,dc=chen,dc=ldap
+        
+    编辑客户端的pam_ldap.conf文件，添加：
+        pam_groupdn              cn=hostA,ou=Hosts,dc=chen,dc=ldap
+        pam_member_attribute       member
+        
+    重启nslcd
+    
             
             
             
