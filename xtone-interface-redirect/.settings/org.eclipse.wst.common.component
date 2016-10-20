@@ -2,6 +2,7 @@
     <wb-module deploy-name="demo-interface">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/" source-path="/src/main"/>
+        <wb-resource deploy-path="/" source-path="/src/test/java"/>
         <dependent-module archiveName="xtone-java-common.war" deploy-path="/WEB-INF/lib" handle="module:/resource/xtone-common/xtone-common">
             <dependency-type>uses</dependency-type>
         </dependent-module>
