@@ -125,7 +125,7 @@ public class ConnectionService {
 		ds.setTestOnBorrow(false);
 		ds.setTestOnReturn(false);
 		ds.setValidationQuery("select 1 from dual");
-		ds.setValidationQueryTimeout(1);
+		ds.setValidationQueryTimeout(1);		
 		ds.setNumTestsPerEvictionRun(20);
 		return ds;
 	}
