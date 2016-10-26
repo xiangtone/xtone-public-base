@@ -1,24 +1,26 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>x-java-app-wechat-token</groupId>
-	<artifactId>x-java-app-wechat-token</artifactId>
+	<groupId>x-java-netty-websocket-demo</groupId>
+	<artifactId>x-java-netty-websocket-demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-all</artifactId>
+<!-- 			<version>4.0.24.Final</version> -->
+			<version>4.1.5.Final</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
 		<dependency>
 			<groupId>org.xtone.common</groupId>
 			<artifactId>xtone-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.3.5</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.6.2</version>
 		</dependency>
 	</dependencies>
 	<build>
@@ -26,10 +28,10 @@
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
-					<target>1.6</target>
-					<source>1.6</source>
-					<encoding>UTF-8</encoding>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -47,7 +49,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
-										<Main-Class>org.x.wechat.Main</Main-Class>
+										<Main-Class>io.netty.example.http.websocketx.server.WebSocketServer</Main-Class>
 									</manifestEntries>
 								</transformer>
 							</transformers>
@@ -106,10 +108,13 @@
 			<id>vgame</id>
 			<properties>
 				<runtime.env>packageConfig\vgame</runtime.env>
-				<final.name>vgame-wechat-token</final.name>
+				<final.name>x-java-netty-websocket-demo</final.name>
 				<ftp.server.id>HYServer</ftp.server.id>
 				<ftp.to.url>ftp://121.40.137.243/tomcat_9010/swap_dir/</ftp.to.url>
 			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<profile>
 			<id>betaCy</id>

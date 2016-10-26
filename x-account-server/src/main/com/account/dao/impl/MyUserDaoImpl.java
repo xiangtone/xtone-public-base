@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.Logger;
 
 import com.account.domain.MyUser;
 
 public class MyUserDaoImpl extends BasicDaoImpl {
-
+	private final static Logger LOG=Logger.getLogger(MyUserDaoImpl.class);
 	// 添加用户
 	public int add(MyUser user) {
 		SqlSession sqlSession = BasicDaoImpl.getSqlSessionFactory().openSession();
@@ -18,6 +19,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			value=sqlSession.insert("insertMyUser", user);
 			sqlSession.commit();
 		} catch (Exception e) {  
+			LOG.error("insert error",e);
 			sqlSession.rollback();  
 		}finally {
 			sqlSession.close();
@@ -33,6 +35,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			value=sqlSession.delete("com.account.mapping.myUserMapper.deleteMyUser", id);
 			sqlSession.commit();
 		} catch (Exception e) {  
+			LOG.error("",e);
 			sqlSession.rollback();  
 		}finally {
 			sqlSession.close();
@@ -48,6 +51,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			value=sqlSession.update("com.account.mapping.myUserMapper.updateMyUser", user);
 			sqlSession.commit();
 		} catch (Exception e) {  
+			LOG.error("",e);
 			sqlSession.rollback();  
 		}finally {
 			sqlSession.close();
@@ -110,7 +114,8 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 			try {
 				value=sqlSession.update("com.account.mapping.myUserMapper.changePwd", user);
 				sqlSession.commit();
-			} catch (Exception e) {  
+			} catch (Exception e) {
+				LOG.error("",e);
 				sqlSession.rollback();  
 			}finally {
 				sqlSession.close();
@@ -157,6 +162,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 					value=sqlSession.update("com.account.mapping.myUserMapper.updateTime", user);
 					sqlSession.commit();
 				} catch (Exception e) {  
+					LOG.error("",e);
 					sqlSession.rollback();  
 				}finally {
 					sqlSession.close();
@@ -172,6 +178,7 @@ public class MyUserDaoImpl extends BasicDaoImpl {
 					value=sqlSession.update("com.account.mapping.myUserMapper.updateStatus", user);
 					sqlSession.commit();
 				} catch (Exception e) {  
+					LOG.error("",e);
 					sqlSession.rollback();  
 				}finally {
 					sqlSession.close();

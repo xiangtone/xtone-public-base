@@ -25,10 +25,11 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -124,7 +125,7 @@
 		<profile>
 			<id>product</id>
 			<properties>
-				<runtime.env>packageConfig\product</runtime.env>
+				<runtime.env>packageConfig\smzg</runtime.env>
 				<final.name>smzg-admin.xtonegame.com</final.name>
 			</properties>
 			<activation>
@@ -159,6 +160,8 @@
 			<properties>
 				<runtime.env>packageConfig\smzg</runtime.env>
 				<final.name>smzg-admin.xtonegame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://121.40.137.243/tomcat_9010/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
 		<profile>
@@ -221,10 +224,10 @@
 				<ftp.to.url>ftp://121.40.125.15/docker_apps/lyxm.xtonegame.com/swap_dir/</ftp.to.url>
 			</properties>
 		</profile>
-		
-		
-		
-		
+
+
+
+
 		<profile>
 			<id>piggy</id>
 			<properties>
@@ -232,6 +235,25 @@
 				<final.name>piggy-admin.vanggame.com</final.name>
 				<ftp.server.id>HYServer</ftp.server.id>
 				<ftp.to.url>ftp://121.40.137.243/tomcat-8_5000/swap_dir/</ftp.to.url>
+			</properties>
+		</profile>
+
+
+		<profile>
+			<id>mxjh</id>
+			<properties>
+				<runtime.env>packageConfig/mxjh</runtime.env>
+				<final.name>mxjh-admin.vanggame.com</final.name>
+				<ftp.server.id>HYServer</ftp.server.id>
+				<ftp.to.url>ftp://114.55.226.218/mxjh.vanggame.com/swap_dir</ftp.to.url>
+			</properties>
+		</profile>
+		
+		<profile>
+			<id>mxjhtest</id>
+			<properties>
+				<runtime.env>packageConfig\mxjhtest</runtime.env>
+				<final.name>mxjh-admin.xtonegame.com-test</final.name>
 			</properties>
 		</profile>
 	</profiles>
