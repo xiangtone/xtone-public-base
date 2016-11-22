@@ -2,6 +2,7 @@ package com.github.netty.http.handler;
 
 import org.apache.log4j.Logger;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -36,7 +37,12 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
 		LOG.debug(msg.text());
-		group.writeAndFlush(msg.retain());
+//		group.writeAndFlush(msg.retain());
+		for(Channel cg:group){
+			if(ctx.channel()!=cg){
+				cg.writeAndFlush(msg.retain());
+			}
+		}
 	}
 
 	@Override
