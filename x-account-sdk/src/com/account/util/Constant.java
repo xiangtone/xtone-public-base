@@ -3,7 +3,7 @@ package com.account.util;
 public class Constant {
 
 	// 本机测试
-	 public static final String URL="http://192.168.1.223:8080/account.xtonegame.com";
+//	 public static final String URL="http://192.168.16.133:8080/account.xtonegame.com";
 
 	// 内网测试
 	// public static final String URL="http://192.168.0.51:8080/account-test";
@@ -14,7 +14,10 @@ public class Constant {
 	// youka服务器
 //	public static final String URL = "http://account.youkala.com";
 	// 南方银谷服务器
-//	public static final String URL = "http://account.wifi8.com:29141";
+//		public static final String URL = "http://account.wifi8.com:29141";
+	
+	// 跳板服务器
+	public static final String URL = "http://1626zw1909.51mypc.cn:83/x-account-server";
 
 	public static final String URLLOGIN = URL + "/jsp/login.jsp"; // 登录页面
 	public static final String URLLOGINSERVLET = URL + "/LoginServlet";// 登录Servlet

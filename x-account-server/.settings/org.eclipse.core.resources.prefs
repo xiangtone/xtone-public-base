@@ -3,6 +3,7 @@
 >>>>>>>=master
 eclipse.preferences.version=1
 encoding//WebContent/css/main.css=UTF-8
+encoding//packageConfig/local/config.properties=UTF-8
 encoding//packageConfig/n8wan/config.properties=UTF-8
 encoding//packageConfig/wifi8/config.properties=UTF-8
 encoding//packageConfig/youkala/config.properties=UTF-8

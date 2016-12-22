@@ -86,6 +86,6 @@ public class ConfigManager
 
 	public static void main(String[] args){
 		//System.out.println(System.getProperty("java.class.path").split(";")[0]);
-		System.out.println(ConfigManager.getConfigData("MAIL_ACTIVATION"));
+		System.out.println(ConfigManager.getConfigData("local.url"));
 	}
 }
